@@ -6,24 +6,37 @@ import classes from './App.module.css'
 
 function App() {
   
-  const testData = ".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2.";
-
-  const buildGrid = (str: string) => {
+  const rawPuzzle = ".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2."
+  
+  const buildGrid = (str: string): string[][] => {
     let arr = [];
     for(var i=0; i<9; i++) {
       arr.push([...str.split('').splice(i*9,9)])
     }
     return arr;
   }
-
-  const [grid, setGrid] = useState(buildGrid(testData))
-  console.log(grid)
+  
+  const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
+  const updateUserPuzzle = (val: string, row: number, col: number): void => {
+    let newUserPuzzle = [...userPuzzle]
+    newUserPuzzle[row][col] = val
+    setUserPuzzle(newUserPuzzle)
+  }
+  
+  const [grid, setGrid] = useState<string[][]>(buildGrid(rawPuzzle))
+  const [highlightedRow, setHighlightedRow] = useState<number | null>(null)
+  const [highlightedCol, setHighlightedCol] = useState<number | null>(null)
 
   const puzzle = grid.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
       return <Tile 
-        row={i+1}
-        col={j+1}
+        row={i}
+        col={j}
+        highlighted={i === highlightedRow || j === highlightedCol}
+        setHighlightedRow={setHighlightedRow}
+        setHighlightedCol={setHighlightedCol}
+        setUserPuzzle={updateUserPuzzle}
+        isGiven={grid[i][j] !== '.'}
         value={grid[i][j]} 
         key={`gridTile_${i}_${j}`} 
       />
