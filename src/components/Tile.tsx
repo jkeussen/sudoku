@@ -3,12 +3,20 @@ import classes from "./Tile.module.css";
 
 const Tile: React.FC<{
 	row: number;
+	activeRow: number | null,
 	col: number;
+	activeCol: number | null,
+	section: number,
+	activeSection: number | null,
 	value: string;
-	highlighted: boolean;
+	highlighted: {
+		highlightActiveRow: boolean,
+		highlightActiveCol: boolean,
+		highlightActiveSection: boolean,
+	};
 	isGiven: boolean;
-	setHighlightedRow: React.Dispatch<React.SetStateAction<number | null>>;
-	setHighlightedCol: React.Dispatch<React.SetStateAction<number | null>>;
+	setActiveRow: React.Dispatch<React.SetStateAction<number | null>>;
+	setActiveCol: React.Dispatch<React.SetStateAction<number | null>>;
 	setUserPuzzle: (val: string, row: number, col: number) => void;
 }> = (props) => {
 	
@@ -27,11 +35,18 @@ const Tile: React.FC<{
 	};
 
 	const onFocusHandler = () => {
-		props.setHighlightedCol(props.col)
-		props.setHighlightedRow(props.row)
+		props.setActiveCol(props.col)
+		props.setActiveRow(props.row)
 	}
 
-	const css = `${props.isGiven ? classes.givenTile : classes.userTile} ${props.highlighted ? classes.highlighted : ''}`;
+	const highlightedRow = props.highlighted.highlightActiveRow && props.row === props.activeRow
+		? classes.highlighted : null
+	const highlightedCol = props.highlighted.highlightActiveCol && props.col === props.activeCol
+		? classes.highlighted : null
+	const highlightedSection = props.highlighted.highlightActiveSection && props.section === props.activeSection
+		? classes.highlighted : null
+
+	const css = `${props.isGiven ? classes.givenTile : classes.userTile} ${highlightedRow} ${highlightedCol} ${highlightedSection}`;
 
 	return (
 		<div className={classes.wrapper} id={`${props.row}_${props.col}`}>

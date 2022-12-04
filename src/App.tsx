@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 
 import Tile from './components/Tile';
 
+import { sectionRefArr } from './helpers/section-lookup';
+
 import classes from './App.module.css'
 
 function App() {
@@ -24,17 +26,29 @@ function App() {
   }
   
   const [grid, setGrid] = useState<string[][]>(buildGrid(rawPuzzle))
-  const [highlightedRow, setHighlightedRow] = useState<number | null>(null)
-  const [highlightedCol, setHighlightedCol] = useState<number | null>(null)
+  const [activeRow, setActiveRow] = useState<number | null>(null)
+  const [activeCol, setActiveCol] = useState<number | null>(null)
+
+  const [highlightActiveRow, setHighlightActiveRow] = useState<boolean>(true)
+  const [highlightActiveCol, setHighlightActiveCol] = useState<boolean>(true)
+  const [highlightActiveSection, setHighlightActiveSection] = useState<boolean>(false)
+  
+  const activeSection = activeRow !== null && activeCol !== null
+    ? sectionRefArr[activeRow][activeCol] 
+    : null;
 
   const puzzle = grid.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
       return <Tile 
         row={i}
         col={j}
-        highlighted={i === highlightedRow || j === highlightedCol}
-        setHighlightedRow={setHighlightedRow}
-        setHighlightedCol={setHighlightedCol}
+        section={sectionRefArr[i][j]}
+        activeSection={activeSection}
+        highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}
+        activeRow={activeRow}
+        activeCol={activeCol}
+        setActiveRow={setActiveRow}
+        setActiveCol={setActiveCol}
         setUserPuzzle={updateUserPuzzle}
         isGiven={grid[i][j] !== '.'}
         value={grid[i][j]} 
