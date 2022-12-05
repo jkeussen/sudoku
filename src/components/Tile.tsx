@@ -5,11 +5,7 @@ const Tile: React.FC<{
 	id: number;
 	activeSquare: number | null;
 	setActiveSquare: React.Dispatch<React.SetStateAction<number | null>>;
-	row: number;
-	activeRow: number | null;
 	validRow: boolean;
-	col: number;
-	activeCol: number | null;
 	validCol: boolean;
 	section: number;
 	activeSection: number | null;	
@@ -20,37 +16,38 @@ const Tile: React.FC<{
 		highlightActiveSection: boolean;
 	};
 	isGiven: boolean;
-	setActiveRow: React.Dispatch<React.SetStateAction<number | null>>;
-	setActiveCol: React.Dispatch<React.SetStateAction<number | null>>;
 	setUserPuzzle: (val: string, row: number, col: number) => void;
 }> = (props) => {
 
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [userVal, setUserVal] = useState<string>("");
+	const [value, setValue] = useState<string>("");
+
+	const row = Math.floor(props.id / 9)
+	const col = props.id % 9
 
 	if (props.activeSquare === props.id) inputRef.current!.focus()
 
 	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (props.isGiven) return;
 		// console.log(e)
 		// console.log(e.target.value)
 		const enteredValue = e.target.value[e.target.value.length - 1];
 		// const enteredValue = e.nativeEvent.data;
 		console.log(enteredValue)
-		if (enteredValue === userVal) return;
+		if (enteredValue === value) return;
 		if (enteredValue === undefined) {
-			setUserVal("");
-			props.setUserPuzzle(".", props.row, props.col);
+			setValue("");
+			props.setUserPuzzle(".", row, col);
 			return;
 		}
 		if (!Number(enteredValue)) return;
-		setUserVal(enteredValue);
-		props.setUserPuzzle(enteredValue, props.row, props.col);
+		setValue(enteredValue);
+		props.setUserPuzzle(enteredValue, row, col);
 	};
 
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
 		e.target.select();
-		props.setActiveCol(props.col);
-		props.setActiveRow(props.row);
+		props.setActiveSquare(props.id)
 	};
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -59,28 +56,28 @@ const Tile: React.FC<{
 		let colToSelect: number | null;
 		let squareToSelect: number | null;
 		if (e.code === "ArrowUp") {
-			if (props.row === 0) return
-			rowToSelect = props.row-1;
-			colToSelect = props.col;
-			squareToSelect = (props.row-1)*9 + props.col
+			if (row === 0) return
+			rowToSelect = row-1;
+			colToSelect = col;
+			squareToSelect = (row-1)*9 + col
 		}
 		else if (e.code === "ArrowRight") {
-			if (props.col === 8) return
-			rowToSelect = props.row;
-			colToSelect = props.col+1;
-			squareToSelect = (props.row)*9 + props.col+1
+			if (col === 8) return
+			rowToSelect = row;
+			colToSelect = col+1;
+			squareToSelect = (row)*9 + col+1
 		}
 		else if (e.code === "ArrowDown") {
-			if (props.row === 8) return
-			rowToSelect = props.row+1;
-			colToSelect = props.col;
-			squareToSelect = (props.row+1)*9 + props.col
+			if (row === 8) return
+			rowToSelect = row+1;
+			colToSelect = col;
+			squareToSelect = (row+1)*9 + col
 		}
 		else if (e.code === "ArrowLeft") {
-			if (props.col === 0) return
-			rowToSelect = props.row;
-			colToSelect = props.col-1;
-			squareToSelect = (props.row)*9 + props.col-1
+			if (col === 0) return
+			rowToSelect = row;
+			colToSelect = col-1;
+			squareToSelect = (row)*9 + col-1
 		}
 		else if (e.code === "Escape") {
 			rowToSelect = null;
@@ -93,11 +90,11 @@ const Tile: React.FC<{
 
 	// Adds the highlighted style depending on if active rows/cols/sections should be highlighted
 	const highlightedRow =
-		props.highlighted.highlightActiveRow && props.row === props.activeRow
+		props.highlighted.highlightActiveRow && props.activeSquare && row === Math.floor(props.activeSquare! / 9)
 			? classes.highlighted
 			: null;
 	const highlightedCol =
-		props.highlighted.highlightActiveCol && props.col === props.activeCol
+		props.highlighted.highlightActiveCol && props.activeSquare && col === props.activeSquare! % 9
 			? classes.highlighted
 			: null;
 	const highlightedSection =
@@ -113,16 +110,15 @@ const Tile: React.FC<{
 	}`;
 
 	return (
-		<div className={classes.wrapper} id={`${props.row}_${props.col}`}>
+		<div className={classes.wrapper} id={`${row}_${col}`}>
 			<input
 				ref={inputRef}
 				className={css}
 				type="text"
-				value={props.isGiven ? props.value : userVal}
+				value={props.isGiven ? props.value : value}
 				onChange={onChangeHandler}
 				onFocus={onFocusHandler}
 				onKeyDown={onKeyDownHandler}
-				disabled={props.isGiven}
 			/>
 		</div>
 	);

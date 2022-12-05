@@ -21,10 +21,11 @@ function App() {
   
   const [grid, setGrid] = useState<string[][]>(buildGrid(rawPuzzle))
   const [activeSquare, setActiveSquare] = useState<number | null>(null)
-  const [activeRow, setActiveRow] = useState<number | null>(null)
-  const [activeCol, setActiveCol] = useState<number | null>(null)
   const [validRows, setValidRows] = useState<number[]>([])
   const [validCols, setValidCols] = useState<number[]>([])
+
+  const activeRow = activeSquare ? Math.floor(activeSquare / 9) : null
+  const activeCol = activeSquare ? activeSquare % 9 : null
   
   const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
   const updateUserPuzzle = (val: string, row: number, col: number): void => {
@@ -55,14 +56,8 @@ function App() {
         id={(i*9) + j}
         activeSquare={activeSquare}
         setActiveSquare={setActiveSquare}
-        row={i}
-        activeRow={activeRow}
         validRow={validRows.includes(i)}
-        setActiveRow={setActiveRow}
-        col={j}
-        activeCol={activeCol}
         validCol={validCols.includes(j)}
-        setActiveCol={setActiveCol}
         section={sectionRefArr[i][j]}
         activeSection={activeSection}
         highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}

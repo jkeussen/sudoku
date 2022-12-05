@@ -32,7 +32,7 @@
 }
 
 .givenTile {
-	pointer-events: none;
+	/* pointer-events: none; */
 	/* background-color: grey; */
 }
 .givenTile:active,
@@ -42,12 +42,15 @@
 }
 
 .userTile:active,
-.userTile:focus {
-	/* border: 1px solid red; */
+.userTile:focus,
+.givenTile:active,
+.givenTile:focus {
 	background-color: lightskyblue;
 }
 .userTile.valid:active,
-.userTile.valid:focus {
+.userTile.valid:focus,
+.givenTile.valid:active,
+.givenTile.valid:focus {
 	border: 8px solid lightgreen;
 	z-index: 3;
 }
