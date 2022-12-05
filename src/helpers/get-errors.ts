@@ -33,6 +33,8 @@ export const getErrors = (puzzle: (number | string)[][], selSquare: number | nul
 			errors.push((curRow * 9) + selCol)
 		}
 	})
+	// for all tiles in the section
+	// TODO: write section algo
 
 	return errors
 }
@@ -42,9 +44,23 @@ export const getAllErrors = (puzzle: (number | string)[][]) => {
 
 	let errors: number[] = []
 
-	puzzle.forEach((row, index) => {
-		// find duplicates in the row, 
-		// calculate their ids, push to array
+	puzzle.forEach((row, i) => {
+		// check if there are duplicates
+		if (new Set(row).size === row.length) return;
+		// create an object with tile values in the row as key names
+		// and arrays of those tile IDs for each occuring value
+		let alreadySeen: {[key: string]: number[]} = {}
+		row.forEach((tileVal, j) => {
+			if (tileVal === '0') return;
+			const id = i*9+j
+			if (!alreadySeen[tileVal]) alreadySeen[tileVal] = []
+			alreadySeen[tileVal].push(id)
+		})
+		Object.keys(alreadySeen).forEach(key => {
+			if (alreadySeen[key].length > 1) {
+				errors = errors.concat(alreadySeen[key])
+			}
+		})
 	})
 
 	// build array of columns 
@@ -57,8 +73,22 @@ export const getAllErrors = (puzzle: (number | string)[][]) => {
 		rotatedPuzzle.push(col)
 	}
 
-	puzzle.forEach((row, index) => {
-		// find duplicates in the col, 
-		// calculate their ids, push to array
+	rotatedPuzzle.forEach((col, j) => {
+		// check if there are duplicates
+		if (new Set(col).size === col.length) return;
+		let alreadySeen: {[key: string]: number[]} = {}
+		col.forEach((tileVal, i) => {
+			if (tileVal === '0') return;
+			const id = i*9+j
+			if (!alreadySeen[tileVal]) alreadySeen[tileVal] = []
+			alreadySeen[tileVal].push(id)
+		})
+		Object.keys(alreadySeen).forEach(key => {
+			if (alreadySeen[key].length > 1) {
+				errors = errors.concat(alreadySeen[key])
+			}
+		})
 	})
+
+	return errors;
 }

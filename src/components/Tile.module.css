@@ -45,5 +45,8 @@
 	z-index: 3;
 }
 .error {
-	background-color: lightcoral;
+	background-color: lightcoral !important;
+}
+.userTile.error {
+	color: maroon;
 }
