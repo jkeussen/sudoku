@@ -102,11 +102,11 @@ const Tile: React.FC<{
 
 	const userOrGiven = props.isGiven ? classes.givenTile : classes.userTile
 	const highlightedRow =
-		props.highlighted.highlightActiveRow && props.activeSquare && row === Math.floor(props.activeSquare! / 9)
+		props.highlighted.highlightActiveRow && props.activeSquare !== null && row === Math.floor(props.activeSquare! / 9)
 			? classes.highlighted
 			: '';
 	const highlightedCol =
-		props.highlighted.highlightActiveCol && props.activeSquare && col === props.activeSquare! % 9
+		props.highlighted.highlightActiveCol && props.activeSquare !== null && col === props.activeSquare! % 9
 			? classes.highlighted
 			: '';
 	const highlightedSection =

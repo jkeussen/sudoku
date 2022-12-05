@@ -1,6 +1,7 @@
 import { empty } from "./valid-inputs"
+import { sectionRefArr, sectionIdArr } from "./get-section"
 
-export const getErrors = (puzzle: (number | string)[][], selSquare: number | null): number[] => {
+export const getErrors = (puzzle: string[][], selSquare: number | null): number[] => {
 	if (!puzzle || !selSquare) return []
 
 	let errors: number[] = []
@@ -51,7 +52,7 @@ export const getAllErrors = (puzzle: (number | string)[][]) => {
 		// and arrays of those tile IDs for each occuring value
 		let alreadySeen: {[key: string]: number[]} = {}
 		row.forEach((tileVal, j) => {
-			if (tileVal === '0') return;
+			if (tileVal === empty) return;
 			const id = i*9+j
 			if (!alreadySeen[tileVal]) alreadySeen[tileVal] = []
 			alreadySeen[tileVal].push(id)
@@ -78,8 +79,36 @@ export const getAllErrors = (puzzle: (number | string)[][]) => {
 		if (new Set(col).size === col.length) return;
 		let alreadySeen: {[key: string]: number[]} = {}
 		col.forEach((tileVal, i) => {
-			if (tileVal === '0') return;
+			if (tileVal === empty) return;
 			const id = i*9+j
+			if (!alreadySeen[tileVal]) alreadySeen[tileVal] = []
+			alreadySeen[tileVal].push(id)
+		})
+		Object.keys(alreadySeen).forEach(key => {
+			if (alreadySeen[key].length > 1) {
+				errors = errors.concat(alreadySeen[key])
+			}
+		})
+	})
+
+	// build array of sections
+	let sections: string[][] = [[],[],[],[],[],[],[],[],[]]
+	puzzle.forEach((row, i) => {
+		row.forEach((tileVal, j) => {
+			let section = sectionRefArr[i][j];
+			sections[section].push(tileVal.toString())
+		})
+	})
+
+	sections.forEach((section, i) => {
+		// check if there are duplicates
+		if (new Set(section).size === section.length) return;
+		// create an object with tile values in the section as key names
+		// and arrays of those tile IDs for each occuring value
+		let alreadySeen: {[key: string]: number[]} = {}
+		section.forEach((tileVal, j) => {
+			if (tileVal === empty) return;
+			const id = sectionIdArr[i][j]
 			if (!alreadySeen[tileVal]) alreadySeen[tileVal] = []
 			alreadySeen[tileVal].push(id)
 		})
