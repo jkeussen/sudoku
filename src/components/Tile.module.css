@@ -5,7 +5,6 @@
 	border: 1px solid black;
 	padding: 0.5px;
 	overflow: visible;
-	z-index: 1;
 }
 
 .highlighted {
@@ -24,22 +23,34 @@
 	text-align: center;
 	font-size: 2rem; 
 	caret-color: transparent;
+	user-select: none;
+	z-index: 2;
+}
+.giveTile::selection,
+.userTile::selection {
+	background-color: transparent;
 }
 
 .givenTile {
 	pointer-events: none;
-	user-select: none;
 	/* background-color: grey; */
 }
 .givenTile:active,
 .givenTile:focus {
-	border: none;
-	outline: none;
+	/* border: none; */
+	/* outline: none; */
 }
 
 .userTile:active,
 .userTile:focus {
-	border: none;
+	/* border: 1px solid red; */
 	background-color: lightskyblue;
-	outline: none;
+}
+.userTile.valid:active,
+.userTile.valid:focus {
+	border: 8px solid lightgreen;
+	z-index: 3;
+}
+.valid {
+	background-color: lightgreen;
 }
