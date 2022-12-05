@@ -96,7 +96,7 @@ const Tile: React.FC<{
 				break;
 		}
 
-		console.log(`Select square [${rowToSelect!}, ${colToSelect!}] (${squareToSelect!})`)
+		// console.log(`Select square [${rowToSelect!}, ${colToSelect!}] (${squareToSelect!})`)
 		props.setActiveSquare(squareToSelect!)
 	}
 

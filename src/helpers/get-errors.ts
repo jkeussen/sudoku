@@ -1,46 +1,64 @@
 import { empty } from "./valid-inputs"
 import { sectionRefArr, sectionIdArr } from "./get-section"
 
-export const getErrors = (puzzle: string[][], selSquare: number | null): number[] => {
-	if (!puzzle || !selSquare) return []
+export const getLocalErrors = (puzzle: string[][], selSquare: number | null): number[] => {
+	if (!puzzle || selSquare === null) return []
 
 	let errors: number[] = []
 
 	let selRow = Math.floor(selSquare / 9)
 	let selCol = selSquare % 9
 	let selVal = puzzle[selRow][selCol]
+	let selSection = sectionRefArr[selRow][selCol]
 	let rowData = puzzle[selRow]
 	let colData = puzzle.map(rowData => rowData[selCol])
 
 	// for all tiles in the row
 	rowData.forEach((tileVal, curCol) => {
-		if (tileVal === empty) return;
-		// if the current tile isn't the active tile
-		// and the value of the tile = selected tile value
-		// if (curCol === selCol) return
+		if (tileVal === empty || curCol === selCol) return;
 		if (tileVal === selVal) {
-			// push that tile's ID to the error array
 			errors.push((selRow * 9) + curCol)
+			errors.push(selSquare)
 		}
 	})
 	// for all tiles in the column
 	colData.forEach((tileVal, curRow) => {
-		if (tileVal === empty) return;
-		// if the current tile isn't the active tile
-		// and the value of the tile = selected tile value
-		// if (curRow === selRow) return;
+		if (tileVal === empty || curRow === selRow) return;
 		if (tileVal === selVal) {
-			// push that tile's ID to the error array
 			errors.push((curRow * 9) + selCol)
+			errors.push(selSquare)
 		}
 	})
+	// build section value array
+	let sectionData: string[] = []
+	puzzle.forEach((row, i) => {
+		row.forEach((tileVal, j) => {
+			if (sectionRefArr[i][j] === selSection) sectionData.push(tileVal)
+		})
+	})
 	// for all tiles in the section
-	// TODO: write section algo
+	let alreadySeen: {[key: string]: number[]} = {}
+	sectionData.forEach((tileVal, i) => {
+		if (tileVal === empty) return;
+		const id = sectionIdArr[selSection][i]
+		// if (tileVal === empty || selSquare === id) return;
+		// if (tileVal === selVal) {
+		// 	errors.push(id)
+		// 	errors.push(selSquare)
+		// }
+		if (!alreadySeen[tileVal]) alreadySeen[tileVal] = []
+		alreadySeen[tileVal].push(id)
+	})
+	Object.keys(alreadySeen).forEach(key => {
+		if (alreadySeen[key].length > 1) {
+			errors = errors.concat(alreadySeen[key])
+		}
+	})
 
 	return errors
 }
 
-export const getAllErrors = (puzzle: (number | string)[][]) => {
+export const getGlobalErrors = (puzzle: (number | string)[][]) => {
 	if (!puzzle) return []
 
 	let errors: number[] = []

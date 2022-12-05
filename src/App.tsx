@@ -4,7 +4,7 @@ import Tile from './components/Tile';
 
 import { sectionRefArr } from './helpers/get-section';
 import { getValidRows, getValidCols } from './helpers/get-valid-areas';
-import { getAllErrors, getErrors } from './helpers/get-errors';
+import { getGlobalErrors, getLocalErrors } from './helpers/get-errors';
 import { empty } from './helpers/valid-inputs';
 
 import classes from './App.module.css'
@@ -44,15 +44,18 @@ function App() {
   const [highlightActiveCol, setHighlightActiveCol] = useState<boolean>(true)
   const [highlightActiveSection, setHighlightActiveSection] = useState<boolean>(false)
 
-  const [errors, setErrors] = useState<number[]>([])
-  const [allErrors, setAllErrors] = useState<Set<number>>(new Set())
+  const [localErrors, setLocalErrors] = useState<Set<number>>(new Set())
+  const [globalErrors, setGlobalErrors] = useState<Set<number>>(new Set())
 
   useEffect(() => {
-    setErrors(getErrors(userPuzzle, activeSquare))
-    console.log('Local errors: \n', errors)
-    setAllErrors(new Set(getAllErrors(userPuzzle)))
-    console.log('All errors: \n', allErrors)
+    setGlobalErrors(new Set(getGlobalErrors(userPuzzle)))
+    // console.log('Global Errors: \n', globalErrors)
   }, [userPuzzle])
+
+  useEffect(() => {
+    setLocalErrors(new Set(getLocalErrors(userPuzzle, activeSquare)))
+    console.log('Local Errors: \n', localErrors)
+  }, [userPuzzle, activeSquare])
 
   const puzzle = grid.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
@@ -68,8 +71,7 @@ function App() {
         setUserPuzzle={updateUserPuzzle}
         isGiven={grid[i][j] !== empty}
         value={grid[i][j]} 
-        // error={errors.includes(id)}
-        error={allErrors.has(id)}
+        error={globalErrors.has(id)}
         key={`gridTile_${i}_${j}`} 
       />
     })
