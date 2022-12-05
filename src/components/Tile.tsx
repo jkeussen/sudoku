@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import classes from "./Tile.module.css";
 
+import { validInputs } from "../helpers/valid-inputs";
+import { getActiveSection } from "../helpers/get-section";
+
 const Tile: React.FC<{
 	id: number;
 	activeSquare: number | null;
@@ -8,7 +11,6 @@ const Tile: React.FC<{
 	validRow: boolean;
 	validCol: boolean;
 	section: number;
-	activeSection: number | null;	
 	value: string;
 	highlighted: {
 		highlightActiveRow: boolean;
@@ -24,66 +26,76 @@ const Tile: React.FC<{
 
 	const row = Math.floor(props.id / 9)
 	const col = props.id % 9
+	const activeSection = getActiveSection(props.activeSquare)
 
 	if (props.activeSquare === props.id) inputRef.current!.focus()
 
-	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (props.isGiven) return;
-		// console.log(e)
-		// console.log(e.target.value)
-		const enteredValue = e.target.value[e.target.value.length - 1];
-		// const enteredValue = e.nativeEvent.data;
-		console.log(enteredValue)
-		if (enteredValue === value) return;
-		if (enteredValue === undefined) {
-			setValue("");
-			props.setUserPuzzle(".", row, col);
-			return;
-		}
-		if (!Number(enteredValue)) return;
-		setValue(enteredValue);
-		props.setUserPuzzle(enteredValue, row, col);
-	};
-
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-		e.target.select();
 		props.setActiveSquare(props.id)
 	};
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Escape"].includes(e.code)) return
+		console.log(e)
+		if (!validInputs.includes(e.code)) return
+		
 		let rowToSelect: number | null;
 		let colToSelect: number | null;
 		let squareToSelect: number | null;
-		if (e.code === "ArrowUp") {
-			if (row === 0) return
-			rowToSelect = row-1;
-			colToSelect = col;
-			squareToSelect = (row-1)*9 + col
+
+		switch (e.code) {
+			case "Escape":
+				props.setActiveSquare(null)
+				return;
+			case "Backspace":
+			case "Digit0":
+				if (props.isGiven) return
+				setValue("")
+				props.setUserPuzzle('.', row, col);
+				inputRef.current!.blur()
+				return;
+			case "Digit1":
+			case "Digit2":
+			case "Digit3":
+			case "Digit4":
+			case "Digit5":
+			case "Digit6":
+			case "Digit7":
+			case "Digit8":
+			case "Digit9":
+				if (props.isGiven) return;
+				let enteredValue = e.code.slice(-1)
+				if (enteredValue === value) return;
+				setValue(enteredValue)
+				props.setUserPuzzle(enteredValue, row, col);
+				return;
+			case "ArrowUp":
+				if (row === 0) return
+				rowToSelect = row-1;
+				colToSelect = col;
+				squareToSelect = (row-1)*9 + col
+				break;
+			case "ArrowRight":
+				if (col === 8) return
+				rowToSelect = row;
+				colToSelect = col+1;
+				squareToSelect = (row)*9 + col+1
+				break;
+			case "ArrowDown":
+				if (row === 8) return
+				rowToSelect = row+1;
+				colToSelect = col;
+				squareToSelect = (row+1)*9 + col
+				break;
+			case "ArrowLeft":
+				if (col === 0) return
+				rowToSelect = row;
+				colToSelect = col-1;
+				squareToSelect = (row)*9 + col-1
+				break;
+			default:
+				break;
 		}
-		else if (e.code === "ArrowRight") {
-			if (col === 8) return
-			rowToSelect = row;
-			colToSelect = col+1;
-			squareToSelect = (row)*9 + col+1
-		}
-		else if (e.code === "ArrowDown") {
-			if (row === 8) return
-			rowToSelect = row+1;
-			colToSelect = col;
-			squareToSelect = (row+1)*9 + col
-		}
-		else if (e.code === "ArrowLeft") {
-			if (col === 0) return
-			rowToSelect = row;
-			colToSelect = col-1;
-			squareToSelect = (row)*9 + col-1
-		}
-		else if (e.code === "Escape") {
-			rowToSelect = null;
-			colToSelect = null;
-			squareToSelect = null;
-		}
+
 		console.log(`Select square [${rowToSelect!}, ${colToSelect!}] (${squareToSelect!})`)
 		props.setActiveSquare(squareToSelect!)
 	}
@@ -98,8 +110,7 @@ const Tile: React.FC<{
 			? classes.highlighted
 			: null;
 	const highlightedSection =
-		props.highlighted.highlightActiveSection &&
-		props.section === props.activeSection
+		props.highlighted.highlightActiveSection && props.section === activeSection
 			? classes.highlighted
 			: null;
 
@@ -116,7 +127,8 @@ const Tile: React.FC<{
 				ref={inputRef}
 				type="text"
 				value={props.isGiven ? props.value : value}
-				onChange={onChangeHandler}
+				// onChange={onChangeHandler}
+				readOnly
 				onFocus={onFocusHandler}
 				onKeyDown={onKeyDownHandler}
 			/>

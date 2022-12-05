@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 
 import Tile from './components/Tile';
 
-import { sectionRefArr } from './helpers/section-lookup';
+import { sectionRefArr } from './helpers/get-section';
 import { getValidRows, getValidCols } from './helpers/get-valid-areas';
 
 import classes from './App.module.css'
@@ -19,14 +19,11 @@ function App() {
     return arr;
   }
   
-  const [grid, setGrid] = useState<string[][]>(buildGrid(rawPuzzle))
   const [activeSquare, setActiveSquare] = useState<number | null>(null)
   const [validRows, setValidRows] = useState<number[]>([])
   const [validCols, setValidCols] = useState<number[]>([])
-
-  const activeRow = activeSquare ? Math.floor(activeSquare / 9) : null
-  const activeCol = activeSquare ? activeSquare % 9 : null
   
+  const [grid, setGrid] = useState<string[][]>(buildGrid(rawPuzzle))
   const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
   const updateUserPuzzle = (val: string, row: number, col: number): void => {
     let newUserPuzzle = [...userPuzzle]
@@ -34,21 +31,15 @@ function App() {
     // check for valid rows and columns
     const validRows = getValidRows(newUserPuzzle)
     const validCols = getValidCols(newUserPuzzle)
-    // console.log('Valid Rows: [' + validRows +']')
-    // console.log('Valid Cols: [' + validCols +']')
     setValidRows(validRows)
     setValidCols(validCols)
-  
+    // update current puzzle state
     setUserPuzzle(newUserPuzzle)
   }
 
   const [highlightActiveRow, setHighlightActiveRow] = useState<boolean>(true)
   const [highlightActiveCol, setHighlightActiveCol] = useState<boolean>(true)
   const [highlightActiveSection, setHighlightActiveSection] = useState<boolean>(false)
-  
-  const activeSection = activeRow !== null && activeCol !== null
-    ? sectionRefArr[activeRow][activeCol] 
-    : null;
 
   const puzzle = grid.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
@@ -59,7 +50,6 @@ function App() {
         validRow={validRows.includes(i)}
         validCol={validCols.includes(j)}
         section={sectionRefArr[i][j]}
-        activeSection={activeSection}
         highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}
         setUserPuzzle={updateUserPuzzle}
         isGiven={grid[i][j] !== '.'}
