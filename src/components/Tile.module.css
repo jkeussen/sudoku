@@ -6,13 +6,7 @@
 	padding: 0.5px;
 	overflow: visible;
 }
-
-.highlighted {
-	background-color: lightblue;
-}
-
-.givenTile,
-.userTile {
+.tile {
 	max-width: 100%;
 	max-height: 100%;
 	border: none;
@@ -26,34 +20,22 @@
 	user-select: none;
 	z-index: 2;
 }
-.giveTile::selection,
-.userTile::selection {
+.tile:active,
+.tile:focus {
+	background-color: lightskyblue;
+}
+.tile::selection {
 	background-color: transparent;
 }
 
-.givenTile {
-	/* pointer-events: none; */
-	/* background-color: grey; */
-}
-.givenTile:active,
-.givenTile:focus {
-	/* border: none; */
-	/* outline: none; */
-}
-
-.userTile:active,
-.userTile:focus,
-.givenTile:active,
-.givenTile:focus {
-	background-color: lightskyblue;
-}
-.userTile.valid:active,
-.userTile.valid:focus,
-.givenTile.valid:active,
-.givenTile.valid:focus {
-	border: 8px solid lightgreen;
-	z-index: 3;
+.highlighted {
+	background-color: lightblue;
 }
 .valid {
 	background-color: lightgreen;
+}
+.valid:active,
+.valid:focus {
+	border: 8px solid lightgreen;
+	z-index: 3;
 }

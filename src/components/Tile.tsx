@@ -103,7 +103,7 @@ const Tile: React.FC<{
 			? classes.highlighted
 			: null;
 
-	const css = `${
+	const css = `${classes.tile} ${
 		props.isGiven ? classes.givenTile : classes.userTile
 	} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${
 		props.validRow || props.validCol ? classes.valid : null
@@ -112,8 +112,8 @@ const Tile: React.FC<{
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>
 			<input
-				ref={inputRef}
 				className={css}
+				ref={inputRef}
 				type="text"
 				value={props.isGiven ? props.value : value}
 				onChange={onChangeHandler}
