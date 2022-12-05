@@ -4,12 +4,15 @@ import Tile from './components/Tile';
 
 import { sectionRefArr } from './helpers/get-section';
 import { getValidRows, getValidCols } from './helpers/get-valid-areas';
+import { getErrors } from './helpers/get-errors';
+import { empty } from './helpers/valid-inputs';
 
 import classes from './App.module.css'
 
 function App() {
   
-  const rawPuzzle = ".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2."
+  // const rawPuzzle = ".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2."
+  const rawPuzzle = "010008000304721690006000010000902530042103780035806000090000100021387409000500020"
   
   const buildGrid = (str: string): string[][] => {
     let arr = [];
@@ -41,10 +44,14 @@ function App() {
   const [highlightActiveCol, setHighlightActiveCol] = useState<boolean>(true)
   const [highlightActiveSection, setHighlightActiveSection] = useState<boolean>(false)
 
+  const errors = getErrors(userPuzzle, activeSquare)
+  console.log(errors)
+
   const puzzle = grid.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
+      const id = (i*9) + j
       return <Tile 
-        id={(i*9) + j}
+        id={id}
         activeSquare={activeSquare}
         setActiveSquare={setActiveSquare}
         validRow={validRows.includes(i)}
@@ -52,8 +59,9 @@ function App() {
         section={sectionRefArr[i][j]}
         highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}
         setUserPuzzle={updateUserPuzzle}
-        isGiven={grid[i][j] !== '.'}
+        isGiven={grid[i][j] !== empty}
         value={grid[i][j]} 
+        error={errors.includes(id)}
         key={`gridTile_${i}_${j}`} 
       />
     })

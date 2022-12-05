@@ -1,8 +1,9 @@
+import { empty } from "./valid-inputs";
+
 export const getValidRows = (puzzle: string[][]) => {
 	let validRows = [];
 	for (var i=0; i<puzzle.length; i++) {
-		if (puzzle[i].includes('.')) continue;
-		if (puzzle[i].includes('0')) continue;
+		if (puzzle[i].includes(empty)) continue;
 		if (new Set(puzzle[i]).size !== puzzle[i].length) continue
 		validRows.push(i)
 	}
@@ -21,8 +22,7 @@ export const getValidCols = (puzzle: string[][]) => {
 		rotatedPuzzle.push(col)
 	}
 	for (var i=0; i<rotatedPuzzle.length; i++) {
-		if (rotatedPuzzle[i].includes('.')) continue;
-		if (rotatedPuzzle[i].includes('0')) continue;
+		if (rotatedPuzzle[i].includes(empty)) continue;
 		if (new Set(rotatedPuzzle[i]).size !== rotatedPuzzle[i].length) continue
 		validCols.push(i)
 	}

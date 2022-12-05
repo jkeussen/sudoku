@@ -1,3 +1,5 @@
+export const empty = '0'
+
 export const validInputs = [
 	"ArrowUp",
 	"ArrowDown",

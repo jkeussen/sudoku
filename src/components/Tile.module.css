@@ -19,6 +19,12 @@
 	user-select: none;
 	z-index: 2;
 }
+.userTile {
+	color: rgb(69, 69, 69)
+}
+.givenTile {
+	color: black;
+}
 .tile:active,
 .tile:focus {
 	background-color: lightskyblue;
@@ -37,4 +43,7 @@
 .valid:focus {
 	border: 8px solid lightgreen;
 	z-index: 3;
+}
+.error {
+	background-color: lightcoral;
 }

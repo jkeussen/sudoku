@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import classes from "./Tile.module.css";
 
-import { validInputs } from "../helpers/valid-inputs";
+import { validInputs, empty } from "../helpers/valid-inputs";
 import { getActiveSection } from "../helpers/get-section";
 
 const Tile: React.FC<{
@@ -18,6 +18,7 @@ const Tile: React.FC<{
 		highlightActiveSection: boolean;
 	};
 	isGiven: boolean;
+	error: boolean;
 	setUserPuzzle: (val: string, row: number, col: number) => void;
 }> = (props) => {
 
@@ -35,7 +36,6 @@ const Tile: React.FC<{
 	};
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		console.log(e)
 		if (!validInputs.includes(e.code)) return
 		
 		let rowToSelect: number | null;
@@ -50,7 +50,7 @@ const Tile: React.FC<{
 			case "Digit0":
 				if (props.isGiven) return
 				setValue("")
-				props.setUserPuzzle('.', row, col);
+				props.setUserPuzzle(empty, row, col);
 				inputRef.current!.blur()
 				return;
 			case "Digit1":
@@ -100,25 +100,23 @@ const Tile: React.FC<{
 		props.setActiveSquare(squareToSelect!)
 	}
 
-	// Adds the highlighted style depending on if active rows/cols/sections should be highlighted
+	const userOrGiven = props.isGiven ? classes.givenTile : classes.userTile
 	const highlightedRow =
 		props.highlighted.highlightActiveRow && props.activeSquare && row === Math.floor(props.activeSquare! / 9)
 			? classes.highlighted
-			: null;
+			: '';
 	const highlightedCol =
 		props.highlighted.highlightActiveCol && props.activeSquare && col === props.activeSquare! % 9
 			? classes.highlighted
-			: null;
+			: '';
 	const highlightedSection =
 		props.highlighted.highlightActiveSection && props.section === activeSection
 			? classes.highlighted
-			: null;
+			: '';
+	const valid = props.validRow || props.validCol ? classes.valid : ''
+	const error = props.error ? classes.error : ''
 
-	const css = `${classes.tile} ${
-		props.isGiven ? classes.givenTile : classes.userTile
-	} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${
-		props.validRow || props.validCol ? classes.valid : null
-	}`;
+	const css = `${classes.tile} ${userOrGiven} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>
