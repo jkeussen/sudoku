@@ -20,7 +20,7 @@
 	z-index: 2;
 }
 .userTile {
-	color: rgb(69, 69, 69)
+	color: rgb(81, 81, 81)
 }
 .givenTile {
 	color: black;
@@ -48,5 +48,5 @@
 	background-color: lightcoral !important;
 }
 .userTile.error {
-	color: maroon;
+	color: rgb(181, 0, 0);
 }

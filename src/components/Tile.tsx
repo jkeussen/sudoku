@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import classes from "./Tile.module.css";
 
 import { validInputs, empty } from "../helpers/valid-inputs";
@@ -23,7 +23,6 @@ const Tile: React.FC<{
 }> = (props) => {
 
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [value, setValue] = useState<string>("");
 
 	const row = Math.floor(props.id / 9)
 	const col = props.id % 9
@@ -49,9 +48,7 @@ const Tile: React.FC<{
 			case "Backspace":
 			case "Digit0":
 				if (props.isGiven) return
-				setValue("")
 				props.setUserPuzzle(empty, row, col);
-				inputRef.current!.blur()
 				return;
 			case "Digit1":
 			case "Digit2":
@@ -64,8 +61,7 @@ const Tile: React.FC<{
 			case "Digit9":
 				if (props.isGiven) return;
 				let enteredValue = e.code.slice(-1)
-				if (enteredValue === value) return;
-				setValue(enteredValue)
+				if (enteredValue === props.value) return;
 				props.setUserPuzzle(enteredValue, row, col);
 				return;
 			case "ArrowUp":
@@ -124,8 +120,7 @@ const Tile: React.FC<{
 				className={css}
 				ref={inputRef}
 				type="text"
-				value={props.isGiven ? props.value : value}
-				// onChange={onChangeHandler}
+				value={props.value === empty ? "" : props.value}
 				readOnly
 				onFocus={onFocusHandler}
 				onKeyDown={onKeyDownHandler}

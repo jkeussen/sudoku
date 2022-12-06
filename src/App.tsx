@@ -11,8 +11,7 @@ import classes from './App.module.css'
 
 function App() {
   
-  // const rawPuzzle = ".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2."
-  const rawPuzzle = "010008000304721690006000010000902530042103780035806000090000100021387409000500020"
+  const rawPuzzle = ".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2."
   
   const buildGrid = (str: string): string[][] => {
     let arr = [];
@@ -26,7 +25,7 @@ function App() {
   const [validRows, setValidRows] = useState<number[]>([])
   const [validCols, setValidCols] = useState<number[]>([])
   
-  const [grid, setGrid] = useState<string[][]>(buildGrid(rawPuzzle))
+  const [initialPuzzle, setInitialPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
   const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
   const updateUserPuzzle = (val: string, row: number, col: number): void => {
     let newUserPuzzle = [...userPuzzle]
@@ -57,7 +56,7 @@ function App() {
     console.log('Local Errors: \n', localErrors)
   }, [userPuzzle, activeSquare])
 
-  const puzzle = grid.map((row:string[], i:number) => {
+  const puzzle = userPuzzle.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
       const id = (i*9) + j
       return <Tile 
@@ -69,8 +68,8 @@ function App() {
         section={sectionRefArr[i][j]}
         highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}
         setUserPuzzle={updateUserPuzzle}
-        isGiven={grid[i][j] !== empty}
-        value={grid[i][j]} 
+        isGiven={initialPuzzle[i][j] !== empty}
+        value={userPuzzle[i][j]} 
         error={globalErrors.has(id)}
         key={`gridTile_${i}_${j}`} 
       />
