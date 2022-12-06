@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import Header from './components/Header';
 import Tile from './components/Tile';
 
 import { sectionRefArr } from './helpers/get-section';
@@ -8,6 +9,7 @@ import { getGlobalErrors, getLocalErrors } from './helpers/get-errors';
 import { empty } from './helpers/valid-inputs';
 
 import classes from './App.module.css'
+import MobileInputs from './components/MobileInputs';
 
 function App() {
   
@@ -98,11 +100,12 @@ function App() {
   // return <Tile key={`gridTile_${index}`} value={char} />
   return (
     <div className={classes.app}>
-      <h1>Sudoku</h1>
+      <Header />
       <div className={classes.puzzleGrid}>
         {dividers}
         {puzzle}
       </div>
+      <MobileInputs />
     </div>
   )
 }

@@ -1,0 +1,28 @@
+.mobileInputs {
+	display: flex;
+	width: 100%;
+	max-width: 300px;
+	justify-content: space-between;
+	row-gap: 0.5rem;
+	margin-top: 2rem;
+	flex-wrap: wrap;
+	position: relative;
+}
+
+.inputBtn {
+	width: 32%;
+	/* flex-grow: 1; */
+	aspect-ratio: 4 / 3;
+	border: none;
+	/* border: 1px solid grey; */
+	border-radius: 1rem;
+	font-size: 4rem;
+	color: grey;
+}
+
+.inputBtn:hover {
+	background-color: lightblue;
+}
+.inputBtn:active {
+	background-color: lightskyblue;
+}
