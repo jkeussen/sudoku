@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Tile from './components/Tile';
 
 import { sectionRefArr } from './helpers/get-section';
-import { getValidRows, getValidCols } from './helpers/get-valid-areas';
+import { getValidRows, getValidCols, getValidSections } from './helpers/get-valid-areas';
 import { getGlobalErrors, getLocalErrors } from './helpers/get-errors';
 import { empty } from './helpers/valid-inputs';
 
@@ -23,7 +23,11 @@ function App() {
   
   const [activeSquare, setActiveSquare] = useState<number | null>(null)
   const [validRows, setValidRows] = useState<number[]>([])
+  // let validRows: number[] = []
   const [validCols, setValidCols] = useState<number[]>([])
+  // let validCols: number[] = []
+  const [validSections, setValidSections] = useState<number[]>([])
+  // let validSections: number[] = []
   
   const [initialPuzzle, setInitialPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
   const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
@@ -31,10 +35,11 @@ function App() {
     let newUserPuzzle = [...userPuzzle]
     newUserPuzzle[row][col] = val
     // check for valid rows and columns
-    const validRows = getValidRows(newUserPuzzle)
-    const validCols = getValidCols(newUserPuzzle)
-    setValidRows(validRows)
-    setValidCols(validCols)
+    setValidRows(getValidRows(newUserPuzzle))
+    setValidCols(getValidCols(newUserPuzzle))
+    setValidSections(getValidSections(newUserPuzzle))
+    // setValidRows(validRows)
+    // setValidCols(validCols)
     // update current puzzle state
     setUserPuzzle(newUserPuzzle)
   }
@@ -53,19 +58,21 @@ function App() {
 
   useEffect(() => {
     setLocalErrors(new Set(getLocalErrors(userPuzzle, activeSquare)))
-    console.log('Local Errors: \n', localErrors)
+    // console.log('Local Errors: \n', localErrors)
   }, [userPuzzle, activeSquare])
 
   const puzzle = userPuzzle.map((row:string[], i:number) => {
     return row.map((col:string, j:number) => {
       const id = (i*9) + j
+      const section = sectionRefArr[i][j]
       return <Tile 
         id={id}
         activeSquare={activeSquare}
         setActiveSquare={setActiveSquare}
         validRow={validRows.includes(i)}
         validCol={validCols.includes(j)}
-        section={sectionRefArr[i][j]}
+        validSection={validSections.includes(section)}
+        section={section}
         highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}
         setUserPuzzle={updateUserPuzzle}
         isGiven={initialPuzzle[i][j] !== empty}

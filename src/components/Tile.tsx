@@ -10,6 +10,7 @@ const Tile: React.FC<{
 	setActiveSquare: React.Dispatch<React.SetStateAction<number | null>>;
 	validRow: boolean;
 	validCol: boolean;
+	validSection: boolean;
 	section: number;
 	value: string;
 	highlighted: {
@@ -109,7 +110,7 @@ const Tile: React.FC<{
 		props.highlighted.highlightActiveSection && props.section === activeSection
 			? classes.highlighted
 			: '';
-	const valid = props.validRow || props.validCol ? classes.valid : ''
+	const valid = props.validRow || props.validCol || props.validSection ? classes.valid : ''
 	const error = props.error ? classes.error : ''
 
 	const css = `${classes.tile} ${userOrGiven} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;

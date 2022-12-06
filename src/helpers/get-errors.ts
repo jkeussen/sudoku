@@ -1,5 +1,6 @@
 import { empty } from "./valid-inputs"
 import { sectionRefArr, sectionIdArr } from "./get-section"
+import { buildSections, rotatePuzzle } from "./utils"
 
 export const getLocalErrors = (puzzle: string[][], selSquare: number | null): number[] => {
 	if (!puzzle || selSquare === null) return []
@@ -58,7 +59,7 @@ export const getLocalErrors = (puzzle: string[][], selSquare: number | null): nu
 	return errors
 }
 
-export const getGlobalErrors = (puzzle: (number | string)[][]) => {
+export const getGlobalErrors = (puzzle: string[][]) => {
 	if (!puzzle) return []
 
 	let errors: number[] = []
@@ -83,14 +84,7 @@ export const getGlobalErrors = (puzzle: (number | string)[][]) => {
 	})
 
 	// build array of columns 
-	let rotatedPuzzle = [];
-	for (var i=0; i<puzzle.length; i++) {
-		let col = []
-		for (var j=0; j<puzzle[i].length; j++) {
-			col.push(puzzle[j][i])
-		}
-		rotatedPuzzle.push(col)
-	}
+	let rotatedPuzzle = rotatePuzzle(puzzle)
 
 	rotatedPuzzle.forEach((col, j) => {
 		// check if there are duplicates
@@ -110,13 +104,7 @@ export const getGlobalErrors = (puzzle: (number | string)[][]) => {
 	})
 
 	// build array of sections
-	let sections: string[][] = [[],[],[],[],[],[],[],[],[]]
-	puzzle.forEach((row, i) => {
-		row.forEach((tileVal, j) => {
-			let section = sectionRefArr[i][j];
-			sections[section].push(tileVal.toString())
-		})
-	})
+	let sections = buildSections(puzzle)
 
 	sections.forEach((section, i) => {
 		// check if there are duplicates

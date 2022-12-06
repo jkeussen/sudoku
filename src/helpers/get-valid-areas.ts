@@ -1,3 +1,4 @@
+import { buildSections } from "./utils";
 import { empty } from "./valid-inputs";
 
 export const getValidRows = (puzzle: string[][]) => {
@@ -30,5 +31,10 @@ export const getValidCols = (puzzle: string[][]) => {
 }
 
 export const getValidSections = (puzzle: string[][]) => {
-
+	let sections = buildSections(puzzle);
+	let validSections: number[] = [];
+	sections.forEach((section, i) => {
+		if (new Set(section).size === 9) validSections.push(i)
+	})
+	return validSections;
 }
