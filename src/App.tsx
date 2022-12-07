@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useAppDispatch, useAppSelector } from './store/hooks';
 
 import Header from './components/Header';
 import Tile from './components/Tile';
@@ -14,10 +15,13 @@ import { getSudoku } from './lib/sudoku';
 import { generateSudoku } from './lib/generate-unique-puzzle';
 
 import classes from './App.module.css'
+import { puzzleActions } from './store/puzzle-slice';
 
 const sudoku = getSudoku();
 
 function App() {
+
+  const dispatch = useAppDispatch();
   
   const [rawPuzzle, setRawPuzzle] = useState(generateSudoku('insane')[0])
   // const [rawPuzzle, setRawPuzzle] = useState(".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2.")
@@ -36,20 +40,24 @@ function App() {
     setUserPuzzle(newUserPuzzle)
   }
 
-  const [localErrors, setLocalErrors] = useState<Set<number>>(new Set())
-  const [globalErrors, setGlobalErrors] = useState<Set<number>>(new Set())
+  // const [localErrors, setLocalErrors] = useState<Set<number>>(new Set())
+  // const [globalErrors, setGlobalErrors] = useState<Set<number>>(new Set())
+  const globalErrors = useAppSelector(state => state.puzzle.globalErrors)
+  const localErrors = useAppSelector(state => state.puzzle.localErrors)
 
   useEffect(() => {
-    setGlobalErrors(new Set(getGlobalErrors(userPuzzle)))
+    // setGlobalErrors(new Set(getGlobalErrors(userPuzzle)))
+    dispatch(puzzleActions.setGlobalErrors(getGlobalErrors(userPuzzle)))
     // check for valid rows and columns
     setValidRows(getValidRows(userPuzzle))
     setValidCols(getValidCols(userPuzzle))
     setValidSections(getValidSections(userPuzzle))
     // console.log('Global Errors: \n', globalErrors)
   }, [userPuzzle])
-
+  
   useEffect(() => {
-    setLocalErrors(new Set(getLocalErrors(userPuzzle, activeSquare)))
+    // setLocalErrors(new Set(getLocalErrors(userPuzzle, activeSquare)))
+    dispatch(puzzleActions.setLocalErrors(getLocalErrors(userPuzzle, activeSquare)))
     // console.log('Local Errors: \n', localErrors)
   }, [userPuzzle, activeSquare])
 
@@ -68,7 +76,7 @@ function App() {
         setUserPuzzle={updateUserPuzzle}
         isGiven={initialPuzzle[i][j] !== empty}
         value={userPuzzle[i][j]} 
-        error={globalErrors.has(id)}
+        error={globalErrors.includes(id)}
         key={`gridTile_${i}_${j}`} 
       />
     })
