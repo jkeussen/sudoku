@@ -1,10 +1,11 @@
 import classes from './MobileInputs.module.css'
+import buttonCss from '../styles/Buttons.module.css'
 
 const MobileInputButton: React.FC<{
 	value: number;
 }> = (props) => {
 	return(
-		<button className={classes.inputBtn}>
+		<button className={`${buttonCss.button} ${classes.inputBtn}`}>
 			{props.value}
 		</button>
 	)

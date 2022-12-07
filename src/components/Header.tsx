@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import classes from './Header.module.css'
+import buttonCss from '../styles/Buttons.module.css'
 
 const Header: React.FC = (props?) => {
 
@@ -29,10 +30,15 @@ const Header: React.FC = (props?) => {
 
 	return(
 		<header className={classes.header}>
+			<div className={classes.logo}>
+			<button onClick={() => {}} className={`${buttonCss.button} ${buttonCss.rounded}`}>
+					<span className="material-icons">menu</span>
+				</button>
 			<h1>Sudoku</h1>
+			</div>
 			<div className={classes.timer}>
 				<h2>{minutes}:{seconds.length > 1 ? seconds : `0${seconds}`}</h2>
-				<button onClick={timerToggleHandler}>
+				<button onClick={timerToggleHandler} className={`${buttonCss.button} ${buttonCss.rounded}`}>
 					<span className="material-icons">{isPaused ? 'play_arrow' : 'pause'}</span>
 				</button>
 			</div>
