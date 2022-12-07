@@ -56,7 +56,8 @@ export const getLocalErrors = (puzzle: string[][], selSquare: number | null): nu
 		}
 	})
 
-	return errors
+	// return errors
+	return Array.from(new Set(errors))
 }
 
 export const getGlobalErrors = (puzzle: string[][]) => {
@@ -125,5 +126,5 @@ export const getGlobalErrors = (puzzle: string[][]) => {
 		})
 	})
 
-	return errors;
+	return Array.from(new Set(errors))
 }

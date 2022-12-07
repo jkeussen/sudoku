@@ -59,13 +59,15 @@ const puzzleSlice = createSlice({
 			state.validCols = [];
 			state.validSections = [];
 		},
-		solvePuzzle(state, action) {
-			state.userGrid = [...state.solvedGrid];
+		solvePuzzle(state, action: {payload?: any} ) {
+			let newUserGrid = [...state.solvedGrid]; 
+			state.userGrid = newUserGrid
 			state.localErrors = []
 			state.globalErrors = []
-			state.validRows = []
-			state.validCols = []
-			state.validSections = []
+			state.validRows = getValidRows(newUserGrid);
+			state.validCols = getValidCols(newUserGrid);
+			state.validSections = getValidSections(newUserGrid);
+			console.log(state.validRows, '\n', state.validCols, '\n', state.validSections)
 		},
 		setLocalErrors(state, action: { payload: number[] }) {
 			state.localErrors = action.payload;
@@ -80,7 +82,7 @@ const puzzleSlice = createSlice({
 					val: string;
 					row: number;
 					col: number;
-					activeSquare: number;
+					activeSquare: number | null;
 				};
 			}
 		) {
@@ -96,7 +98,7 @@ const puzzleSlice = createSlice({
 			state.validCols = getValidCols(newUserPuzzle);
 			state.validSections = getValidSections(newUserPuzzle);
 		},
-		setActiveSquare(state, action: { payload: number }) {
+		setActiveSquare(state, action: { payload: number | null }) {
 			state.activeSquare = action.payload;
 		},
 	},

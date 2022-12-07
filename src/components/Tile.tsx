@@ -1,57 +1,71 @@
 import React, { useRef } from "react";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 import classes from "./Tile.module.css";
 
 import { validInputs, empty } from "../helpers/valid-inputs";
 import { getActiveSection } from "../helpers/get-section";
+import { puzzleActions } from "../store/puzzle-slice";
 
 const Tile: React.FC<{
 	id: number;
-	activeSquare: number | null;
-	setActiveSquare: React.Dispatch<React.SetStateAction<number | null>>;
-	validRow: boolean;
-	validCol: boolean;
-	validSection: boolean;
-	section: number;
 	value: string;
-	isGiven: boolean;
+	section: number;
+	validRows: number[];
+	validCols: number[];
+	validSections: number[];
 	error: boolean;
-	setUserPuzzle: (val: string, row: number, col: number) => void;
 }> = (props) => {
+	const dispatch = useAppDispatch();
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const row = Math.floor(props.id / 9)
-	const col = props.id % 9
-	const activeSection = getActiveSection(props.activeSquare)
+	const row = Math.floor(props.id / 9);
+	const col = props.id % 9;
 
-	const highlightActiveRowsAndCols = useAppSelector(state => state.ui.highlightActiveRowsAndCols)
-	const highlightActiveSection = useAppSelector(state => state.ui.highlightActiveSection)
-	const highlightSameValues = useAppSelector(state => state.ui.highlightSameValues)
-	const highlightValidRowsAndCols = useAppSelector(state => state.ui.highlightValidRowsAndCols)
-	const highlightValidSections = useAppSelector(state => state.ui.highlightValidSections)
+	const validRow = props.validRows.includes(props.id);
+	const validCol = props.validCols.includes(props.id);
+	const validSection = props.validSections.includes(props.id);
 
-	if (props.activeSquare === props.id) inputRef.current!.focus()
+	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
+	const isGiven = initialGrid[row][col] !== empty;
+
+	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
+	const activeSection = getActiveSection(activeSquare);
+
+	const highlightActiveRowsAndCols = useAppSelector((state) => state.ui.highlightActiveRowsAndCols);
+	const highlightActiveSection = useAppSelector((state) => state.ui.highlightActiveSection);
+	const highlightSameValues = useAppSelector((state) => state.ui.highlightSameValues);
+	const highlightValidRowsAndCols = useAppSelector((state) => state.ui.highlightValidRowsAndCols);
+	const highlightValidSections = useAppSelector((state) => state.ui.highlightValidSections);
+
+	if (activeSquare === props.id) inputRef.current!.focus();
 
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-		props.setActiveSquare(props.id)
+		dispatch(puzzleActions.setActiveSquare(props.id));
 	};
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (!validInputs.includes(e.code)) return
-		
+		if (!validInputs.includes(e.code)) return;
+
 		let rowToSelect: number | null;
 		let colToSelect: number | null;
 		let squareToSelect: number | null;
 
 		switch (e.code) {
 			case "Escape":
-				props.setActiveSquare(null)
+				dispatch(puzzleActions.setActiveSquare(null));
 				return;
 			case "Backspace":
 			case "Digit0":
-				if (props.isGiven) return
-				props.setUserPuzzle(empty, row, col);
+				if (isGiven) return;
+				dispatch(
+					puzzleActions.updateUserPuzzle({
+						val: empty,
+						row,
+						col,
+						activeSquare,
+					})
+				);
 				return;
 			case "Digit1":
 			case "Digit2":
@@ -62,58 +76,69 @@ const Tile: React.FC<{
 			case "Digit7":
 			case "Digit8":
 			case "Digit9":
-				if (props.isGiven) return;
-				let enteredValue = e.code.slice(-1)
+				if (isGiven) return;
+				let enteredValue = e.code.slice(-1);
 				if (enteredValue === props.value) return;
-				props.setUserPuzzle(enteredValue, row, col);
+				dispatch(
+					puzzleActions.updateUserPuzzle({
+						val: enteredValue,
+						row,
+						col,
+						activeSquare,
+					})
+				);
 				return;
 			case "ArrowUp":
-				if (row === 0) return
-				rowToSelect = row-1;
+				if (row === 0) return;
+				rowToSelect = row - 1;
 				colToSelect = col;
-				squareToSelect = (row-1)*9 + col
+				squareToSelect = (row - 1) * 9 + col;
 				break;
 			case "ArrowRight":
-				if (col === 8) return
+				if (col === 8) return;
 				rowToSelect = row;
-				colToSelect = col+1;
-				squareToSelect = (row)*9 + col+1
+				colToSelect = col + 1;
+				squareToSelect = row * 9 + col + 1;
 				break;
 			case "ArrowDown":
-				if (row === 8) return
-				rowToSelect = row+1;
+				if (row === 8) return;
+				rowToSelect = row + 1;
 				colToSelect = col;
-				squareToSelect = (row+1)*9 + col
+				squareToSelect = (row + 1) * 9 + col;
 				break;
 			case "ArrowLeft":
-				if (col === 0) return
+				if (col === 0) return;
 				rowToSelect = row;
-				colToSelect = col-1;
-				squareToSelect = (row)*9 + col-1
+				colToSelect = col - 1;
+				squareToSelect = row * 9 + col - 1;
 				break;
 			default:
 				break;
 		}
 
 		// console.log(`Select square [${rowToSelect!}, ${colToSelect!}] (${squareToSelect!})`)
-		props.setActiveSquare(squareToSelect!)
-	}
+		dispatch(puzzleActions.setActiveSquare(squareToSelect!));
+	};
 
-	const userOrGiven = props.isGiven ? classes.givenTile : classes.userTile
+	const userOrGiven = isGiven ? classes.givenTile : classes.userTile;
 	const highlightedRow =
-		highlightActiveRowsAndCols && props.activeSquare !== null && row === Math.floor(props.activeSquare! / 9)
+		highlightActiveRowsAndCols &&
+		activeSquare !== null &&
+		row === Math.floor(activeSquare! / 9)
 			? classes.highlighted
-			: '';
+			: "";
 	const highlightedCol =
-		highlightActiveRowsAndCols && props.activeSquare !== null && col === props.activeSquare! % 9
+		highlightActiveRowsAndCols &&
+		activeSquare !== null &&
+		col === activeSquare! % 9
 			? classes.highlighted
-			: '';
+			: "";
 	const highlightedSection =
 		highlightActiveSection && props.section === activeSection
 			? classes.highlighted
-			: '';
-	const valid = props.validRow || props.validCol || props.validSection ? classes.valid : ''
-	const error = props.error ? classes.error : ''
+			: "";
+	const valid = validRow || validCol || validSection ? classes.valid : "";
+	const error = props.error ? classes.error : "";
 
 	const css = `${classes.tile} ${userOrGiven} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;
 
