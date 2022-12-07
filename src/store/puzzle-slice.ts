@@ -59,6 +59,14 @@ const puzzleSlice = createSlice({
 			state.validCols = [];
 			state.validSections = [];
 		},
+		solvePuzzle(state, action) {
+			state.userGrid = [...state.solvedGrid];
+			state.localErrors = []
+			state.globalErrors = []
+			state.validRows = []
+			state.validCols = []
+			state.validSections = []
+		},
 		setLocalErrors(state, action: { payload: number[] }) {
 			state.localErrors = action.payload;
 		},
