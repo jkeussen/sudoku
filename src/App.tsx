@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Tile from './components/Tile';
 import MobileInputs from './components/MobileInputs';
 
+import { buildPuzzleGridFromString } from './helpers/utils';
 import { sectionRefArr } from './helpers/get-section';
 import { getValidRows, getValidCols, getValidSections } from './helpers/get-valid-areas';
 import { getGlobalErrors, getLocalErrors } from './helpers/get-errors';
@@ -20,26 +21,15 @@ function App() {
   
   const [rawPuzzle, setRawPuzzle] = useState(generateSudoku('insane')[0])
   // const [rawPuzzle, setRawPuzzle] = useState(".1...8...3.472169...6....1....9.253..421.378..358.6....9....1...213874.9...5...2.")
-  console.log(generateSudoku('easy'))
-  
-  const buildGrid = (str: string): string[][] => {
-    let arr = [];
-    for(var i=0; i<9; i++) {
-      arr.push([...str.split('').splice(i*9,9)])
-    }
-    return arr;
-  }
+  // console.log(generateSudoku('easy'))
   
   const [activeSquare, setActiveSquare] = useState<number | null>(null)
   const [validRows, setValidRows] = useState<number[]>([])
-  // let validRows: number[] = []
   const [validCols, setValidCols] = useState<number[]>([])
-  // let validCols: number[] = []
   const [validSections, setValidSections] = useState<number[]>([])
-  // let validSections: number[] = []
   
-  const [initialPuzzle, setInitialPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
-  const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildGrid(rawPuzzle))
+  const [initialPuzzle, setInitialPuzzle] = useState<string[][]>(buildPuzzleGridFromString(rawPuzzle))
+  const [userPuzzle, setUserPuzzle] = useState<string[][]>([...initialPuzzle])
   const updateUserPuzzle = (val: string, row: number, col: number): void => {
     let newUserPuzzle = [...userPuzzle]
     newUserPuzzle[row][col] = val
@@ -89,17 +79,12 @@ function App() {
     })
   })
 
-  const generateDividers = () => {
-    let dividers = []
-    for(var i=0; i<9; i++) {
-      let id = `section_${i+1}`
-      dividers.push(
-        <div className={`${classes.divider} ${classes[id]}`} id={id} key={id}/>
-      )
-    }
-    return dividers;
-  }
-  const dividers = useMemo(() => generateDividers(), [])
+  const dividers = useMemo(() => {
+    return Array.apply(null, Array(9)).map((x, i) => { 
+      const id = `section_${i+1}`
+      return <div className={`${classes.divider} ${classes[id]}`} id={id} key={id}/>; 
+    })
+  }, [])
 
   const solvePuzzle = (puzzle: string[][]) => {
     let string = sudoku.board_grid_to_string(puzzle)
