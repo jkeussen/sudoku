@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getValidRows, getValidCols, getValidSections } from '../helpers/get-valid-areas';
+import { getLocalErrors, getGlobalErrors } from '../helpers/get-errors'
 
 interface PuzzleState {
 	initialString: string;
@@ -10,8 +12,6 @@ interface PuzzleState {
 	validRows: number[];
 	validCols: number[];
 	validSections: number[];
-	// localErrors: Set<number>;
-	// globalErrors: Set<number>;
 	localErrors: number[];
 	globalErrors: number[];
 }
@@ -26,8 +26,6 @@ const initialState: PuzzleState = {
 	validRows: [],
 	validCols: [],
 	validSections: [],
-	// localErrors: new Set(),
-	// globalErrors: new Set(),
 	localErrors: [],
 	globalErrors: [],
 };
@@ -37,13 +35,26 @@ const puzzleSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		setLocalErrors(state, action: { payload: number[] }) {
-			const uniqueNums = new Set(action.payload)
-			state.localErrors = Array.from(uniqueNums);
+			state.localErrors = action.payload;
 		},
 		setGlobalErrors(state, action: { payload: number[] }) {
-			const uniqueNums = new Set(action.payload)
-			state.globalErrors = Array.from(uniqueNums);
+			state.globalErrors = action.payload;
 		},
+		updateUserPuzzle(
+			state,
+			action: { payload: { val: string; row: number; col: number; activeSquare: number } }
+		) {
+			let newUserPuzzle = [...state.userGrid]
+    	newUserPuzzle[action.payload.row][action.payload.col] = action.payload.val
+			state.localErrors = getLocalErrors(newUserPuzzle, action.payload.activeSquare);
+			state.globalErrors = getGlobalErrors(newUserPuzzle);
+			state.validRows = getValidRows(newUserPuzzle)
+			state.validCols = getValidCols(newUserPuzzle)
+			state.validSections = getValidSections(newUserPuzzle)
+		},
+		setActiveSquare(state, action: { payload: number }) {
+			state.activeSquare = action.payload
+		}
 	},
 });
 
