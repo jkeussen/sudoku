@@ -29,16 +29,12 @@ function App() {
   const [validSections, setValidSections] = useState<number[]>([])
   
   const [initialPuzzle, setInitialPuzzle] = useState<string[][]>(buildPuzzleGridFromString(rawPuzzle))
-  const [userPuzzle, setUserPuzzle] = useState<string[][]>([...initialPuzzle])
+  const [userPuzzle, setUserPuzzle] = useState<string[][]>(buildPuzzleGridFromString(rawPuzzle))
   const updateUserPuzzle = (val: string, row: number, col: number): void => {
     let newUserPuzzle = [...userPuzzle]
     newUserPuzzle[row][col] = val
     setUserPuzzle(newUserPuzzle)
   }
-
-  const [highlightActiveRow, setHighlightActiveRow] = useState<boolean>(true)
-  const [highlightActiveCol, setHighlightActiveCol] = useState<boolean>(true)
-  const [highlightActiveSection, setHighlightActiveSection] = useState<boolean>(false)
 
   const [localErrors, setLocalErrors] = useState<Set<number>>(new Set())
   const [globalErrors, setGlobalErrors] = useState<Set<number>>(new Set())
@@ -69,7 +65,6 @@ function App() {
         validCol={validCols.includes(j)}
         validSection={validSections.includes(section)}
         section={section}
-        highlighted={{highlightActiveRow, highlightActiveCol, highlightActiveSection}}
         setUserPuzzle={updateUserPuzzle}
         isGiven={initialPuzzle[i][j] !== empty}
         value={userPuzzle[i][j]} 

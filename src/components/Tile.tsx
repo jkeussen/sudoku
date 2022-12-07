@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useAppSelector } from "../store/hooks";
 import classes from "./Tile.module.css";
 
 import { validInputs, empty } from "../helpers/valid-inputs";
@@ -13,11 +14,6 @@ const Tile: React.FC<{
 	validSection: boolean;
 	section: number;
 	value: string;
-	highlighted: {
-		highlightActiveRow: boolean;
-		highlightActiveCol: boolean;
-		highlightActiveSection: boolean;
-	};
 	isGiven: boolean;
 	error: boolean;
 	setUserPuzzle: (val: string, row: number, col: number) => void;
@@ -28,6 +24,12 @@ const Tile: React.FC<{
 	const row = Math.floor(props.id / 9)
 	const col = props.id % 9
 	const activeSection = getActiveSection(props.activeSquare)
+
+	const highlightActiveRowsAndCols = useAppSelector(state => state.ui.highlightActiveRowsAndCols)
+	const highlightActiveSection = useAppSelector(state => state.ui.highlightActiveSection)
+	const highlightSameValues = useAppSelector(state => state.ui.highlightSameValues)
+	const highlightValidRowsAndCols = useAppSelector(state => state.ui.highlightValidRowsAndCols)
+	const highlightValidSections = useAppSelector(state => state.ui.highlightValidSections)
 
 	if (props.activeSquare === props.id) inputRef.current!.focus()
 
@@ -99,15 +101,15 @@ const Tile: React.FC<{
 
 	const userOrGiven = props.isGiven ? classes.givenTile : classes.userTile
 	const highlightedRow =
-		props.highlighted.highlightActiveRow && props.activeSquare !== null && row === Math.floor(props.activeSquare! / 9)
+		highlightActiveRowsAndCols && props.activeSquare !== null && row === Math.floor(props.activeSquare! / 9)
 			? classes.highlighted
 			: '';
 	const highlightedCol =
-		props.highlighted.highlightActiveCol && props.activeSquare !== null && col === props.activeSquare! % 9
+		highlightActiveRowsAndCols && props.activeSquare !== null && col === props.activeSquare! % 9
 			? classes.highlighted
 			: '';
 	const highlightedSection =
-		props.highlighted.highlightActiveSection && props.section === activeSection
+		highlightActiveSection && props.section === activeSection
 			? classes.highlighted
 			: '';
 	const valid = props.validRow || props.validCol || props.validSection ? classes.valid : ''
