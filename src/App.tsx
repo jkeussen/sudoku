@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Tile from "./components/Tile";
 import MobileInputs from "./components/MobileInputs";
 
-import { sectionRefArr } from "./helpers/get-section";
 import { puzzleActions } from "./store/puzzle-slice";
 
 import classes from "./App.module.css";
@@ -29,12 +28,10 @@ function App() {
 	const puzzle = userGrid.map((row: string[], i: number) => {
 		return row.map((col: string, j: number) => {
 			const id = i * 9 + j;
-			const section = sectionRefArr[i][j];
 			return (
 				<Tile
 					id={id}
 					value={userGrid[i][j]}
-					section={section}
 					validRows={validRows}
           validCols={validCols}
           validSections={validSections}

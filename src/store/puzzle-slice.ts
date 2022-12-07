@@ -100,6 +100,10 @@ const puzzleSlice = createSlice({
 		},
 		setActiveSquare(state, action: { payload: number | null }) {
 			state.activeSquare = action.payload;
+			state.localErrors = getLocalErrors(
+				state.userGrid,
+				action.payload
+			);
 		},
 	},
 });

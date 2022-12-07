@@ -3,13 +3,12 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import classes from "./Tile.module.css";
 
 import { validInputs, empty } from "../helpers/valid-inputs";
-import { getActiveSection } from "../helpers/get-section";
+import { sectionRefArr, getActiveSection } from "../helpers/get-section";
 import { puzzleActions } from "../store/puzzle-slice";
 
 const Tile: React.FC<{
 	id: number;
 	value: string;
-	section: number;
 	validRows: number[];
 	validCols: number[];
 	validSections: number[];
@@ -21,10 +20,11 @@ const Tile: React.FC<{
 
 	const row = Math.floor(props.id / 9);
 	const col = props.id % 9;
+	const section = sectionRefArr[row][col];
 
-	const validRow = props.validRows.includes(props.id);
-	const validCol = props.validCols.includes(props.id);
-	const validSection = props.validSections.includes(props.id);
+	const validRow = props.validRows.includes(row);
+	const validCol = props.validCols.includes(col);
+	const validSection = props.validSections.includes(section);
 
 	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
 	const isGiven = initialGrid[row][col] !== empty;
@@ -45,6 +45,7 @@ const Tile: React.FC<{
 	};
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		e.preventDefault();
 		if (!validInputs.includes(e.code)) return;
 
 		let rowToSelect: number | null;
@@ -134,7 +135,7 @@ const Tile: React.FC<{
 			? classes.highlighted
 			: "";
 	const highlightedSection =
-		highlightActiveSection && props.section === activeSection
+		highlightActiveSection && section === activeSection
 			? classes.highlighted
 			: "";
 	const valid = validRow || validCol || validSection ? classes.valid : "";
