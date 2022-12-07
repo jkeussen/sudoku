@@ -157,6 +157,8 @@
 		 maximumCells = 6;
 		 totalCells = 40;
 	 }
+	//  TODO: implement other difficulty levels
+	// "easy" | "medium" | "hard" | "very-hard" | "insane" | "inhuman"
 	 else {
 		 minimumCells = 1;
 		 maximumCells = 5;
@@ -164,15 +166,15 @@
 	 }
  
 	 for (let j = 0; j < 9; j++) {
-		 boxCounts[j] =  _cellAvailable(tempInitArray, j, 0) +
-										 _cellAvailable(tempInitArray, j, 1) +
-										 _cellAvailable(tempInitArray, j, 2) +
-										 _cellAvailable(tempInitArray, j, 3) +
-										 _cellAvailable(tempInitArray, j, 4) +
-										 _cellAvailable(tempInitArray, j, 5) +
-										 _cellAvailable(tempInitArray, j, 6) +
-										 _cellAvailable(tempInitArray, j, 7) +
-										 _cellAvailable(tempInitArray, j, 8);
+		 boxCounts[j] = _cellAvailable(tempInitArray, j, 0) +
+										_cellAvailable(tempInitArray, j, 1) +
+										_cellAvailable(tempInitArray, j, 2) +
+										_cellAvailable(tempInitArray, j, 3) +
+										_cellAvailable(tempInitArray, j, 4) +
+										_cellAvailable(tempInitArray, j, 5) +
+										_cellAvailable(tempInitArray, j, 6) +
+										_cellAvailable(tempInitArray, j, 7) +
+										_cellAvailable(tempInitArray, j, 8);
 	 }
  
 	 for (let i = 0; i < totalCells; i++) {
@@ -207,9 +209,9 @@
 	 return tempInitArray;
  }
 
- type Difficulty = "easy" | "medium" | "hard" | "very-hard" | "insane" | "inhuman"
+ export type PuzzleDifficultyString = "easy" | "medium" | "hard" | "very-hard" | "insane" | "inhuman"
  
- export const generateSudoku = (difficulty: Difficulty) => {
+ export const generateSudoku = (difficulty: PuzzleDifficultyString) => {
 	 let temporaryInitArray = nullArray.slice();
 	 let temporarySolvedArray = nullArray.slice();
 	 let sudoku = getSudoku();
