@@ -45,7 +45,7 @@ const Header: React.FC = (props?) => {
 		<header className={classes.header}>
 			<div className={classes.logo}>
 				<button
-					onClick={() => {}}
+					onClick={() => {alert('Not yet implemented... :(')}}
 					className={`${buttonCss.button} ${buttonCss.rounded}`}
 				>
 					<span className="material-icons">menu</span>

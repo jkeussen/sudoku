@@ -16,16 +16,6 @@
 	/* flex-wrap: wrap; */
 	gap: 0.5rem;
 }
-.topRow button {
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
-	color: var(--control-button-text-color);
-}
-.topRow button span {
-	width: 100%;
-	font-size: 3vw;
-}
 .numbers {
 	width: 100%;
 	position: relative;
@@ -33,20 +23,45 @@
 	gap: 0.5rem;
 	grid-template-columns: repeat(3, 1fr);
 }
-.numberButton {
+.topRow button,
+.numbers button {
 	aspect-ratio: 4 / 3;
-	border-radius: var(--border-radius);
-	font-size: 6vw;
+	padding: 0;
+}
+.topRow button {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	color: var(--control-button-text-color);
+}
+	.topRow button span {
+		width: 100%;
+		font-size: 1.25rem;
+	}
+.numbers button {
+	font-size: 2.5rem;
 	color: var(--control-button-text-color);
 }
 
 .col2 {
 	width: 50%;
 	display: flex;
-	gap: 0.5rem;
+	flex-direction: column;
+	gap: 1rem;
 	align-items: flex-start;
 	justify-content: flex-start;
 	flex-wrap: wrap;
+}
+.gameActions {
+	width: 100%;
+	gap: 0.5rem;
+	display: flex;
+}
+.switches {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 .col2 button {
 	padding: 0.5rem 1rem;
@@ -65,7 +80,8 @@
 	.topRow button span {
 		font-size: 4vw;
 	}
-	.numberButton {
+	.topRow button,
+	.numbers button {
 		aspect-ratio: 2 / 1;	
 	}
 	.col2 {

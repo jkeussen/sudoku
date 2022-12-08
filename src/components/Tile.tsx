@@ -54,7 +54,7 @@ const Tile: React.FC<{
 	`Tile`, follow the stack trace as described in 
 	https://reactjs.org/link/setstate-in-render
 	*/
-	if (activeSquare === props.id) inputRef?.current?.focus();
+	if (activeSquare === props.id && inputRef.current) inputRef?.current?.focus();
 
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
 		dispatch(puzzleActions.setActiveSquare(props.id));
@@ -151,7 +151,12 @@ const Tile: React.FC<{
 		highlightActiveSection && section === activeSection
 			? classes.highlighted
 			: "";
-	const valid = validRow || validCol || validSection ? classes.valid : "";
+	const valid =
+		(highlightValidRowsAndCols && validRow) ||
+		(highlightValidRowsAndCols && validCol) ||
+		(highlightValidSections && validSection)
+			? classes.valid
+			: "";
 	const error = props.error ? classes.error : "";
 
 	const css = `${classes.tile} ${userOrGiven} ${active} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;

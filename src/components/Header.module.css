@@ -20,3 +20,6 @@
 	aspect-ratio: 1 / 1;
 	width: min-content;
 }
+.header button:disabled {
+	background-color: lightgreen;
+}

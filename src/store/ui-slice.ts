@@ -19,7 +19,7 @@ const initialUiState: UiState = {
 	highlightActiveRowsAndCols: true,
 	highlightActiveSection: true,
 	highlightSameValues: true,
-	highlightValidRowsAndCols: true,
+	highlightValidRowsAndCols: false,
 	highlightValidSections: true,
 	showLocalErrors: false,
 	showGlobalErrors: true,

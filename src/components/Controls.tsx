@@ -6,6 +6,8 @@ import { puzzleActions } from "../store/puzzle-slice";
 import { empty } from '../helpers/valid-inputs';
 import { uiActions } from '../store/ui-slice';
 
+import Switch from './Switch';
+
 const Number: React.FC<{
 	number: string;
 }> = (props) => {
@@ -23,7 +25,7 @@ const Number: React.FC<{
 	}
 
 	return(<button 
-		className={`${buttonCss.button} ${classes.numberButton}`}
+		className={buttonCss.button}
 		onClick={clickHandler}
 	>
 		{props.number}
@@ -97,6 +99,12 @@ const Numbers: React.FC = () => {
 const Options: React.FC = () => {
 	const dispatch = useAppDispatch();
 
+	const highlightActiveRowsAndCols = useAppSelector(state => state.ui.highlightActiveRowsAndCols)
+	const highlightActiveSection = useAppSelector(state => state.ui.highlightActiveSection)
+	const highlightSameValues = useAppSelector(state => state.ui.highlightSameValues)
+	const highlightValidRowsAndCols = useAppSelector(state => state.ui.highlightValidRowsAndCols)
+	const highlightValidSections = useAppSelector(state => state.ui.highlightValidSections)
+
 	const showSolutionHandler = () => {
 		dispatch(puzzleActions.solvePuzzle())
 	}
@@ -107,8 +115,25 @@ const Options: React.FC = () => {
 		dispatch(uiActions.setIsTimerPaused(false))
 	}
 
+	const toggleHighlightActiveRowsAndCols = () => {
+		dispatch(uiActions.setHighlightActiveRowsAndCols(!highlightActiveRowsAndCols))
+	}
+	
+	const toggleHighlightActiveSection = () => {
+		dispatch(uiActions.setHighlightActiveSection(!highlightActiveSection))
+	}
+	
+	const toggleHighlightValidRowsAndCols = () => {
+		dispatch(uiActions.setHighlightValidRowsAndCols(!highlightValidRowsAndCols))
+	}
+	
+	const toggleHighlightValidSections = () => {
+		dispatch(uiActions.setHighlightValidSections(!highlightValidSections))
+	}
+
 	return(
 		<div className={classes.col2}>
+			<div className={classes.gameActions}>
 			<button 
 				className={buttonCss.button}
 				onClick={showSolutionHandler}
@@ -121,6 +146,29 @@ const Options: React.FC = () => {
 			>
 				New Game
 			</button>
+			</div>
+			<div className={classes.switches}>
+				<Switch 
+					label="Highlight active rows & columns"
+					checked={highlightActiveRowsAndCols}
+					onChange={toggleHighlightActiveRowsAndCols}
+				/>
+				<Switch 
+					label="Highlight active section"
+					checked={highlightActiveSection}
+					onChange={toggleHighlightActiveSection}
+				/>
+				<Switch 
+					label="Highlight valid rows & columns"
+					checked={highlightValidRowsAndCols}
+					onChange={toggleHighlightValidRowsAndCols}
+				/>
+				<Switch 
+					label="Highlight valid sections"
+					checked={highlightValidSections}
+					onChange={toggleHighlightValidSections}
+				/>
+			</div>
 		</div>
 	)
 }

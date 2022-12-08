@@ -1,0 +1,52 @@
+.toggle {
+	display: flex;
+	gap: 0.5rem;
+	width: 100%
+}
+.toggle span {
+	font-family: Arial;
+	color: grey;
+	font-size: 0.9rem;
+}
+// https://codepen.io/liamj/pen/QYyBzz
+$width: 50px;
+$padding: 4px;
+$height: $width / 2 + $padding;
+//toggle code begins!
+.switchWrap {
+  cursor: pointer;
+  background: var(--switch-bg);
+  padding: $padding;
+  width: $width;
+  height: $height;
+  border-radius: $height / 2;
+  flex-shrink: 0;
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+.switch {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 0fr 1fr 1fr;
+  transition: .2s;
+  //ICYMI, pseudo elements are treated as grid items
+  &::after {
+    content: '';
+    border-radius: 50%;
+    background: var(--switch-off);
+    grid-column: 2;
+    transition: background .2s;
+  }
+}
+input:checked {
+  + .switch {
+    grid-template-columns: 1fr 1fr 0fr; 
+    &::after {
+      background-color: var(--switch-on);
+    }
+  }
+}
