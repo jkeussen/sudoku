@@ -4,7 +4,9 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	color: var(--text);
 	border-radius: var(--border-radius);
+	background-color: var(--button-bg);
 }
 
 .rounded {

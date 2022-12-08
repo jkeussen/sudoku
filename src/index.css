@@ -19,12 +19,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
   box-sizing: border-box;
+}
 
+.light {
   --border-radius: 15px;
   --divider: 2px;
   --divider-color: black;
   --bg: white;
+  --tile-bg: white;
+  --text: black;
+  --button-bg: rgb(239,239,239);
 }
 

@@ -1,3 +1,6 @@
+.wrapper {
+  background-color: var(--bg);
+}
 .app {
   display: flex;
   flex-direction: column;
@@ -7,4 +10,5 @@
   margin: 0 auto;
   align-items: center;
   background-color: var(--bg); 
+  color: var(--text);
 }

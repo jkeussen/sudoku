@@ -18,10 +18,12 @@ function App() {
 
 	// return <Tile key={`gridTile_${index}`} value={char} />
 	return (
-		<div className={classes.app}>
-			<Header />
-			<Puzzle />
-			<Controls />
+		<div className={classes.wrapper + ' light'}>
+			<div className={classes.app}>
+				<Header />
+				<Puzzle />
+				<Controls />
+			</div>
 		</div>
 	);
 }
