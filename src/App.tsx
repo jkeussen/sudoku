@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./store/hooks";
 
 import Header from "./components/Header";
-import MobileInputs from "./components/MobileInputs";
+import Puzzle from "./components/Puzzle";
+import Controls from "./components/Controls";
 
 import { puzzleActions } from "./store/puzzle-slice";
 
 import classes from "./App.module.css";
-import Puzzle from "./components/Puzzle";
-import Options from "./components/Options";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -22,10 +21,7 @@ function App() {
 		<div className={classes.app}>
 			<Header />
 			<Puzzle />
-			<div className={classes.controls}>
-				<MobileInputs />
-				<Options />
-			</div>
+			<Controls />
 		</div>
 	);
 }

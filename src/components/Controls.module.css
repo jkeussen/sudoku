@@ -1,0 +1,47 @@
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-basis: 0;
+  width: 100%;
+}
+
+.numbers {
+	width: 50%;
+	position: relative;
+	display: grid;
+	gap: 0.5rem;
+	grid-template-columns: repeat(3, 1fr);
+}
+.numberButton {
+	aspect-ratio: 4 / 3;
+	border-radius: var(--border-radius);
+	font-size: 6vw;
+	color: grey;
+}
+
+.options {
+	width: 50%;
+	display: flex;
+	gap: 0.5rem;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+.options button {
+	padding: 0.5rem 1rem;
+	width: max-content;
+	flex: 1;
+}
+
+@media (max-width: 600px) {
+	.controls {
+		flex-direction: column;
+	}
+	.numbers {
+		width: 100%;
+	}
+	.options {
+		width: 100%;
+	}
+}
