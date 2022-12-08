@@ -17,7 +17,7 @@ interface PuzzleState {
 	initialGrid: string[][];
 	solvedGrid: string[][];
 	userGrid: string[][];
-	activeSquare: number | null;
+	activeSquare: number;
 	validRows: number[];
 	validCols: number[];
 	validSections: number[];
@@ -31,7 +31,7 @@ const initialState: PuzzleState = {
 	initialGrid: [],
 	solvedGrid: [],
 	userGrid: [],
-	activeSquare: null,
+	activeSquare: 0,
 	validRows: [],
 	validCols: [],
 	validSections: [],
@@ -80,15 +80,14 @@ const puzzleSlice = createSlice({
 			action: {
 				payload: {
 					val: string;
-					row: number;
-					col: number;
-					activeSquare: number | null;
+					activeSquare: number;
 				};
 			}
 		) {
 			let newUserPuzzle = [...state.userGrid];
-			newUserPuzzle[action.payload.row][action.payload.col] =
-				action.payload.val;
+			let row = Math.floor(action.payload.activeSquare / 9)
+			let col = action.payload.activeSquare % 9
+			newUserPuzzle[row][col] = action.payload.val;
 			state.localErrors = getLocalErrors(
 				newUserPuzzle,
 				action.payload.activeSquare
@@ -98,7 +97,7 @@ const puzzleSlice = createSlice({
 			state.validCols = getValidCols(newUserPuzzle);
 			state.validSections = getValidSections(newUserPuzzle);
 		},
-		setActiveSquare(state, action: { payload: number | null }) {
+		setActiveSquare(state, action: { payload: number }) {
 			state.activeSquare = action.payload;
 			state.localErrors = getLocalErrors(
 				state.userGrid,

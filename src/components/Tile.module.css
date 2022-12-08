@@ -32,6 +32,7 @@
 .givenTile {
 	color: black;
 }
+.tile.active,
 .tile:active,
 .tile:focus {
 	background-color: lightskyblue;

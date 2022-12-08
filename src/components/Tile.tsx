@@ -48,7 +48,13 @@ const Tile: React.FC<{
 		(state) => state.ui.highlightValidSections
 	);
 
-	if (activeSquare === props.id) inputRef.current!.focus();
+	// TODO: This line causes problems the first time you move using keyboard
+	/* Warning: Cannot update a component (`Puzzle`) while rendering a 
+	different component (`Tile`). To locate the bad setState() call inside 
+	`Tile`, follow the stack trace as described in 
+	https://reactjs.org/link/setstate-in-render
+	*/
+	if (activeSquare === props.id) inputRef?.current?.focus();
 
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
 		dispatch(puzzleActions.setActiveSquare(props.id));
@@ -64,7 +70,7 @@ const Tile: React.FC<{
 
 		switch (e.code) {
 			case "Escape":
-				dispatch(puzzleActions.setActiveSquare(null));
+				// dispatch(puzzleActions.setActiveSquare(null));
 				return;
 			case "Backspace":
 			case "Digit0":
@@ -72,8 +78,6 @@ const Tile: React.FC<{
 				dispatch(
 					puzzleActions.updateUserPuzzle({
 						val: empty,
-						row,
-						col,
 						activeSquare,
 					})
 				);
@@ -93,8 +97,6 @@ const Tile: React.FC<{
 				dispatch(
 					puzzleActions.updateUserPuzzle({
 						val: enteredValue,
-						row,
-						col,
 						activeSquare,
 					})
 				);
@@ -132,6 +134,7 @@ const Tile: React.FC<{
 	};
 
 	const userOrGiven = isGiven ? classes.givenTile : classes.userTile;
+	const active = activeSquare === props.id ? classes.active : "";
 	const highlightedRow =
 		highlightActiveRowsAndCols &&
 		activeSquare !== null &&
@@ -151,7 +154,7 @@ const Tile: React.FC<{
 	const valid = validRow || validCol || validSection ? classes.valid : "";
 	const error = props.error ? classes.error : "";
 
-	const css = `${classes.tile} ${userOrGiven} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;
+	const css = `${classes.tile} ${userOrGiven} ${active} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>

@@ -5,9 +5,29 @@
   flex-basis: 0;
   width: 100%;
 }
-
-.numbers {
+.col1 {
+	display: flex;
 	width: 50%;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.topRow {
+	display: flex;
+	/* flex-wrap: wrap; */
+	gap: 0.5rem;
+}
+.topRow button {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	color: var(--control-button-text-color);
+}
+.topRow button span {
+	width: 100%;
+	font-size: 3vw;
+}
+.numbers {
+	width: 100%;
 	position: relative;
 	display: grid;
 	gap: 0.5rem;
@@ -17,10 +37,10 @@
 	aspect-ratio: 4 / 3;
 	border-radius: var(--border-radius);
 	font-size: 6vw;
-	color: grey;
+	color: var(--control-button-text-color);
 }
 
-.options {
+.col2 {
 	width: 50%;
 	display: flex;
 	gap: 0.5rem;
@@ -28,20 +48,27 @@
 	justify-content: flex-start;
 	flex-wrap: wrap;
 }
-.options button {
+.col2 button {
 	padding: 0.5rem 1rem;
 	width: max-content;
 	flex: 1;
+	color: var(--control-button-text-color);
 }
 
 @media (max-width: 600px) {
 	.controls {
 		flex-direction: column;
 	}
-	.numbers {
+	.col1 {
 		width: 100%;
 	}
-	.options {
+	.topRow button span {
+		font-size: 4vw;
+	}
+	.numberButton {
+		aspect-ratio: 2 / 1;	
+	}
+	.col2 {
 		width: 100%;
 	}
 }
