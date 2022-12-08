@@ -15,7 +15,7 @@
 	align-items: center;
 	text-align: center;
 	/* font-size: 2rem;  */
-	font-size: 4vw;
+	font-size: 2rem;
 	caret-color: transparent;
 	user-select: none;
 	z-index: 2;
@@ -23,7 +23,7 @@
 }
 @media (max-width: 600px) {
 	.tile {
-		font-size: 6vw;
+		font-size: 1.4rem;
 	}
 }
 .userTile {
@@ -40,7 +40,9 @@
 .tile::selection {
 	background-color: transparent;
 }
-
+.sameTileValue {
+	border: 4px solid lightskyblue;
+}
 .highlighted {
 	background-color: lightblue;
 }

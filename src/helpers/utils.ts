@@ -1,4 +1,5 @@
 import { sectionRefArr } from "./get-section"
+import { empty } from "./valid-inputs";
 
 export const buildPuzzleGridFromString = (str: string): string[][] => {
 	let arr = [];
@@ -33,4 +34,29 @@ export const rotatePuzzle = (puzzle: string[][]) => {
 		rotatedPuzzle.push(col)
 	}
 	return rotatedPuzzle;
+}
+
+export const getSameValueTiles = (puzzle: string[][], activeSquare: number): number[] => {
+	let activeRow = Math.floor(activeSquare / 9);
+	let activeCol = activeSquare % 9;
+	let activeValue = puzzle[activeRow][activeCol]
+
+	if (activeValue === empty) return [];
+	if (!activeValue) {
+		console.error('Could not determine the active value')
+		return [];
+	}
+
+	let sameValues: number[] = [];
+
+	puzzle.forEach((row, i) => {
+		row.forEach((value, j) => {
+			if (value === activeValue) {
+				let tileId = i * 9 + j
+				sameValues.push(tileId)
+			}
+		})
+	})
+
+	return sameValues;
 }

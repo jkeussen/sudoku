@@ -9,7 +9,7 @@ import {
 	getValidSections,
 } from "../helpers/get-valid-areas";
 import { getLocalErrors, getGlobalErrors } from "../helpers/get-errors";
-import { buildPuzzleGridFromString } from "../helpers/utils";
+import { buildPuzzleGridFromString, getSameValueTiles } from "../helpers/utils";
 
 interface PuzzleState {
 	initialString: string;
@@ -23,6 +23,7 @@ interface PuzzleState {
 	validSections: number[];
 	localErrors: number[];
 	globalErrors: number[];
+	sameValueTiles: number[];
 	isPuzzleSolved: boolean;
 }
 
@@ -38,6 +39,7 @@ const initialState: PuzzleState = {
 	validSections: [],
 	localErrors: [],
 	globalErrors: [],
+	sameValueTiles: [],
 	isPuzzleSolved: false,
 };
 
@@ -60,6 +62,7 @@ const puzzleSlice = createSlice({
 			state.validRows = [];
 			state.validCols = [];
 			state.validSections = [];
+			state.sameValueTiles = [];
 			state.isPuzzleSolved = false;
 		},
 		solvePuzzle(state, action: {payload?: any} ) {
@@ -70,6 +73,7 @@ const puzzleSlice = createSlice({
 			state.validRows = getValidRows(newUserGrid);
 			state.validCols = getValidCols(newUserGrid);
 			state.validSections = getValidSections(newUserGrid);
+			state.sameValueTiles = [];
 			console.log(state.validRows, '\n', state.validCols, '\n', state.validSections)
 			state.isPuzzleSolved = true;
 		},
@@ -100,6 +104,7 @@ const puzzleSlice = createSlice({
 			state.validRows = getValidRows(newUserPuzzle);
 			state.validCols = getValidCols(newUserPuzzle);
 			state.validSections = getValidSections(newUserPuzzle);
+			state.sameValueTiles = getSameValueTiles(newUserPuzzle, action.payload.activeSquare)
 			if (state.validSections.length === 9) state.isPuzzleSolved = true;
 		},
 		setActiveSquare(state, action: { payload: number }) {
@@ -108,6 +113,7 @@ const puzzleSlice = createSlice({
 				state.userGrid,
 				action.payload
 			);
+			state.sameValueTiles = getSameValueTiles(state.userGrid, action.payload)
 		},
 	},
 });

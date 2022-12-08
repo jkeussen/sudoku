@@ -25,6 +25,7 @@ const Tile: React.FC<{
 	const validRow = props.validRows.includes(row);
 	const validCol = props.validCols.includes(col);
 	const validSection = props.validSections.includes(section);
+	const sameValueTiles = useAppSelector(state => state.puzzle.sameValueTiles)
 
 	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
 	const isGiven = initialGrid[row][col] !== empty;
@@ -151,6 +152,10 @@ const Tile: React.FC<{
 		highlightActiveSection && section === activeSection
 			? classes.highlighted
 			: "";
+	const highLightedSameTile = 
+		highlightSameValues && sameValueTiles.includes(props.id)
+		? classes.sameTileValue
+		: "";
 	const valid =
 		(highlightValidRowsAndCols && validRow) ||
 		(highlightValidRowsAndCols && validCol) ||
@@ -159,7 +164,7 @@ const Tile: React.FC<{
 			: "";
 	const error = props.error ? classes.error : "";
 
-	const css = `${classes.tile} ${userOrGiven} ${active} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${valid} ${error}`;
+	const css = `${classes.tile} ${userOrGiven} ${active} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${highLightedSameTile} ${valid} ${error}`;
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>

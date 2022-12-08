@@ -131,6 +131,10 @@ const Options: React.FC = () => {
 		dispatch(uiActions.setHighlightValidSections(!highlightValidSections))
 	}
 
+	const toggleHighlightSameValues = () => {
+		dispatch(uiActions.setHighlightSameValues(!highlightSameValues))
+	}
+
 	return(
 		<div className={classes.col2}>
 			<div className={classes.gameActions}>
@@ -167,6 +171,11 @@ const Options: React.FC = () => {
 					label="Highlight valid sections"
 					checked={highlightValidSections}
 					onChange={toggleHighlightValidSections}
+				/>
+				<Switch 
+					label="Highlight other instances of the selected number"
+					checked={highlightSameValues}
+					onChange={toggleHighlightSameValues}
 				/>
 			</div>
 		</div>

@@ -11,7 +11,7 @@
 // https://codepen.io/liamj/pen/QYyBzz
 $width: 50px;
 $padding: 4px;
-$height: $width / 2 + $padding;
+$height: calc(($width / 2) + $padding);
 //toggle code begins!
 .switchWrap {
   cursor: pointer;
@@ -19,7 +19,7 @@ $height: $width / 2 + $padding;
   padding: $padding;
   width: $width;
   height: $height;
-  border-radius: $height / 2;
+  border-radius: calc($height / 2);
   flex-shrink: 0;
   input {
     position: absolute;
