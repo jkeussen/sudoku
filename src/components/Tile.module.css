@@ -2,7 +2,7 @@
 	display: flex;
 	width: calc(100%/9);
 	aspect-ratio: 1 / 1;
-	border: 0.5px solid black;
+	border: 0.5px solid rgb(94, 94, 94);
 	overflow: visible;
 }
 .tile {
@@ -43,11 +43,14 @@
 .sameTileValue {
 	border: 4px solid lightskyblue;
 }
+.sameTileValue.error {
+	border: 4px solid rgb(214, 99, 99);
+}
 .highlighted {
 	background-color: lightblue;
 }
 .valid {
-	background-color: lightgreen;
+	background-color: lightgreen;	
 }
 .valid:active,
 .valid:focus {

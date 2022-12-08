@@ -62,7 +62,8 @@ const puzzleSlice = createSlice({
 			state.validRows = [];
 			state.validCols = [];
 			state.validSections = [];
-			state.sameValueTiles = [];
+			// state.sameValueTiles = [];
+			state.sameValueTiles = getSameValueTiles(puzzleGrid, 0)
 			state.isPuzzleSolved = false;
 		},
 		solvePuzzle(state, action: {payload?: any} ) {

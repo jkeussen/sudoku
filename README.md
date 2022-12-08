@@ -6,6 +6,18 @@ This project is a React web application for playing sudoku. Players can use the 
 
 https://sudoku-42842.web.app/
 
+# Features
+
+* Puzzle generation
+* Puzzle solving
+* Responsive
+* Mobile-friendly
+* Hints
+* Timer
+* Optional highlighting of active rows/columns/sections
+* Optional highlighting of valid rows/columns/sections
+* Error checking and highlighting
+
 # Tech
 
 * [React.js](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/) for the UI.
