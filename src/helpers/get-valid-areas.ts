@@ -34,7 +34,8 @@ export const getValidSections = (puzzle: string[][]) => {
 	let sections = buildSections(puzzle);
 	let validSections: number[] = [];
 	sections.forEach((section, i) => {
-		if (new Set(section).size === 9) validSections.push(i)
+		let valuesInSection = new Set(section)
+		if (valuesInSection.size === 9 && !valuesInSection.has(empty)) validSections.push(i)
 	})
 	return validSections;
 }

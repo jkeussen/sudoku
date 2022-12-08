@@ -1,49 +1,65 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import classes from './Header.module.css'
-import buttonCss from '../styles/Buttons.module.css'
+import classes from "./Header.module.css";
+import buttonCss from "../styles/Buttons.module.css";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { uiActions } from "../store/ui-slice";
 
 const Header: React.FC = (props?) => {
+	const dispatch = useAppDispatch();
 
-	const [secondsElapsed, setSecondsElapsed] = useState<number>(0)
-	const [isPaused, setIsPaused] = useState<boolean>(false);
+	const isTimerPaused = useAppSelector((state) => state.ui.isTimerPaused);
+	const isTimerDisabled = useAppSelector((state) => state.ui.isTimerDisabled);
+	const timerSecondsElapsed = useAppSelector((state) => state.ui.timerSecondsElapsed);
+	const isPuzzleSolved = useAppSelector(state => state.puzzle.isPuzzleSolved)
 
-	const minutes = Math.floor(secondsElapsed / 60).toString()
-	const seconds = (secondsElapsed % 60).toString()
+	const minutes = Math.floor(timerSecondsElapsed / 60).toString();
+	const seconds = (timerSecondsElapsed % 60).toString();
 
 	const timerToggleHandler = () => {
-		setIsPaused(bool => !bool)
-	}
+		dispatch(uiActions.toggleIsTimerPaused())
+	};
 
 	useEffect(() => {
 		let timer: ReturnType<typeof setInterval>;
-		if (!isPaused) {
+		if (!isTimerPaused) {
 			timer = setInterval(() => {
-				setSecondsElapsed(num => num+1)
-			}, 1000)
+				dispatch(uiActions.incrementTimer(1))
+			}, 1000);
 		} else {
-			clearInterval(timer!)
-			console.log('clear')
+			clearInterval(timer!);
+			console.log("clear");
 		}
-		return () => clearInterval(timer)
-	}, [isPaused])
+		return () => clearInterval(timer);
+	}, [isTimerPaused, isPuzzleSolved]);
 
-	return(
+	return (
 		<header className={classes.header}>
 			<div className={classes.logo}>
-			<button onClick={() => {}} className={`${buttonCss.button} ${buttonCss.rounded}`}>
+				<button
+					onClick={() => {}}
+					className={`${buttonCss.button} ${buttonCss.rounded}`}
+				>
 					<span className="material-icons">menu</span>
 				</button>
-			<h1>Sudoku</h1>
+				<h1>Sudoku</h1>
 			</div>
 			<div className={classes.timer}>
-				<h2>{minutes}:{seconds.length > 1 ? seconds : `0${seconds}`}</h2>
-				<button onClick={timerToggleHandler} className={`${buttonCss.button} ${buttonCss.rounded}`}>
-					<span className="material-icons">{isPaused ? 'play_arrow' : 'pause'}</span>
+				<h2>
+					{minutes}:{seconds.length > 1 ? seconds : `0${seconds}`}
+				</h2>
+				<button
+					onClick={timerToggleHandler}
+					className={`${buttonCss.button} ${buttonCss.rounded}`}
+					disabled={isTimerDisabled}
+				>
+					<span className="material-icons">
+						{isTimerPaused ? "play_arrow" : "pause"}
+					</span>
 				</button>
 			</div>
 		</header>
-	)
-}
+	);
+};
 
 export default Header;

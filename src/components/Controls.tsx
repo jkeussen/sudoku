@@ -96,17 +96,25 @@ const Numbers: React.FC = () => {
 const Options: React.FC = () => {
 	const dispatch = useAppDispatch();
 
+	const showSolutionHandler = () => {
+		dispatch(puzzleActions.solvePuzzle())
+	}
+
+	const newGameHandler = () => {
+		dispatch(puzzleActions.generatePuzzle())
+	}
+
 	return(
 		<div className={classes.col2}>
 			<button 
 				className={buttonCss.button}
-				onClick={() => dispatch(puzzleActions.solvePuzzle())}
+				onClick={showSolutionHandler}
 			>
 				Show Solution
 			</button>
 			<button 
 				className={buttonCss.button}
-				onClick={() => dispatch(puzzleActions.generatePuzzle())}
+				onClick={newGameHandler}
 			>
 				New Game
 			</button>

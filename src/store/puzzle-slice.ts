@@ -23,6 +23,7 @@ interface PuzzleState {
 	validSections: number[];
 	localErrors: number[];
 	globalErrors: number[];
+	isPuzzleSolved: boolean;
 }
 
 const initialState: PuzzleState = {
@@ -37,6 +38,7 @@ const initialState: PuzzleState = {
 	validSections: [],
 	localErrors: [],
 	globalErrors: [],
+	isPuzzleSolved: false,
 };
 
 const puzzleSlice = createSlice({
@@ -58,6 +60,7 @@ const puzzleSlice = createSlice({
 			state.validRows = [];
 			state.validCols = [];
 			state.validSections = [];
+			state.isPuzzleSolved = false;
 		},
 		solvePuzzle(state, action: {payload?: any} ) {
 			let newUserGrid = [...state.solvedGrid]; 
@@ -68,6 +71,7 @@ const puzzleSlice = createSlice({
 			state.validCols = getValidCols(newUserGrid);
 			state.validSections = getValidSections(newUserGrid);
 			console.log(state.validRows, '\n', state.validCols, '\n', state.validSections)
+			state.isPuzzleSolved = true;
 		},
 		setLocalErrors(state, action: { payload: number[] }) {
 			state.localErrors = action.payload;
@@ -96,6 +100,7 @@ const puzzleSlice = createSlice({
 			state.validRows = getValidRows(newUserPuzzle);
 			state.validCols = getValidCols(newUserPuzzle);
 			state.validSections = getValidSections(newUserPuzzle);
+			if (state.validSections.length === 9) state.isPuzzleSolved = true;
 		},
 		setActiveSquare(state, action: { payload: number }) {
 			state.activeSquare = action.payload;
