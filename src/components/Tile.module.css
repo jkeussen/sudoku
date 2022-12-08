@@ -14,10 +14,16 @@
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	font-size: 2rem; 
+	/* font-size: 2rem;  */
+	font-size: 4vw;
 	caret-color: transparent;
 	user-select: none;
 	z-index: 2;
+}
+@media (max-width: 600px) {
+	.tile {
+		font-size: 6vw;
+	}
 }
 .userTile {
 	color: rgb(81, 81, 81)
