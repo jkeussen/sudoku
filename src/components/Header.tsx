@@ -17,10 +17,18 @@ const Header: React.FC = (props?) => {
 	const seconds = (timerSecondsElapsed % 60).toString();
 
 	const timerToggleHandler = () => {
-		dispatch(uiActions.toggleIsTimerPaused())
+		dispatch(uiActions.setIsTimerPaused(!isTimerPaused))
 	};
 
 	useEffect(() => {
+		// Pause and disable timer if puzzle is solved
+		if (isPuzzleSolved) {
+			dispatch(uiActions.setIsTimerDisabled(true))
+			dispatch(uiActions.setIsTimerPaused(true))
+		} else {
+			if (isTimerDisabled) dispatch(uiActions.setIsTimerDisabled(false))
+		}
+		// Pause/unpause timer when isTimerPaused changes
 		let timer: ReturnType<typeof setInterval>;
 		if (!isTimerPaused) {
 			timer = setInterval(() => {
@@ -54,7 +62,9 @@ const Header: React.FC = (props?) => {
 					disabled={isTimerDisabled}
 				>
 					<span className="material-icons">
-						{isTimerPaused ? "play_arrow" : "pause"}
+						{!isTimerDisabled && isTimerPaused && "play_arrow"}
+						{!isTimerDisabled && !isTimerPaused && "pause"}
+						{isTimerDisabled && 'celebration'}
 					</span>
 				</button>
 			</div>

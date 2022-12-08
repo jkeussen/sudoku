@@ -32,35 +32,35 @@ const uiSlice = createSlice({
 	name: "ui",
 	initialState: initialUiState,
 	reducers: {
-		toggleShowMenu(state) {
-			state.showMenu = !state.showMenu
+		setShowMenu(state, action: { payload: boolean }) {
+			state.showMenu = action.payload;
 		},
-		toggleHighlightActiveRowsAndCols(state) {
-			state.highlightActiveRowsAndCols = !state.highlightActiveRowsAndCols
+		setHighlightActiveRowsAndCols(state, action: { payload: boolean }) {
+			state.highlightActiveRowsAndCols = action.payload;
 		},
-		toggleHighlightActiveSection(state) {
-			state.highlightActiveSection = !state.highlightActiveSection
+		setHighlightActiveSection(state, action: { payload: boolean }) {
+			state.highlightActiveSection = action.payload;
 		},
-		toggleHighlightSameValues(state) {
-			state.highlightSameValues = !state.highlightSameValues
+		setHighlightSameValues(state, action: { payload: boolean }) {
+			state.highlightSameValues = action.payload;
 		},
-		toggleHighlightValidRowsAndCols(state) {
-			state.highlightValidRowsAndCols = !state.highlightValidRowsAndCols
+		setHighlightValidRowsAndCols(state, action: { payload: boolean }) {
+			state.highlightValidRowsAndCols = action.payload;
 		},
-		toggleHighlightValidSections(state) {
-			state.highlightValidSections = !state.highlightValidSections
+		setHighlightValidSections(state, action: { payload: boolean }) {
+			state.highlightValidSections = action.payload;
 		},
-		toggleShowLocalErrors(state) {
-			state.showLocalErrors = !state.showLocalErrors
+		setShowLocalErrors(state, action: { payload: boolean }) {
+			state.showLocalErrors = action.payload;
 		},
-		toggleShowGlobalErrors(state) {
-			state.showGlobalErrors = !state.showGlobalErrors
+		setShowGlobalErrors(state, action: { payload: boolean }) {
+			state.showGlobalErrors = action.payload;
 		},
-		toggleIsTimerPaused(state) {
-			state.isTimerPaused = !state.isTimerPaused
+		setIsTimerPaused(state, action: { payload: boolean }) {
+			state.isTimerPaused = action.payload;
 		},
-		toggleIsTimerDisabled(state) {
-			state.isTimerDisabled = !state.isTimerDisabled
+		setIsTimerDisabled(state, action: { payload: boolean }) {
+			state.isTimerDisabled = action.payload;
 		},
 		// toggleBoolean(state, action: { payload: string }) {
 		// 	let key = action.payload as keyof UiState;
@@ -73,6 +73,9 @@ const uiSlice = createSlice({
 		incrementTimer(state, action: { payload: number }) {
 			let increment = action.payload
 			state.timerSecondsElapsed += increment;
+		},
+		setTimerSecondsElapsed(state, action: { payload: number }) {
+			state.timerSecondsElapsed = action.payload;
 		}
 	},
 });

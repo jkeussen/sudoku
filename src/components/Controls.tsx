@@ -4,6 +4,7 @@ import buttonCss from '../styles/Buttons.module.css'
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { puzzleActions } from "../store/puzzle-slice";
 import { empty } from '../helpers/valid-inputs';
+import { uiActions } from '../store/ui-slice';
 
 const Number: React.FC<{
 	number: string;
@@ -102,6 +103,8 @@ const Options: React.FC = () => {
 
 	const newGameHandler = () => {
 		dispatch(puzzleActions.generatePuzzle())
+		dispatch(uiActions.setTimerSecondsElapsed(0))
+		dispatch(uiActions.setIsTimerPaused(false))
 	}
 
 	return(
