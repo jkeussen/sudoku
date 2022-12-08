@@ -1,10 +1,8 @@
 .mobileInputs {
 	display: flex;
-	width: 100%;
-	max-width: 300px;
 	justify-content: space-between;
 	row-gap: 0.5rem;
-	margin-top: 2rem;
+	width: 50%;
 	flex-wrap: wrap;
 	position: relative;
 }

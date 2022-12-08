@@ -1,14 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { useEffect } from "react";
+import { useAppDispatch } from "./store/hooks";
 
 import Header from "./components/Header";
-import Tile from "./components/Tile";
 import MobileInputs from "./components/MobileInputs";
 
 import { puzzleActions } from "./store/puzzle-slice";
 
 import classes from "./App.module.css";
 import Puzzle from "./components/Puzzle";
+import Options from "./components/Options";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -22,10 +22,10 @@ function App() {
 		<div className={classes.app}>
 			<Header />
 			<Puzzle />
-			<MobileInputs />
-			<button onClick={() => dispatch(puzzleActions.solvePuzzle())}>
-				Solve
-			</button>
+			<div className={classes.controls}>
+				<MobileInputs />
+				<Options />
+			</div>
 		</div>
 	);
 }

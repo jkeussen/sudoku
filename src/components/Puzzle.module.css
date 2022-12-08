@@ -1,8 +1,6 @@
 .puzzleGrid {
   display: flex;
   flex-wrap: wrap;
-  max-width: 600px;
-  margin: 0 auto;
   position: relative;
   border-width: var(--divider);
   border-color: var(--divider-color);

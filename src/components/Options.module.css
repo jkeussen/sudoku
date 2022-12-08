@@ -1,0 +1,11 @@
+.options {
+	width: 50%;
+	display: flex;
+	gap: 0.5rem;
+	align-items: flex-start;
+}
+.options button {
+	padding: 0.5rem 1rem;
+	border-radius: 0.25rem;
+	font-size: 1rem;
+}

@@ -1,7 +1,17 @@
 .app {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   align-items: center;
   --divider: 2px;
   --divider-color: black;
+}
+.controls {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-basis: 0;
+  width: 100%;
 }

@@ -32,11 +32,21 @@ const Tile: React.FC<{
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
 	const activeSection = getActiveSection(activeSquare);
 
-	const highlightActiveRowsAndCols = useAppSelector((state) => state.ui.highlightActiveRowsAndCols);
-	const highlightActiveSection = useAppSelector((state) => state.ui.highlightActiveSection);
-	const highlightSameValues = useAppSelector((state) => state.ui.highlightSameValues);
-	const highlightValidRowsAndCols = useAppSelector((state) => state.ui.highlightValidRowsAndCols);
-	const highlightValidSections = useAppSelector((state) => state.ui.highlightValidSections);
+	const highlightActiveRowsAndCols = useAppSelector(
+		(state) => state.ui.highlightActiveRowsAndCols
+	);
+	const highlightActiveSection = useAppSelector(
+		(state) => state.ui.highlightActiveSection
+	);
+	const highlightSameValues = useAppSelector(
+		(state) => state.ui.highlightSameValues
+	);
+	const highlightValidRowsAndCols = useAppSelector(
+		(state) => state.ui.highlightValidRowsAndCols
+	);
+	const highlightValidSections = useAppSelector(
+		(state) => state.ui.highlightValidSections
+	);
 
 	if (activeSquare === props.id) inputRef.current!.focus();
 
