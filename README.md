@@ -8,13 +8,14 @@ https://sudoku-42842.web.app/
 
 # Tech
 
-* React.js and Typescript for UI
-* Hosted with Firebase
-* Bootstrapped with Vite
+* [React.js](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/) for the UI.
+* Styled using [CSS Modules](https://github.com/css-modules/css-modules).
+* Hosted with [Firebase](https://firebase.google.com/docs/hosting).
+* Bootstrapped with [Vite](https://vitejs.dev/).
 
 # Thanks
 
 A big help when creating the project was the two bits of open source code below.
 
-[Robatron's Sudoku Generator/Solver](https://github.com/robatron/sudoku.js/blob/master/sudoku.js)
-[Raravi's Sudoku Generator](https://github.com/raravi/sudoku/blob/master/src/solver/UniqueSudoku.tsx)
+* [Robatron's Sudoku Generator/Solver](https://github.com/robatron/sudoku.js/blob/master/sudoku.js)
+* [Raravi's Sudoku Generator](https://github.com/raravi/sudoku/blob/master/src/solver/UniqueSudoku.tsx)
