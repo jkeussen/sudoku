@@ -25,8 +25,10 @@
 
 .light {
   --border-radius: 8px;
-  --divider: 2px;
-  --divider-color: black;
+  --divider-tile-width: 1px;
+  --divider-section-width: 3px;
+  --divider-tile: rgb(131, 131, 131);
+  --divider-section: rgb(35, 35, 35);
   --bg: white;
   --tile-bg: white;
   --text: rgb(88, 88, 88);
@@ -42,5 +44,12 @@
   --tile-num-given: black;
   --tile-num-user: rgb(81, 81, 81);
   --tile-num-wrong: rgb(181, 0, 0);
+}
+
+@media (max-width: 600px) {
+  .light {
+    --divider-tile-width: 0.5px;
+    --divider-section-width: 1px;
+  }
 }
 

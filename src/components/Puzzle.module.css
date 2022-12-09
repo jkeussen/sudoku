@@ -2,8 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  border-width: var(--divider);
-  border-color: var(--divider-color);
+  border-width: var(--divider-section-width);
+  border-color: var(--divider-section);
   border-style: solid;
 }
 .divider {
@@ -11,8 +11,8 @@
   width: 33.333%;
   height: 33.333%;
   pointer-events: none;
-  outline-width: calc(var(--divider) / 2);
-  outline-color: var(--divider-color);
+  outline-width: calc(var(--divider-section-width) / 2);
+  outline-color: var(--divider-section);
   outline-style: solid;
   z-index: 5;
 }

@@ -48,7 +48,7 @@ const puzzleSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		generatePuzzle(state, action: { payload?: PuzzleDifficultyString }) {
-			let difficulty = action.payload ? action.payload : 'easy'
+			let difficulty = action.payload ? action.payload : 'medium'
 			const [puzzle, solution] = generateSudoku(difficulty);
 			const puzzleGrid = buildPuzzleGridFromString(puzzle);
 			const solutionGrid = buildPuzzleGridFromString(solution);

@@ -24,6 +24,7 @@ https://sudoku-42842.web.app/
 * Styled using [CSS Modules](https://github.com/css-modules/css-modules).
 * Hosted with [Firebase](https://firebase.google.com/docs/hosting).
 * Bootstrapped with [Vite](https://vitejs.dev/).
+* Icons from [Google Material Symbols](https://fonts.google.com/icons).
 
 # Thanks
 
