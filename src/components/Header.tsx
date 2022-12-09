@@ -47,6 +47,7 @@ const Header: React.FC = (props?) => {
 				<button
 					onClick={() => {alert('Not yet implemented... :(')}}
 					className={`${buttonCss.button} ${buttonCss.rounded}`}
+					disabled
 				>
 					<span className="material-icons">menu</span>
 				</button>

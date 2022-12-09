@@ -8,12 +8,15 @@
 	color: var(--text);
 	border-radius: var(--border-radius);
 	background-color: var(--button-bg);
+	cursor: pointer;
 }
-
 .rounded {
 	border-radius: 50%;	
 }
-
+.button:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
 .button:hover {
 	background-color: var(--blue);
 }

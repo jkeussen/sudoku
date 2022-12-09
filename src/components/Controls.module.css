@@ -23,7 +23,6 @@
 	gap: 0.5rem;
 	grid-template-columns: repeat(3, 1fr);
 }
-.topRow button,
 .numbers button {
 	aspect-ratio: 4 / 3;
 	padding: 0;

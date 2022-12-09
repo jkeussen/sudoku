@@ -20,6 +20,7 @@
 	user-select: none;
 	z-index: 2;
 	background-color: var(--tile-bg);
+	cursor: pointer;
 }
 @media (max-width: 600px) {
 	.tile {

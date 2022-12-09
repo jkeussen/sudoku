@@ -20,6 +20,7 @@
 	aspect-ratio: 1 / 1;
 	width: min-content;
 }
-.header button:disabled {
+.timer button:disabled {
 	background-color: var(--valid);
+	opacity: 1;
 }
