@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import classes from "./Tile.module.css";
 
@@ -49,13 +49,9 @@ const Tile: React.FC<{
 		(state) => state.ui.highlightValidSections
 	);
 
-	// TODO: This line causes problems the first time you move using keyboard
-	/* Warning: Cannot update a component (`Puzzle`) while rendering a 
-	different component (`Tile`). To locate the bad setState() call inside 
-	`Tile`, follow the stack trace as described in 
-	https://reactjs.org/link/setstate-in-render
-	*/
-	if (activeSquare === props.id && inputRef.current) inputRef?.current?.focus();
+	useEffect(() => {
+		if (activeSquare === props.id)  inputRef.current?.focus();
+	}, [activeSquare])
 
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
 		dispatch(puzzleActions.setActiveSquare(props.id));
