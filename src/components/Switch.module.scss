@@ -5,7 +5,7 @@
 }
 .toggle span {
 	font-family: Arial;
-	color: grey;
+	color: var(--text);
 	font-size: 0.9rem;
 }
 // https://codepen.io/liamj/pen/QYyBzz
@@ -15,7 +15,7 @@ $height: calc(($width / 2) + $padding);
 //toggle code begins!
 .switchWrap {
   cursor: pointer;
-  background: var(--switch-bg);
+  background: var(--button-bg);
   padding: $padding;
   width: $width;
   height: $height;
@@ -37,7 +37,8 @@ $height: calc(($width / 2) + $padding);
   &::after {
     content: '';
     border-radius: 50%;
-    background: var(--switch-off);
+    background: var(--button);
+    border: 1px solid var(--text);
     grid-column: 2;
     transition: background .2s;
   }
@@ -46,7 +47,8 @@ input:checked {
   + .switch {
     grid-template-columns: 1fr 1fr 0fr; 
     &::after {
-      background-color: var(--switch-on);
+      background-color: var(--blue-dark);
+      border: none;
     }
   }
 }

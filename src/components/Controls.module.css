@@ -32,7 +32,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
-	color: var(--control-button-text-color);
+	color: var(--text);
 }
 	.topRow button span {
 		width: 100%;
@@ -40,7 +40,7 @@
 	}
 .numbers button {
 	font-size: 2.5rem;
-	color: var(--control-button-text-color);
+	color: var(--text);
 }
 
 .col2 {
@@ -67,7 +67,7 @@
 	padding: 0.5rem 1rem;
 	width: max-content;
 	flex: 1;
-	color: var(--control-button-text-color);
+	color: var(--text);
 }
 
 @media (max-width: 600px) {
@@ -80,8 +80,13 @@
 	.topRow button span {
 		font-size: 4vw;
 	}
-	.topRow button,
+	.numbers {
+		grid-template-columns: repeat(9, 1fr);
+	}
 	.numbers button {
+		font-size: 2.25rem;
+	}
+	.topRow button {
 		aspect-ratio: 2 / 1;	
 	}
 	.col2 {

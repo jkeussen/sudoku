@@ -15,8 +15,8 @@
 }
 
 .button:hover {
-	background-color: lightblue;
+	background-color: var(--blue);
 }
 .button:active {
-	background-color: lightskyblue;
+	background-color: var(--blue-dark);
 }
