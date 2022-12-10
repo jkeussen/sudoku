@@ -28,6 +28,9 @@ $height: calc(($width / 2) + $padding);
     height: 0;
   }
 }
+.switchWrap:has(input:focus) {
+  outline: var(--focus)
+}
 .switch {
   height: 100%;
   display: grid;

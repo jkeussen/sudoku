@@ -6,6 +6,8 @@ import Tile from "./Tile";
 import { puzzleActions } from "../store/puzzle-slice";
 
 import classes from "./Puzzle.module.css";
+import buttonCss from '../styles/Buttons.module.css'
+import { uiActions } from "../store/ui-slice";
 
 const Puzzle = () => {
 
@@ -16,6 +18,8 @@ const Puzzle = () => {
 	const validRows = useAppSelector((state) => state.puzzle.validRows);
 	const validCols = useAppSelector((state) => state.puzzle.validCols);
 	const validSections = useAppSelector((state) => state.puzzle.validSections);
+
+	const isTimerPaused = useAppSelector(state => state.ui.isTimerPaused)
 
 	const localErrors = useAppSelector((state) => state.puzzle.localErrors);
 	const globalErrors = useAppSelector((state) => state.puzzle.globalErrors);
@@ -50,8 +54,21 @@ const Puzzle = () => {
 		});
 	}, []);
 
+	const resumeGameHandler = () => {
+		dispatch(uiActions.setIsTimerPaused(false))
+	}
+
 	return(
 		<div className={classes.puzzleGrid}>
+			{isTimerPaused && <div className={classes.pauseShield}>
+				<span>
+					Game paused.
+				</span>
+				<button className={buttonCss.button} onClick={resumeGameHandler}>
+					<span className="material-icons">play_arrow</span>
+					Resume
+				</button>
+			</div>}
 			{dividers}
 			{puzzle}
 		</div>

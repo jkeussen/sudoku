@@ -6,6 +6,29 @@
   border-color: var(--divider-section);
   border-style: solid;
 }
+.pauseShield {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg);
+  z-index: 6;
+  padding: 1rem;
+  color: var(--text);
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+  .pauseShield span,
+  .pauseShield button {
+    text-align: center;
+    width: max-content;
+  }
+  /* .pauseShield button {
+    display: flex;
+    flex-direction: column;
+  } */
 .divider {
   position: absolute;
   width: 33.333%;

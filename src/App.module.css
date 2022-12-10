@@ -1,5 +1,9 @@
 .wrapper {
   background-color: var(--bg);
+  /* background-color: blue; */
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
 }
 .app {
   display: flex;
@@ -8,7 +12,7 @@
   padding: 1rem;
   max-width: 600px;
   margin: 0 auto;
-  align-items: center;
   background-color: var(--bg); 
+  /* background-color: red; */
   color: var(--text);
 }

@@ -25,8 +25,6 @@
 
 .light {
   --border-radius: 8px;
-  --divider-tile-width: 1px;
-  --divider-section-width: 3px;
   --divider-tile: rgb(131, 131, 131);
   --divider-section: rgb(35, 35, 35);
   --bg: white;
@@ -40,16 +38,33 @@
   --error: rgb(240, 128, 128);
   --error-dark: rgb(214, 99, 99);
 
+  --focus: 2px solid var(--blue-dark);
+
   /* Tiles */
   --tile-num-given: black;
   --tile-num-user: rgb(81, 81, 81);
   --tile-num-wrong: rgb(181, 0, 0);
+
+  /* Dividers */
+  --divider-tile-width: 1px;
+  --divider-section-width: 4px;
 }
 
 @media (max-width: 600px) {
-  .light {
+  .light,
+  .dark {
     --divider-tile-width: 0.5px;
-    --divider-section-width: 1px;
+    --divider-section-width: 2px;
   }
 }
 
+@media only screen and (-moz-min-device-pixel-ratio: 2), 
+only screen and (-o-min-device-pixel-ratio: 2/1), 
+only screen and (-webkit-min-device-pixel-ratio: 2), 
+only screen and (min-device-pixel-ratio: 2) {
+  .light,
+  .dark {
+    --divider-tile-width: 0.5px;
+    --divider-section-width: 2px;
+  }
+}   
