@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface UiState {
 	showMenu: boolean;
+	showDarkTheme: boolean,
 	highlightActiveRowsAndCols: boolean;
 	highlightActiveSection: boolean;
 	highlightSameValues: boolean;
@@ -17,6 +18,7 @@ interface UiState {
 
 const initialUiState: UiState = {
 	showMenu: false,
+	showDarkTheme: false,
 	highlightActiveRowsAndCols: true,
 	highlightActiveSection: true,
 	highlightSameValues: true,
@@ -36,6 +38,9 @@ const uiSlice = createSlice({
 	reducers: {
 		setShowMenu(state, action: { payload: boolean }) {
 			state.showMenu = action.payload;
+		},
+		setShowDarkTheme(state, action: { payload: boolean }) {
+			state.showDarkTheme = action.payload;
 		},
 		setHighlightActiveRowsAndCols(state, action: { payload: boolean }) {
 			state.highlightActiveRowsAndCols = action.payload;

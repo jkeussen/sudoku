@@ -23,6 +23,9 @@ const OptionsSwitches: React.FC<{
 	const highlightValidSections = useAppSelector(
 		(state) => state.ui.highlightValidSections
 	);
+	const showDarkTheme = useAppSelector(
+		(state) => state.ui.showDarkTheme
+	);
 
 	const toggleHighlightActiveRowsAndCols = () => {
 		dispatch(
@@ -54,6 +57,12 @@ const OptionsSwitches: React.FC<{
 		);
 	};
 
+	const toggleDarkTheme = () => {
+		dispatch(
+			uiActions.setShowDarkTheme(!showDarkTheme)
+		);
+	};
+
 	return (
 		<div className={props.className}>
 			<Switch
@@ -77,9 +86,14 @@ const OptionsSwitches: React.FC<{
 				onChange={toggleHighlightValidSections}
 			/>
 			<Switch
-				label="Highlight other instances of the selected number"
+				label="Highlight same numbers"
 				checked={highlightSameValues}
 				onChange={toggleHighlightSameValues}
+			/>
+			<Switch
+				label="Dark theme"
+				checked={showDarkTheme}
+				onChange={toggleDarkTheme}
 			/>
 		</div>
 	);

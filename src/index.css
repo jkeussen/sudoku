@@ -1,10 +1,12 @@
 *, html, body {
+  --transition-speed: 0.3s;
   width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
-*::before, *::after { box-sizing: inherit; }
+
 :root {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -21,38 +23,15 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
-}
-
-.light {
-  --border-radius: 8px;
-  --divider-tile: rgb(131, 131, 131);
-  --divider-section: rgb(35, 35, 35);
-  --bg: white;
-  --tile-bg: white;
-  --text: rgb(88, 88, 88);
-  --button-bg: rgb(239,239,239);
-  --control-button-text-color: grey;
-  --blue: rgb(173, 216, 230);
-  --blue-dark: rgb(135, 206, 250);
-  --valid: rgb(144, 238, 144);
-  --error: rgb(240, 128, 128);
-  --error-dark: rgb(214, 99, 99);
-
-  --focus: 2px solid var(--blue-dark);
-
-  /* Tiles */
-  --tile-num-given: black;
-  --tile-num-user: rgb(81, 81, 81);
-  --tile-num-wrong: rgb(181, 0, 0);
-
+  
   /* Dividers */
   --divider-tile-width: 1px;
   --divider-section-width: 4px;
+  --border-radius: 8px;
 }
 
 @media (max-width: 600px) {
-  .light,
-  .dark {
+  :root {
     --divider-tile-width: 0.5px;
     --divider-section-width: 2px;
   }
@@ -62,9 +41,48 @@
 only screen and (-o-min-device-pixel-ratio: 2/1), 
 only screen and (-webkit-min-device-pixel-ratio: 2), 
 only screen and (min-device-pixel-ratio: 2) {
-  .light,
-  .dark {
+  :root {
     --divider-tile-width: 0.5px;
     --divider-section-width: 2px;
   }
 }   
+
+.light {
+  --bg: white;
+  --text: rgb(88, 88, 88);
+  --tile-bg: white;
+  --tile-num-given: black;
+  --tile-num-user: rgb(81, 81, 81);
+  --tile-num-wrong: rgb(181, 0, 0);
+  --divider-tile: rgb(131, 131, 131);
+  --divider-section: rgb(35, 35, 35);
+  --button-bg: rgb(239,239,239);
+  --control-button-text-color: grey;
+  --blue: rgb(173, 216, 230);
+  --blue-dark: rgb(135, 206, 250);
+  --valid: rgb(144, 238, 144);
+  --error: rgb(240, 128, 128);
+  --error-dark: rgb(214, 99, 99);
+
+  --focus: 2px solid var(--blue-dark);
+}
+
+.dark {
+  --bg: rgb(42, 42, 42);
+  --text: rgb(171, 171, 171);
+  --tile-bg: rgb(42, 42, 42);
+  --tile-num-given: rgb(210, 210, 210);
+  --tile-num-user: rgb(160, 160, 160);
+  --tile-num-wrong: rgb(206, 65, 65);
+  --divider-tile: rgb(0, 0, 0);
+  --divider-section: rgb(2, 2, 2);
+  --button-bg: rgb(32, 32, 32);
+  --control-button-text-color: grey;
+  --blue: rgb(44, 59, 64);
+  --blue-dark: rgb(50, 98, 128);
+  --valid: rgb(33, 64, 33);
+  --error: rgb(94, 46, 46);
+  --error-dark: rgb(58, 24, 24);
+
+  --focus: 2px solid var(--blue-dark);
+}
