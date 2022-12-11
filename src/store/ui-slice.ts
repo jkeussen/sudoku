@@ -7,6 +7,7 @@ interface UiState {
 	highlightSameValues: boolean;
 	highlightValidRowsAndCols: boolean;
 	highlightValidSections: boolean;
+	showDifficultySelect: boolean,
 	showLocalErrors: boolean;
 	showGlobalErrors: boolean;
 	isTimerPaused: boolean;
@@ -21,6 +22,7 @@ const initialUiState: UiState = {
 	highlightSameValues: true,
 	highlightValidRowsAndCols: false,
 	highlightValidSections: true,
+	showDifficultySelect: false,
 	showLocalErrors: false,
 	showGlobalErrors: true,
 	isTimerPaused: false,
@@ -49,6 +51,9 @@ const uiSlice = createSlice({
 		},
 		setHighlightValidSections(state, action: { payload: boolean }) {
 			state.highlightValidSections = action.payload;
+		},
+		setShowDifficultySelect(state, action: { payload: boolean }) {
+			state.showDifficultySelect = action.payload;
 		},
 		setShowLocalErrors(state, action: { payload: boolean }) {
 			state.showLocalErrors = action.payload;

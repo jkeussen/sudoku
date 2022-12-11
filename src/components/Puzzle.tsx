@@ -25,7 +25,7 @@ const Puzzle = () => {
 	const globalErrors = useAppSelector((state) => state.puzzle.globalErrors);
 
 	useEffect(() => {
-		dispatch(puzzleActions.generatePuzzle());
+		dispatch(puzzleActions.generatePuzzle('hard'));
 	}, []);
 
 	const puzzle = userGrid.map((row: string[], i: number) => {

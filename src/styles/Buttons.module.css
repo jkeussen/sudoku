@@ -21,8 +21,9 @@
 	pointer-events: none;
 }
 .button:hover {
-	background-color: var(--blue);
-}
-.button:active {
 	background-color: var(--blue-dark);
+}
+.button:active,
+.button.pressed {
+	background-color: var(--blue);
 }

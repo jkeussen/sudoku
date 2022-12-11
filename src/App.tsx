@@ -13,7 +13,7 @@ function App() {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(puzzleActions.generatePuzzle());
+		dispatch(puzzleActions.generatePuzzle('medium'));
 	}, []);
 
 	// return <Tile key={`gridTile_${index}`} value={char} />
