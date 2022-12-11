@@ -12,8 +12,6 @@ const Notes: React.FC<{
 	candidateVals: CandidateTileValues
 }> = (props) => {
 
-	if (!props.candidateVals.isPopulated) return <></>
-
 	return(
 		<div className={classes.notes}>
 			<span>{props.candidateVals.values[1] ? '1' : ''}</span>

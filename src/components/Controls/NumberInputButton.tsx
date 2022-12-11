@@ -9,10 +9,12 @@ const NumberInputButton: React.FC<{
 	const dispatch = useAppDispatch();
 
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
+	const areNotesEnabled = useAppSelector(state => state.ui.areNotesEnabled)
 
 	const clickHandler = () => {
 		dispatch(
 			puzzleActions.updateUserPuzzle({
+				isNote: areNotesEnabled,
 				val: props.number,
 				activeSquare,
 			})

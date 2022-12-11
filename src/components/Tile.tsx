@@ -6,6 +6,7 @@ import { validInputs, empty } from "../helpers/valid-inputs";
 import { sectionRefArr, getActiveSection } from "../helpers/get-section";
 import { puzzleActions } from "../store/puzzle-slice";
 import Notes from "./Notes";
+import { uiActions } from "../store/ui-slice";
 
 const Tile: React.FC<{
 	id: number;
@@ -62,19 +63,25 @@ const Tile: React.FC<{
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		e.preventDefault();
+		console.log(e.code)
 		if (!validInputs.includes(e.code)) return;
 
 		let squareToSelect: number | null;
+		let arrowNavigationFlag = false;
 
 		switch (e.code) {
 			case "Escape":
 				// dispatch(puzzleActions.setActiveSquare(null));
 				return;
+			case "KeyN":
+				dispatch(uiActions.setAreNotesEnabled(!areNotesEnabled))
+				break;
 			case "Backspace":
 			case "Digit0":
 				if (isGiven) return;
 				dispatch(
 					puzzleActions.updateUserPuzzle({
+						isNote: props.value === empty ? true : areNotesEnabled,
 						val: empty,
 						activeSquare,
 					})
@@ -94,6 +101,7 @@ const Tile: React.FC<{
 				if (enteredValue === props.value) return;
 				dispatch(
 					puzzleActions.updateUserPuzzle({
+						isNote: areNotesEnabled,
 						val: enteredValue,
 						activeSquare,
 					})
@@ -102,23 +110,28 @@ const Tile: React.FC<{
 			case "ArrowUp":
 				if (row === 0) return;
 				squareToSelect = (row - 1) * 9 + col;
+				arrowNavigationFlag = true;
 				break;
 			case "ArrowRight":
 				if (col === 8) return;
 				squareToSelect = row * 9 + col + 1;
+				arrowNavigationFlag = true;
 				break;
 			case "ArrowDown":
 				if (row === 8) return;
 				squareToSelect = (row + 1) * 9 + col;
+				arrowNavigationFlag = true;
 				break;
 			case "ArrowLeft":
 				if (col === 0) return;
 				squareToSelect = row * 9 + col - 1;
-				break;
+				arrowNavigationFlag = true;
+				break
 			default:
 				break;
 		}
 
+		if (!arrowNavigationFlag) return;
 		// console.log(`Select square [${rowToSelect!}, ${colToSelect!}] (${squareToSelect!})`)
 		dispatch(puzzleActions.setActiveSquare(squareToSelect!));
 	};
@@ -161,6 +174,7 @@ const Tile: React.FC<{
 				<Notes tileId={props.id} candidateVals={candidateValues} />
 			)}
 			<input
+				tabIndex={-1}
 				className={css}
 				ref={inputRef}
 				type="text"

@@ -17,6 +17,7 @@ const InputTopRow: React.FC<{
 	const deleteHandler = () => {
 		dispatch(
 			puzzleActions.updateUserPuzzle({
+				isNote: false,
 				val: empty,
 				activeSquare,
 			})
@@ -26,10 +27,12 @@ const InputTopRow: React.FC<{
 	const hintHandler = () => {
 		dispatch(
 			puzzleActions.updateUserPuzzle({
+				isNote: false,
 				val: solvedString[activeSquare],
 				activeSquare,
 			})
 		);
+		dispatch(puzzleActions.clearNotesOnSquare(activeSquare))
 	};
 
 	const undoHandler = () => {

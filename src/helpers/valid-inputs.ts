@@ -1,6 +1,7 @@
 export const empty = '.'
 
 export const validInputs = [
+	"KeyN",
 	"ArrowUp",
 	"ArrowDown",
 	"ArrowLeft",

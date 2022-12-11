@@ -9,7 +9,7 @@ import {
 	getValidSections,
 } from "../helpers/get-valid-areas";
 import { getLocalErrors, getGlobalErrors } from "../helpers/get-errors";
-import { buildPuzzleGridFromString, generateBlankCandidateValues, getSameValueTiles } from "../helpers/utils";
+import { buildPuzzleGridFromString, generateClearNoteDataForEntirePuzzle, generateClearNoteDataForSingleSquare, getSameValueTiles } from "../helpers/utils";
 import { empty } from "../helpers/valid-inputs";
 import { CandidateTileValues } from "../components/Notes";
 
@@ -43,7 +43,7 @@ const initialState: PuzzleState = {
 	localErrors: [],
 	globalErrors: [],
 	sameValueTiles: [],
-	candidates: generateBlankCandidateValues(),
+	candidates: generateClearNoteDataForEntirePuzzle(),
 	isPuzzleSolved: false,
 };
 
@@ -67,7 +67,7 @@ const puzzleSlice = createSlice({
 			state.validSections = [];
 			// state.sameValueTiles = [];
 			state.sameValueTiles = getSameValueTiles(puzzleGrid, 0)
-			state.candidates = generateBlankCandidateValues();
+			state.candidates = generateClearNoteDataForEntirePuzzle();
 			state.isPuzzleSolved = false;
 		},
 		solvePuzzle(state, action: {payload?: any} ) {
@@ -80,7 +80,7 @@ const puzzleSlice = createSlice({
 			state.validSections = getValidSections(newUserGrid);
 			state.sameValueTiles = [];
 			// console.log(state.validRows, '\n', state.validCols, '\n', state.validSections)
-			state.candidates = generateBlankCandidateValues();
+			state.candidates = generateClearNoteDataForEntirePuzzle();
 			state.isPuzzleSolved = true;
 		},
 		setLocalErrors(state, action: { payload: number[] }) {
@@ -93,15 +93,38 @@ const puzzleSlice = createSlice({
 			state,
 			action: {
 				payload: {
+					isNote: boolean,
 					val: string;
 					activeSquare: number;
 				};
 			}
 		) {
+			// Make sure the square the input is on is not a given square
 			if (state.initialString[action.payload.activeSquare] !== empty) return
-			let newUserPuzzle = [...state.userGrid];
+
+			// ! If the input is done as a note
+			if (action.payload.isNote) {
+				let num = parseInt(action.payload.val)
+				let squareId = action.payload.activeSquare
+				if (action.payload.val === empty) {
+					state.candidates[squareId] = generateClearNoteDataForSingleSquare();
+					return;
+				}
+				// Flip that note value's boolean
+				state.candidates[squareId].values[num] = !state.candidates[squareId].values[num];
+				// Establish the isPopulated flag
+				let isPopulated = false;
+				for (var i=0; i<9; i++) {
+					if (state.candidates[squareId].values[i]) isPopulated = true;
+				}
+				state.candidates[squareId].isPopulated = isPopulated;
+				return;
+			}
+
+			// ! If the input is done as a non-note value
 			let row = Math.floor(action.payload.activeSquare / 9)
 			let col = action.payload.activeSquare % 9
+			let newUserPuzzle = [...state.userGrid];
 			newUserPuzzle[row][col] = action.payload.val;
 			state.localErrors = getLocalErrors(
 				newUserPuzzle,
@@ -117,6 +140,9 @@ const puzzleSlice = createSlice({
 			} else {
 				state.isPuzzleSolved = false;
 			}
+		},
+		clearNotesOnSquare(state, action: { payload: number }) {
+			state.candidates[action.payload] = generateClearNoteDataForSingleSquare();
 		},
 		setActiveSquare(state, action: { payload: number }) {
 			state.activeSquare = action.payload;
