@@ -9,16 +9,25 @@ import {
 	getValidSections,
 } from "../helpers/get-valid-areas";
 import { getLocalErrors, getGlobalErrors } from "../helpers/get-errors";
-import { buildPuzzleGridFromString, generateClearNoteDataForEntirePuzzle, generateClearNoteDataForSingleSquare, getSameValueTiles } from "../helpers/utils";
+import {
+	buildPuzzleGridFromString,
+	buildPuzzleStringFromGrid,
+	generateClearNoteDataForEntirePuzzle,
+	generateClearNoteDataForSingleSquare,
+	getRowAndColTupleFromSquareId,
+	getSameValueTiles,
+	isActionANoteAction,
+} from "../helpers/utils";
 import { empty } from "../helpers/valid-inputs";
 import { CandidateTileValues } from "../components/Notes";
 
 interface PuzzleState {
-	initialString: string;
-	solvedString: string;
 	initialGrid: string[][];
+	initialString: string;
 	solvedGrid: string[][];
+	solvedString: string;
 	userGrid: string[][];
+	userString: string;
 	activeSquare: number;
 	validRows: number[];
 	validCols: number[];
@@ -31,11 +40,12 @@ interface PuzzleState {
 }
 
 const initialState: PuzzleState = {
-	initialString: "",
-	solvedString: "",
 	initialGrid: [],
+	initialString: "",
 	solvedGrid: [],
+	solvedString: "",
 	userGrid: [],
+	userString: "",
 	activeSquare: 0,
 	validRows: [],
 	validCols: [],
@@ -55,26 +65,28 @@ const puzzleSlice = createSlice({
 			const [puzzle, solution] = generateSudoku(action.payload);
 			const puzzleGrid = buildPuzzleGridFromString(puzzle);
 			const solutionGrid = buildPuzzleGridFromString(solution);
+			state.initialGrid = puzzleGrid;
 			state.initialString = puzzle;
+			state.solvedGrid = solutionGrid;
 			state.solvedString = solution;
-			state.initialGrid = puzzleGrid
-			state.solvedGrid = solutionGrid
 			state.userGrid = [...puzzleGrid];
+			state.userString = puzzle;
 			state.localErrors = [];
 			state.globalErrors = [];
 			state.validRows = [];
 			state.validCols = [];
 			state.validSections = [];
 			// state.sameValueTiles = [];
-			state.sameValueTiles = getSameValueTiles(puzzleGrid, 0)
+			state.sameValueTiles = getSameValueTiles(puzzleGrid, 0);
 			state.candidates = generateClearNoteDataForEntirePuzzle();
 			state.isPuzzleSolved = false;
 		},
-		solvePuzzle(state, action: {payload?: any} ) {
-			let newUserGrid = [...state.solvedGrid]; 
-			state.userGrid = newUserGrid
-			state.localErrors = []
-			state.globalErrors = []
+		solvePuzzle(state, action: { payload?: any }) {
+			let newUserGrid = [...state.solvedGrid];
+			state.userGrid = newUserGrid;
+			state.userString = buildPuzzleStringFromGrid(newUserGrid);
+			state.localErrors = [];
+			state.globalErrors = [];
 			state.validRows = getValidRows(newUserGrid);
 			state.validCols = getValidCols(newUserGrid);
 			state.validSections = getValidSections(newUserGrid);
@@ -93,49 +105,61 @@ const puzzleSlice = createSlice({
 			state,
 			action: {
 				payload: {
-					isNote: boolean,
+					noteModeEnabled: boolean;
 					val: string;
 					activeSquare: number;
 				};
 			}
 		) {
 			// Make sure the square the input is on is not a given square
-			if (state.initialString[action.payload.activeSquare] !== empty) return
+			if (state.initialString[action.payload.activeSquare] !== empty) return;
+			const activeSquare = action.payload.activeSquare;
+
+			const isNoteAction = isActionANoteAction({
+				val: action.payload.val,
+				activeSquare: activeSquare,
+				userGrid: state.userGrid,
+				noteModeEnabled: action.payload.noteModeEnabled,
+				squareHasNotes: state.candidates[activeSquare].isPopulated,
+			});
+			console.log(`isNoteAction: ${isNoteAction}`);
 
 			// ! If the input is done as a note
-			if (action.payload.isNote) {
-				let num = parseInt(action.payload.val)
-				let squareId = action.payload.activeSquare
+			if (isNoteAction) {
+				let num = parseInt(action.payload.val);
 				if (action.payload.val === empty) {
-					state.candidates[squareId] = generateClearNoteDataForSingleSquare();
+					state.candidates[activeSquare] =
+						generateClearNoteDataForSingleSquare();
+						console.log(`Square ${activeSquare} has notes: ${false}`);
 					return;
 				}
 				// Flip that note value's boolean
-				state.candidates[squareId].values[num] = !state.candidates[squareId].values[num];
+				state.candidates[activeSquare].values[num] =
+					!state.candidates[activeSquare].values[num];
 				// Establish the isPopulated flag
 				let isPopulated = false;
-				for (var i=0; i<9; i++) {
-					if (state.candidates[squareId].values[i]) isPopulated = true;
+				for (var i = 0; i < 9; i++) {
+					if (state.candidates[activeSquare].values[i]) isPopulated = true;
 				}
-				state.candidates[squareId].isPopulated = isPopulated;
+				state.candidates[activeSquare].isPopulated = isPopulated;
+				console.log(`Square ${activeSquare} has notes: ${isPopulated}`);
 				return;
 			}
 
 			// ! If the input is done as a non-note value
-			let row = Math.floor(action.payload.activeSquare / 9)
-			let col = action.payload.activeSquare % 9
+			let [row, col] = getRowAndColTupleFromSquareId(activeSquare)
 			let newUserPuzzle = [...state.userGrid];
 			newUserPuzzle[row][col] = action.payload.val;
-			state.localErrors = getLocalErrors(
-				newUserPuzzle,
-				action.payload.activeSquare
-			);
+			state.localErrors = getLocalErrors(newUserPuzzle, activeSquare);
 			state.globalErrors = getGlobalErrors(newUserPuzzle);
 			state.validRows = getValidRows(newUserPuzzle);
 			state.validCols = getValidCols(newUserPuzzle);
 			state.validSections = getValidSections(newUserPuzzle);
-			state.sameValueTiles = getSameValueTiles(newUserPuzzle, action.payload.activeSquare)
-			if (state.validSections.length === 9) { 
+			state.sameValueTiles = getSameValueTiles(
+				newUserPuzzle,
+				action.payload.activeSquare
+			);
+			if (state.validSections.length === 9) {
 				state.isPuzzleSolved = true;
 			} else {
 				state.isPuzzleSolved = false;
@@ -146,11 +170,8 @@ const puzzleSlice = createSlice({
 		},
 		setActiveSquare(state, action: { payload: number }) {
 			state.activeSquare = action.payload;
-			state.localErrors = getLocalErrors(
-				state.userGrid,
-				action.payload
-			);
-			state.sameValueTiles = getSameValueTiles(state.userGrid, action.payload)
+			state.localErrors = getLocalErrors(state.userGrid, action.payload);
+			state.sameValueTiles = getSameValueTiles(state.userGrid, action.payload);
 		},
 	},
 });

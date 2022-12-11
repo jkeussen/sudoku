@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import classes from "./Tile.module.css";
-
 import { validInputs, empty } from "../helpers/valid-inputs";
 import { sectionRefArr, getActiveSection } from "../helpers/get-section";
+
 import { puzzleActions } from "../store/puzzle-slice";
-import Notes from "./Notes";
 import { uiActions } from "../store/ui-slice";
+
+import Notes from "./Notes";
+
+import classes from "./Tile.module.css";
+import { getRowAndColTupleFromSquareId } from "../helpers/utils";
 
 const Tile: React.FC<{
 	id: number;
@@ -20,18 +23,18 @@ const Tile: React.FC<{
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const row = Math.floor(props.id / 9);
-	const col = props.id % 9;
+	const [row, col] = getRowAndColTupleFromSquareId(props.id)
 	const section = sectionRefArr[row][col];
 
 	const validRow = props.validRows.includes(row);
 	const validCol = props.validCols.includes(col);
 	const validSection = props.validSections.includes(section);
 	const sameValueTiles = useAppSelector((state) => state.puzzle.sameValueTiles);
-	const areNotesEnabled = useAppSelector((state) => state.ui.areNotesEnabled);
+	const noteModeEnabled = useAppSelector((state) => state.ui.noteModeEnabled);
 	const candidateValues = useAppSelector(state => state.puzzle.candidates[props.id])
 
 	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
+	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
 	const isGiven = initialGrid[row][col] !== empty;
 
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
@@ -74,14 +77,24 @@ const Tile: React.FC<{
 				// dispatch(puzzleActions.setActiveSquare(null));
 				return;
 			case "KeyN":
-				dispatch(uiActions.setAreNotesEnabled(!areNotesEnabled))
+				dispatch(uiActions.setnoteModeEnabled(!noteModeEnabled))
+				break;
+			case "KeyH":
+				dispatch(
+					puzzleActions.updateUserPuzzle({
+						noteModeEnabled: noteModeEnabled,
+						val: solvedString[activeSquare],
+						activeSquare,
+					})
+				);
+				dispatch(puzzleActions.clearNotesOnSquare(activeSquare))
 				break;
 			case "Backspace":
 			case "Digit0":
 				if (isGiven) return;
 				dispatch(
 					puzzleActions.updateUserPuzzle({
-						isNote: props.value === empty ? true : areNotesEnabled,
+						noteModeEnabled: noteModeEnabled,
 						val: empty,
 						activeSquare,
 					})
@@ -98,10 +111,9 @@ const Tile: React.FC<{
 			case "Digit9":
 				if (isGiven) return;
 				let enteredValue = e.code.slice(-1);
-				if (enteredValue === props.value) return;
 				dispatch(
 					puzzleActions.updateUserPuzzle({
-						isNote: areNotesEnabled,
+						noteModeEnabled: noteModeEnabled,
 						val: enteredValue,
 						activeSquare,
 					})
@@ -136,8 +148,9 @@ const Tile: React.FC<{
 		dispatch(puzzleActions.setActiveSquare(squareToSelect!));
 	};
 
+	// ! Build CSS classes for the tile
 	const userOrGiven = isGiven ? classes.givenTile : classes.userTile;
-	const active = activeSquare === props.id ? classes.active : "";
+	const isActiveSquare = activeSquare === props.id ? classes.active : "";
 	const highlightedRow =
 		highlightActiveRowsAndCols &&
 		activeSquare !== null &&
@@ -165,8 +178,7 @@ const Tile: React.FC<{
 			? classes.valid
 			: "";
 	const error = props.error ? classes.error : "";
-
-	const css = `${classes.tile} ${userOrGiven} ${active} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${highLightedSameTile} ${valid} ${error}`;
+	const css = `${classes.tile} ${userOrGiven} ${isActiveSquare} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${highLightedSameTile} ${valid} ${error}`;
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>

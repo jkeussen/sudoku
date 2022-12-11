@@ -11,7 +11,7 @@ interface UiState {
 	showDifficultySelect: boolean,
 	showLocalErrors: boolean;
 	showGlobalErrors: boolean;
-	areNotesEnabled: boolean;
+	noteModeEnabled: boolean;
 	isTimerPaused: boolean;
 	isTimerDisabled: boolean;
 	timerSecondsElapsed: number;
@@ -28,7 +28,7 @@ const initialUiState: UiState = {
 	showDifficultySelect: false,
 	showLocalErrors: false,
 	showGlobalErrors: true,
-	areNotesEnabled: false,
+	noteModeEnabled: false,
 	isTimerPaused: false,
 	isTimerDisabled: false,
 	timerSecondsElapsed: 0,
@@ -68,8 +68,8 @@ const uiSlice = createSlice({
 		setShowGlobalErrors(state, action: { payload: boolean }) {
 			state.showGlobalErrors = action.payload;
 		},
-		setAreNotesEnabled(state, action: { payload: boolean }) {
-			state.areNotesEnabled = action.payload;
+		setnoteModeEnabled(state, action: { payload: boolean }) {
+			state.noteModeEnabled = action.payload;
 		},
 		setIsTimerPaused(state, action: { payload: boolean }) {
 			state.isTimerPaused = action.payload;

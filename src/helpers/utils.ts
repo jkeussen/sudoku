@@ -82,8 +82,43 @@ export const generateClearNoteDataForSingleSquare = () => {
 		isPopulated: false,
 		values: {},
 	};
-	for (let j=0; j<9; j++) {
+	for (let j = 0; j < 9; j++) {
 		singleCandidateValue.values[j] = false;
 	}
 	return singleCandidateValue;
+};
+
+export const getRowAndColTupleFromSquareId = (id: number) => {
+	const row = Math.floor(id / 9);
+	const col = id % 9;
+	return [row, col];
+};
+
+interface NoteDeletionArgs {
+	val: string,
+	activeSquare: number;
+	userGrid: string[][];
+	noteModeEnabled: boolean;
+	squareHasNotes: boolean;
+}
+
+export const isActionANoteAction = ({
+	val,
+	activeSquare,
+	userGrid,
+	noteModeEnabled,
+	squareHasNotes,
+}: NoteDeletionArgs) => {
+	if (val !== empty) return noteModeEnabled;
+
+	const [row, col] = getRowAndColTupleFromSquareId(activeSquare);
+	const squareHasValue = userGrid[row][col] !== empty;
+
+	let isActionANoteAction = noteModeEnabled;
+	if (noteModeEnabled && squareHasNotes) return true;
+	if (!noteModeEnabled && squareHasValue) return false;
+	if (noteModeEnabled && !squareHasNotes && squareHasValue) return false;
+	if (!noteModeEnabled && !squareHasValue && squareHasNotes) return true;
+
+	return isActionANoteAction;
 };

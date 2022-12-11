@@ -1,14 +1,13 @@
 import { empty } from "./valid-inputs"
 import { sectionRefArr, sectionIdArr } from "./get-section"
-import { buildSections, rotatePuzzle } from "./utils"
+import { buildSections, getRowAndColTupleFromSquareId, rotatePuzzle } from "./utils"
 
 export const getLocalErrors = (puzzle: string[][], selSquare: number | null): number[] => {
 	if (!puzzle || selSquare === null) return []
 
 	let errors: number[] = []
 
-	let selRow = Math.floor(selSquare / 9)
-	let selCol = selSquare % 9
+	let [selRow, selCol] = getRowAndColTupleFromSquareId(selSquare)
 	let selVal = puzzle[selRow][selCol]
 	let selSection = sectionRefArr[selRow][selCol]
 	let rowData = puzzle[selRow]

@@ -15,6 +15,8 @@ Puzzle Id Map
 
 */
 
+import { getRowAndColTupleFromSquareId } from "./utils";
+
 export const sectionRefArr = [
 	[0, 0, 0, 1, 1, 1, 2, 2, 2],
 	[0, 0, 0, 1, 1, 1, 2, 2, 2],
@@ -41,7 +43,6 @@ export const sectionIdArr = [
 
 export const getActiveSection = (activeSquare: number | null) => {
 	if (activeSquare === null) return null;
-	const activeRow = Math.floor(activeSquare / 9)
-	const activeCol = activeSquare % 9
-	return sectionRefArr[activeRow][activeCol]
+	const [row, col] = getRowAndColTupleFromSquareId(activeSquare)
+	return sectionRefArr[row][col]
 }

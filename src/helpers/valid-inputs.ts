@@ -1,21 +1,22 @@
 export const empty = '.'
 
 export const validInputs = [
-	"KeyN",
-	"ArrowUp",
-	"ArrowDown",
-	"ArrowLeft",
-	"ArrowRight",
-	"Escape",
-	"Backspace",
-	"Digit0",
-	"Digit1",
-	"Digit2",
-	"Digit3",
-	"Digit4",
-	"Digit5",
-	"Digit6",
-	"Digit7",
-	"Digit8",
-	"Digit9",
+	"KeyN", 				// Toggle notes mode
+	"KeyH",					// Hint for current square
+	"ArrowUp",			// Move current square up
+	"ArrowDown",		// Move current square down
+	"ArrowLeft",		// Move current square left	
+	"ArrowRight",		// Move current square right
+	"Escape",				// Nothing at the moment
+	"Backspace",		// Delete square value, or notes	
+	"Digit0",				// Delete square value, or notes	
+	"Digit1",				// Enter note, or set value to 1	
+	"Digit2",				// Enter note, or set value to 2
+	"Digit3",				// Enter note, or set value to 3
+	"Digit4",				// Enter note, or set value to 4
+	"Digit5",				// Enter note, or set value to 5
+	"Digit6",				// Enter note, or set value to 6
+	"Digit7",				// Enter note, or set value to 7
+	"Digit8",				// Enter note, or set value to 8
+	"Digit9",				// Enter note, or set value to 9
 ];

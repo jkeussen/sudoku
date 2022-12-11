@@ -12,12 +12,12 @@ const InputTopRow: React.FC<{
 
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
 	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
-	const areNotesEnabled = useAppSelector((state) => state.ui.areNotesEnabled);
+	const noteModeEnabled = useAppSelector((state) => state.ui.noteModeEnabled);
 
 	const deleteHandler = () => {
 		dispatch(
 			puzzleActions.updateUserPuzzle({
-				isNote: false,
+				noteModeEnabled: noteModeEnabled,
 				val: empty,
 				activeSquare,
 			})
@@ -27,7 +27,7 @@ const InputTopRow: React.FC<{
 	const hintHandler = () => {
 		dispatch(
 			puzzleActions.updateUserPuzzle({
-				isNote: false,
+				noteModeEnabled: noteModeEnabled,
 				val: solvedString[activeSquare],
 				activeSquare,
 			})
@@ -40,7 +40,7 @@ const InputTopRow: React.FC<{
 	};
 
 	const notesHandler = () => {
-		dispatch(uiActions.setAreNotesEnabled(!areNotesEnabled))
+		dispatch(uiActions.setnoteModeEnabled(!noteModeEnabled))
 	};
 
 	return (
@@ -49,7 +49,7 @@ const InputTopRow: React.FC<{
 				<span className="material-icons">undo</span>
 				Undo
 			</button>
-			<button className={`${buttonCss.button} ${areNotesEnabled ? buttonCss.pressed : ''}`} onClick={notesHandler}>
+			<button className={`${buttonCss.button} ${noteModeEnabled ? buttonCss.pressed : ''}`} onClick={notesHandler}>
 				<span className="material-icons">edit_note</span>
 				Notes
 			</button>
