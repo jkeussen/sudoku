@@ -26,34 +26,53 @@
 		font-size: 1.4rem;
 	}
 }
-.wrapper:has(.userTile),
+
 .userTile {
 	color: var(--tile-num-user)
 }
-.wrapper:has(.givenTile),
+.wrapper:has(.userTile) {
+	color: var(--tile-num-user)
+}
+
 .givenTile {
 	color: var(--tile-num-given);
 }
-.wrapper:has(.tile.active),
-.wrapper:has(.tile:active),
-.wrapper:has(.tile:focus),
+.wrapper:has(.givenTile) {
+	color: var(--tile-num-given);
+}
+
 .tile.active,
 .tile:active,
 .tile:focus {
 	background-color: var(--blue-dark);
 }
-.wrapper:has(.highlighted),
+.wrapper:has(.tile.active),
+.wrapper:has(.tile:active),
+.wrapper:has(.tile:focus) {
+	background-color: var(--blue-dark);
+}
+
 .highlighted {
 	background-color: var(--blue)
 }
-.wrapper:has(.valid),
+.wrapper:has(.highlighted) {
+	background-color: var(--blue)
+}
+
 .valid {
 	background-color: var(--valid);	
 }
-.wrapper:has(.error),
+.wrapper:has(.valid) {
+	background-color: var(--valid);	
+}
+
 .error {
 	background-color: var(--error) !important;
 }
+.wrapper:has(.error) {
+	background-color: var(--error) !important;
+}
+
 .tile::selection {
 	background-color: transparent;
 }

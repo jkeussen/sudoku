@@ -6,11 +6,10 @@ import Tile from "./Tile";
 import { puzzleActions } from "../store/puzzle-slice";
 
 import classes from "./Puzzle.module.css";
-import buttonCss from '../styles/Buttons.module.css'
+import buttonCss from "../styles/Buttons.module.css";
 import { uiActions } from "../store/ui-slice";
 
 const Puzzle = () => {
-
 	const dispatch = useAppDispatch();
 
 	const userGrid = useAppSelector((state) => state.puzzle.userGrid);
@@ -19,14 +18,14 @@ const Puzzle = () => {
 	const validCols = useAppSelector((state) => state.puzzle.validCols);
 	const validSections = useAppSelector((state) => state.puzzle.validSections);
 
-	const isTimerPaused = useAppSelector(state => state.ui.isTimerPaused)
-	const isPuzzleSolved = useAppSelector(state => state.puzzle.isPuzzleSolved)
+	const isTimerPaused = useAppSelector((state) => state.ui.isTimerPaused);
+	const isPuzzleSolved = useAppSelector((state) => state.puzzle.isPuzzleSolved);
 
 	const localErrors = useAppSelector((state) => state.puzzle.localErrors);
 	const globalErrors = useAppSelector((state) => state.puzzle.globalErrors);
 
 	useEffect(() => {
-		dispatch(puzzleActions.generatePuzzle('hard'));
+		dispatch(puzzleActions.generatePuzzle("hard"));
 	}, []);
 
 	const puzzle = userGrid.map((row: string[], i: number) => {
@@ -37,8 +36,8 @@ const Puzzle = () => {
 					id={id}
 					value={userGrid[i][j]}
 					validRows={validRows}
-          validCols={validCols}
-          validSections={validSections}
+					validCols={validCols}
+					validSections={validSections}
 					error={globalErrors.includes(id)}
 					key={`gridTile_${i}_${j}`}
 				/>
@@ -56,24 +55,24 @@ const Puzzle = () => {
 	}, []);
 
 	const resumeGameHandler = () => {
-		dispatch(uiActions.setIsTimerPaused(false))
-	}
+		dispatch(uiActions.setIsTimerPaused(false));
+	};
 
-	return(
+	return (
 		<div className={classes.puzzleGrid}>
-			{isTimerPaused && !isPuzzleSolved && <div className={classes.pauseShield}>
-				<span>
-					Game paused.
-				</span>
-				<button className={buttonCss.button} onClick={resumeGameHandler}>
-					<span className="material-icons">play_arrow</span>
-					Resume
-				</button>
-			</div>}
+			{isTimerPaused && !isPuzzleSolved && (
+				<div className={classes.pauseShield}>
+					<span>Game Paused...</span>
+					<button className={buttonCss.button} onClick={resumeGameHandler} style={{paddingRight: '0.85rem'}}>
+						<span className="material-icons">play_arrow</span>
+						Resume
+					</button>
+				</div>
+			)}
 			{dividers}
 			{puzzle}
 		</div>
-	)
-}
+	);
+};
 
 export default Puzzle;

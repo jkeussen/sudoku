@@ -17,7 +17,7 @@
 	border-radius: 50%;	
 }
 .button:disabled {
-	opacity: 0.5;
+	opacity: 0.4;
 	pointer-events: none;
 }
 .button:hover {

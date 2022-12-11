@@ -1,5 +1,5 @@
 *, html, body {
-  --transition-speed: 0.3s;
+  --transition-speed: 0.25s;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -48,19 +48,19 @@ only screen and (min-device-pixel-ratio: 2) {
 }   
 
 .light {
-  --bg: white;
+  --bg: rgb(220, 220, 220);
   --text: rgb(88, 88, 88);
-  --tile-bg: white;
-  --tile-num-given: black;
-  --tile-num-user: rgb(81, 81, 81);
+  --tile-bg: rgb(220, 220, 220);
+  --tile-num-given: rgb(40, 40, 40);
+  --tile-num-user: rgb(100, 100, 100);
   --tile-num-wrong: rgb(181, 0, 0);
   --divider-tile: rgb(131, 131, 131);
   --divider-section: rgb(35, 35, 35);
-  --button-bg: rgb(239,239,239);
-  --control-button-text-color: grey;
-  --blue: rgb(173, 216, 230);
-  --blue-dark: rgb(135, 206, 250);
-  --valid: rgb(144, 238, 144);
+  --button-bg: rgb(200,200,200);
+  --control-button-text-color: rgb(128, 128, 128);
+  --blue: rgb(183, 222, 235);
+  --blue-dark: rgb(139, 198, 234);
+  --valid: rgb(162, 218, 162);
   --error: rgb(240, 128, 128);
   --error-dark: rgb(214, 99, 99);
 
@@ -69,15 +69,17 @@ only screen and (min-device-pixel-ratio: 2) {
 
 .dark {
   --bg: rgb(42, 42, 42);
-  --text: rgb(171, 171, 171);
+  --text: rgb(150, 150, 150);
   --tile-bg: rgb(42, 42, 42);
-  --tile-num-given: rgb(210, 210, 210);
-  --tile-num-user: rgb(160, 160, 160);
+  --tile-num-given: rgb(190, 190, 190);
+  --tile-num-user: rgb(140, 140, 140);
   --tile-num-wrong: rgb(206, 65, 65);
   --divider-tile: rgb(0, 0, 0);
   --divider-section: rgb(2, 2, 2);
+  /* --divider-tile: rgb(90, 90, 90); */
+  /* --divider-section: rgb(120, 120, 120); */
   --button-bg: rgb(32, 32, 32);
-  --control-button-text-color: grey;
+  --control-button-text-color: rgb(128, 128, 128);
   --blue: rgb(44, 59, 64);
   --blue-dark: rgb(50, 98, 128);
   --valid: rgb(33, 64, 33);

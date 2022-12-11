@@ -2,22 +2,27 @@
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
-  flex-basis: 1;
   width: 100%;
 }
 .col1,
 .col2 {
 	display: flex;
-	/* flex-shrink: 0; */
 	flex: 1 1 auto;
 	flex-direction: column;
 	gap: 0.5rem;
 }
 .topRow {
 	display: flex;
-	/* flex-wrap: wrap; */
 	gap: 0.5rem;
 }
+	.topRow button {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+		.topRow button span {
+			font-size: 1.25rem;
+		}
 .numbers {
 	width: 100%;
 	position: relative;
@@ -25,24 +30,11 @@
 	gap: 0.5rem;
 	grid-template-columns: repeat(3, 1fr);
 }
-.numbers button {
-	aspect-ratio: 4 / 3;
-	padding: 0;
-}
-.topRow button {
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
-	color: var(--text);
-}
-	.topRow button span {
-		width: 100%;
-		font-size: 1.25rem;
+	.numbers button {
+		font-size: 2.5rem;
+		color: var(--text);
+		aspect-ratio: 4 / 3;
 	}
-.numbers button {
-	font-size: 2.5rem;
-	color: var(--text);
-}
 .gameActions {
 	display: flex;
 	gap: 0.5rem;
@@ -56,55 +48,37 @@
 	padding: 0.5rem;
 	border: 1px solid var(--button-bg);
 	border-radius: var(--border-radius);
-	overflow-x: scroll;
 	position: relative;
 }
-/* .difficultySelect::after {
-	position: absolute;
-	top: 0;
-	right: calc(0 - 25%);
-	content: '';
-	border: 4px solid red;
-} */
-.difficultySelect button {
-	padding-left: 0;
-	padding-right: 0;
-	flex-shrink: 1;
-	white-space: nowrap;
-}
+	.difficultySelect button {
+		width: min-content;
+		flex: 1;
+		flex-basis: auto;
+		white-space: nowrap;
+	}
 .switches {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.col2 button {
-	padding: 0.5rem 1rem;
-	width: max-content;
-	flex: 1;
-	color: var(--text);
-}
 
 @media (max-width: 600px) {
 	.controls {
 		flex-direction: column;
 	}
-	.col1 {
-		width: 100%;
-	}
 	.topRow button span {
-		font-size: 4vw;
+		font-size: 1.25rem;
 	}
 	.numbers {
 		grid-template-columns: repeat(9, 1fr);
 	}
-	.numbers button {
-		font-size: 2.25rem;
-	}
-	.topRow button {
-		aspect-ratio: 2 / 1;	
-	}
-	.col2 {
-		width: 100%;
+		.numbers button {
+			font-size: 2.25rem;
+			aspect-ratio: unset;
+			padding: 0;
+		}
+	.difficultySelect button {
+		min-width: 30%;
 	}
 }
