@@ -24,13 +24,13 @@ const Header: React.FC = (props?) => {
 		// Pause and disable timer if puzzle is solved
 		if (isPuzzleSolved) {
 			dispatch(uiActions.setIsTimerDisabled(true))
-			dispatch(uiActions.setIsTimerPaused(true))
+			// dispatch(uiActions.setIsTimerPaused(true))
 		} else {
 			if (isTimerDisabled) dispatch(uiActions.setIsTimerDisabled(false))
 		}
 		// Pause/unpause timer when isTimerPaused changes
 		let timer: ReturnType<typeof setInterval>;
-		if (!isTimerPaused) {
+		if (!isTimerPaused && !isPuzzleSolved) {
 			timer = setInterval(() => {
 				dispatch(uiActions.incrementTimer(1))
 			}, 1000);

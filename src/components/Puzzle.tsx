@@ -20,6 +20,7 @@ const Puzzle = () => {
 	const validSections = useAppSelector((state) => state.puzzle.validSections);
 
 	const isTimerPaused = useAppSelector(state => state.ui.isTimerPaused)
+	const isPuzzleSolved = useAppSelector(state => state.puzzle.isPuzzleSolved)
 
 	const localErrors = useAppSelector((state) => state.puzzle.localErrors);
 	const globalErrors = useAppSelector((state) => state.puzzle.globalErrors);
@@ -60,7 +61,7 @@ const Puzzle = () => {
 
 	return(
 		<div className={classes.puzzleGrid}>
-			{isTimerPaused && <div className={classes.pauseShield}>
+			{isTimerPaused && !isPuzzleSolved && <div className={classes.pauseShield}>
 				<span>
 					Game paused.
 				</span>

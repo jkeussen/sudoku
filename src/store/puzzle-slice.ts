@@ -105,7 +105,11 @@ const puzzleSlice = createSlice({
 			state.validCols = getValidCols(newUserPuzzle);
 			state.validSections = getValidSections(newUserPuzzle);
 			state.sameValueTiles = getSameValueTiles(newUserPuzzle, action.payload.activeSquare)
-			if (state.validSections.length === 9) state.isPuzzleSolved = true;
+			if (state.validSections.length === 9) { 
+				state.isPuzzleSolved = true;
+			} else {
+				state.isPuzzleSolved = false;
+			}
 		},
 		setActiveSquare(state, action: { payload: number }) {
 			state.activeSquare = action.payload;
