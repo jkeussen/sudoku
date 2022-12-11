@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { puzzleActions } from "../../store/puzzle-slice";
+import { uiActions } from "../../store/ui-slice";
 import { empty } from "../../helpers/valid-inputs";
 
 import buttonCss from '../../styles/Buttons.module.css'
@@ -11,6 +12,7 @@ const InputTopRow: React.FC<{
 
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
 	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
+	const areNotesEnabled = useAppSelector((state) => state.ui.areNotesEnabled);
 
 	const deleteHandler = () => {
 		dispatch(
@@ -35,7 +37,7 @@ const InputTopRow: React.FC<{
 	};
 
 	const notesHandler = () => {
-		alert("Not yet implemented... :(");
+		dispatch(uiActions.setAreNotesEnabled(!areNotesEnabled))
 	};
 
 	return (
@@ -44,7 +46,7 @@ const InputTopRow: React.FC<{
 				<span className="material-icons">undo</span>
 				Undo
 			</button>
-			<button className={buttonCss.button} onClick={notesHandler} disabled>
+			<button className={`${buttonCss.button} ${areNotesEnabled ? buttonCss.pressed : ''}`} onClick={notesHandler}>
 				<span className="material-icons">edit_note</span>
 				Notes
 			</button>

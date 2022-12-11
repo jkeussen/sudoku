@@ -1,3 +1,4 @@
+import { CandidateTileValues } from "../components/Notes";
 import { sectionRefArr } from "./get-section"
 import { empty } from "./valid-inputs";
 
@@ -59,4 +60,16 @@ export const getSameValueTiles = (puzzle: string[][], activeSquare: number): num
 	})
 
 	return sameValues;
+}
+
+export const generateBlankCandidateValues = () => {
+	let totalCandidateValueArray: CandidateTileValues[] = [];
+	for (let i=0; i<81; i++) {
+		let noteObject: CandidateTileValues = { isPopulated: false, values: {} };
+		for (let j=0; j<9; j++) {
+			noteObject.values[j] = false;
+		}
+		totalCandidateValueArray.push(noteObject)
+	}
+	return totalCandidateValueArray;
 }

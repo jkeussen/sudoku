@@ -4,6 +4,7 @@
 	aspect-ratio: 1 / 1;
 	border: var(--divider-tile-width) solid var(--divider-tile);
 	overflow: visible;
+	position: relative;
 }
 .tile {
 	max-width: 100%;

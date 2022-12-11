@@ -5,6 +5,7 @@ import classes from "./Tile.module.css";
 import { validInputs, empty } from "../helpers/valid-inputs";
 import { sectionRefArr, getActiveSection } from "../helpers/get-section";
 import { puzzleActions } from "../store/puzzle-slice";
+import Notes from "./Notes";
 
 const Tile: React.FC<{
 	id: number;
@@ -25,7 +26,9 @@ const Tile: React.FC<{
 	const validRow = props.validRows.includes(row);
 	const validCol = props.validCols.includes(col);
 	const validSection = props.validSections.includes(section);
-	const sameValueTiles = useAppSelector(state => state.puzzle.sameValueTiles)
+	const sameValueTiles = useAppSelector((state) => state.puzzle.sameValueTiles);
+	const areNotesEnabled = useAppSelector((state) => state.ui.areNotesEnabled);
+	const candidateValues = useAppSelector(state => state.puzzle.candidates[props.id])
 
 	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
 	const isGiven = initialGrid[row][col] !== empty;
@@ -50,8 +53,8 @@ const Tile: React.FC<{
 	);
 
 	useEffect(() => {
-		if (activeSquare === props.id)  inputRef.current?.focus();
-	}, [activeSquare])
+		if (activeSquare === props.id) inputRef.current?.focus();
+	}, [activeSquare]);
 
 	const onFocusHandler = (e: React.FocusEvent<HTMLInputElement>) => {
 		dispatch(puzzleActions.setActiveSquare(props.id));
@@ -61,8 +64,6 @@ const Tile: React.FC<{
 		e.preventDefault();
 		if (!validInputs.includes(e.code)) return;
 
-		let rowToSelect: number | null;
-		let colToSelect: number | null;
 		let squareToSelect: number | null;
 
 		switch (e.code) {
@@ -100,26 +101,18 @@ const Tile: React.FC<{
 				return;
 			case "ArrowUp":
 				if (row === 0) return;
-				rowToSelect = row - 1;
-				colToSelect = col;
 				squareToSelect = (row - 1) * 9 + col;
 				break;
 			case "ArrowRight":
 				if (col === 8) return;
-				rowToSelect = row;
-				colToSelect = col + 1;
 				squareToSelect = row * 9 + col + 1;
 				break;
 			case "ArrowDown":
 				if (row === 8) return;
-				rowToSelect = row + 1;
-				colToSelect = col;
 				squareToSelect = (row + 1) * 9 + col;
 				break;
 			case "ArrowLeft":
 				if (col === 0) return;
-				rowToSelect = row;
-				colToSelect = col - 1;
 				squareToSelect = row * 9 + col - 1;
 				break;
 			default:
@@ -148,10 +141,10 @@ const Tile: React.FC<{
 		highlightActiveSection && section === activeSection
 			? classes.highlighted
 			: "";
-	const highLightedSameTile = 
+	const highLightedSameTile =
 		highlightSameValues && sameValueTiles.includes(props.id)
-		? classes.sameTileValue
-		: "";
+			? classes.sameTileValue
+			: "";
 	const valid =
 		(highlightValidRowsAndCols && validRow) ||
 		(highlightValidRowsAndCols && validCol) ||
@@ -164,6 +157,9 @@ const Tile: React.FC<{
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>
+			{candidateValues.isPopulated && (
+				<Notes tileId={props.id} candidateVals={candidateValues} />
+			)}
 			<input
 				className={css}
 				ref={inputRef}
