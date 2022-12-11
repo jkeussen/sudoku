@@ -31,9 +31,9 @@
 	grid-template-columns: repeat(3, 1fr);
 }
 	.numbers button {
-		font-size: 2.5rem;
-		color: var(--text);
+		font-size: 2.25rem;
 		aspect-ratio: 4 / 3;
+		font-family: 'Questrial', Avenir, Helvetica, Arial, sans-serif;
 	}
 .gameActions {
 	display: flex;
@@ -72,11 +72,12 @@
 	}
 	.numbers {
 		grid-template-columns: repeat(9, 1fr);
+		gap: 0.25rem;
 	}
 		.numbers button {
-			font-size: 2.25rem;
+			font-size: 2rem;
 			aspect-ratio: unset;
-			padding: 0;
+			padding: 0.25rem 0rem;
 		}
 	.difficultySelect button {
 		min-width: 30%;
