@@ -10,6 +10,7 @@ import {
 } from "../helpers/get-valid-areas";
 import { getLocalErrors, getGlobalErrors } from "../helpers/get-errors";
 import { buildPuzzleGridFromString, getSameValueTiles } from "../helpers/utils";
+import { empty } from "../helpers/valid-inputs";
 
 interface PuzzleState {
 	initialString: string;
@@ -92,6 +93,7 @@ const puzzleSlice = createSlice({
 				};
 			}
 		) {
+			if (state.initialString[action.payload.activeSquare] !== empty) return
 			let newUserPuzzle = [...state.userGrid];
 			let row = Math.floor(action.payload.activeSquare / 9)
 			let col = action.payload.activeSquare % 9
