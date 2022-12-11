@@ -26,16 +26,33 @@
 		font-size: 1.4rem;
 	}
 }
+.wrapper:has(.userTile),
 .userTile {
 	color: var(--tile-num-user)
 }
+.wrapper:has(.givenTile),
 .givenTile {
 	color: var(--tile-num-given);
 }
+.wrapper:has(.tile.active),
+.wrapper:has(.tile:active),
+.wrapper:has(.tile:focus),
 .tile.active,
 .tile:active,
 .tile:focus {
 	background-color: var(--blue-dark);
+}
+.wrapper:has(.highlighted),
+.highlighted {
+	background-color: var(--blue)
+}
+.wrapper:has(.valid),
+.valid {
+	background-color: var(--valid);	
+}
+.wrapper:has(.error),
+.error {
+	background-color: var(--error) !important;
 }
 .tile::selection {
 	background-color: transparent;
@@ -46,19 +63,10 @@
 .sameTileValue.error {
 	border: 4px solid var(--error-dark);
 }
-.highlighted {
-	background-color: var(--blue)
-}
-.valid {
-	background-color: var(--valid);	
-}
 .valid:active,
 .valid:focus {
 	border: 8px solid var(--valid);
 	z-index: 3;
-}
-.error {
-	background-color: var(--error) !important;
 }
 .userTile.error {
 	color: var(--tile-num-wrong);
