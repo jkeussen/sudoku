@@ -1,7 +1,12 @@
 .puzzleGrid {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: var(--divider-tile-width);
+  background-color: var(--divider-tile);
   position: relative;
+  padding: calc(var(--divider-tile-width) / 2);
   border-width: var(--divider-section-width);
   border-color: var(--divider-section);
   border-style: solid;

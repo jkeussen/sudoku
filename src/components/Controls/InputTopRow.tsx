@@ -45,10 +45,10 @@ const InputTopRow: React.FC<{
 
 	return (
 		<div className={props.className}>
-			<button className={buttonCss.button} onClick={undoHandler} disabled>
+			{/* <button className={buttonCss.button} onClick={undoHandler} disabled>
 				<span className="material-icons">undo</span>
 				Undo
-			</button>
+			</button> */}
 			<button className={`${buttonCss.button} ${noteModeEnabled ? buttonCss.pressed : ''}`} onClick={notesHandler}>
 				<span className="material-icons">edit_note</span>
 				Notes

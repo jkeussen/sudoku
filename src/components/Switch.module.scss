@@ -50,7 +50,7 @@ input:checked {
   + .switch {
     grid-template-columns: 1fr 1fr 0fr; 
     &::after {
-      background-color: var(--blue-dark);
+      background-color: var(--blue-accent);
       // background-color: var(--text);
       // border: none;
       border: 1px solid var(--text);

@@ -23,7 +23,7 @@
 	font-size: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 603px) {
 	.notes span {
 		font-size: 0.6rem;
 	}

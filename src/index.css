@@ -14,30 +14,31 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  /* color: rgba(255, 255, 255, 0.87); */
-  /* background-color: #242424; */
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
+
+  --number-font: 'Questrial';
+  /* --number-font: 'IBM Plex Mono'; */
   
   /* Dividers */
   --divider-tile-width: 1px;
-  --divider-section-width: 4px;
+  --divider-section-width: 2px;
+  --tile-inner-border-width: 4px;
   --border-radius: 8px;
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 603px) {
   :root {
-    --divider-tile-width: 0.5px;
+    --divider-tile-width: 1px;
     --divider-section-width: 2px;
   }
-}
+} */
 
-@media only screen and (-moz-min-device-pixel-ratio: 2), 
+/* @media only screen and (-moz-min-device-pixel-ratio: 2), 
 only screen and (-o-min-device-pixel-ratio: 2/1), 
 only screen and (-webkit-min-device-pixel-ratio: 2), 
 only screen and (min-device-pixel-ratio: 2) {
@@ -45,7 +46,7 @@ only screen and (min-device-pixel-ratio: 2) {
     --divider-tile-width: 0.5px;
     --divider-section-width: 2px;
   }
-}   
+}    */
 
 .light {
   --bg: rgb(220, 220, 220);
@@ -59,12 +60,12 @@ only screen and (min-device-pixel-ratio: 2) {
   --button-bg: rgb(200,200,200);
   --control-button-text-color: rgb(128, 128, 128);
   --blue: rgb(183, 222, 235);
-  --blue-dark: rgb(139, 198, 234);
+  --blue-accent: rgb(139, 198, 234);
   --valid: rgb(162, 218, 162);
   --error: rgb(240, 128, 128);
   --error-dark: rgb(214, 99, 99);
 
-  --focus: 2px solid var(--blue-dark);
+  --focus: 2px solid var(--blue-accent);
 }
 
 .dark {
@@ -76,15 +77,13 @@ only screen and (min-device-pixel-ratio: 2) {
   --tile-num-wrong: rgb(206, 65, 65);
   --divider-tile: rgb(0, 0, 0);
   --divider-section: rgb(2, 2, 2);
-  /* --divider-tile: rgb(90, 90, 90); */
-  /* --divider-section: rgb(120, 120, 120); */
   --button-bg: rgb(32, 32, 32);
   --control-button-text-color: rgb(128, 128, 128);
   --blue: rgb(44, 59, 64);
-  --blue-dark: rgb(50, 98, 128);
+  --blue-accent: rgb(50, 98, 128);
   --valid: rgb(33, 64, 33);
   --error: rgb(94, 46, 46);
   --error-dark: rgb(58, 24, 24);
 
-  --focus: 2px solid var(--blue-dark);
+  --focus: 2px solid var(--blue-accent);
 }
