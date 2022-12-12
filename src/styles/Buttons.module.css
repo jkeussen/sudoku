@@ -27,3 +27,11 @@
 .button.pressed {
 	background-color: var(--blue-accent);
 }
+@media (max-width: 603px) {
+	.button:hover {
+		background-color: var(--button-bg);
+	}
+	.button.pressed:hover {
+		background-color: var(--blue-accent);
+	}
+}

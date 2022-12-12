@@ -21,7 +21,9 @@
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
 
-  --number-font: 'Questrial';
+  /* --number-font: 'Questrial'; */
+  /* --number-font: 'Nunito'; */
+  --number-font: 'Ubuntu';
   /* --number-font: 'IBM Plex Mono'; */
   
   /* Dividers */
@@ -55,7 +57,7 @@ only screen and (min-device-pixel-ratio: 2) {
   --tile-num-given: rgb(40, 40, 40);
   --tile-num-user: rgb(100, 100, 100);
   --tile-num-wrong: rgb(181, 0, 0);
-  --divider-tile: rgb(131, 131, 131);
+  --divider-tile: rgb(60, 60, 60);
   --divider-section: rgb(35, 35, 35);
   --button-bg: rgb(200,200,200);
   --control-button-text-color: rgb(128, 128, 128);
@@ -75,8 +77,8 @@ only screen and (min-device-pixel-ratio: 2) {
   --tile-num-given: rgb(190, 190, 190);
   --tile-num-user: rgb(140, 140, 140);
   --tile-num-wrong: rgb(206, 65, 65);
-  --divider-tile: rgb(0, 0, 0);
-  --divider-section: rgb(2, 2, 2);
+  --divider-tile: rgb(25, 25, 25);
+  --divider-section: rgb(15, 15, 15);
   --button-bg: rgb(32, 32, 32);
   --control-button-text-color: rgb(128, 128, 128);
   --blue: rgb(44, 59, 64);
