@@ -1,0 +1,47 @@
+.modalWrapper {
+	position: absolute;
+	min-height: 100vh;
+	min-width: 100vw;
+	background-color: rgba(0,0,0,0.75);
+	z-index: 10;
+	padding: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.modal {
+	border-radius: var(--border-radius);
+	background-color: var(--bg);
+	/* max-width: 10rem; */
+	min-width: 20rem;
+	max-width: max-content;
+	min-height: 50vh;
+	padding: 1rem;
+}
+.modalHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+	.modalHeader button {
+		width: min-content;
+	}
+	.modalHeader button.back {
+		margin-right: 1rem;
+	}
+	.modalHeader button.close {
+		margin-left: 1rem;
+	}
+.modalContent {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+@media (max-width: 603px) {
+	.modal {
+		min-width: unset;
+		max-width: unset;
+	}
+}

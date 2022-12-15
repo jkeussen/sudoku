@@ -8,10 +8,12 @@ import Controls from "./components/Controls";
 import { puzzleActions } from "./store/puzzle-slice";
 
 import classes from "./App.module.css";
+import Menu from "./components/Menu";
 
 function App() {
 	const dispatch = useAppDispatch();
 
+	const showMenu = useAppSelector(state => state.ui.showMenu)
 	const showDarkTheme = useAppSelector(state => state.ui.showDarkTheme)
 
 	useEffect(() => {
@@ -22,6 +24,7 @@ function App() {
 	return (
 		<div className={classes.wrapper + `${showDarkTheme ? ' dark' : ' light'}`}>
 			<div className={classes.app}>
+				{showMenu && <Menu/>}
 				<Header />
 				<Puzzle />
 				<Controls />

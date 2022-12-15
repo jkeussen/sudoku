@@ -8,6 +8,7 @@ import { uiActions } from "../store/ui-slice";
 const Header: React.FC = (props?) => {
 	const dispatch = useAppDispatch();
 
+	const showMenu = useAppSelector(state => state.ui.showMenu)
 	const isTimerPaused = useAppSelector((state) => state.ui.isTimerPaused);
 	const isTimerDisabled = useAppSelector((state) => state.ui.isTimerDisabled);
 	const timerSecondsElapsed = useAppSelector((state) => state.ui.timerSecondsElapsed);
@@ -45,9 +46,9 @@ const Header: React.FC = (props?) => {
 		<header className={classes.header}>
 			<div className={classes.logo}>
 				<button
-					onClick={() => {alert('Not yet implemented... :(')}}
+					// onClick={() => {alert('Not yet implemented... :(')}}
+					onClick={() => {dispatch(uiActions.setShowMenu(!showMenu))}}
 					className={`${buttonCss.button} ${buttonCss.rounded}`}
-					disabled
 				>
 					<span className="material-icons">menu</span>
 				</button>
