@@ -2,9 +2,14 @@
 	position: absolute;
 	min-height: 100vh;
 	min-width: 100vw;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	background-color: rgba(0,0,0,0.75);
 	z-index: 10;
-	padding: 2rem;
+	--padding: 2rem;
+	padding: var(--padding);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -15,16 +20,28 @@
 	/* max-width: 10rem; */
 	/* min-width: 20rem; */
 	width: 20rem;
-	/* height: 100%; */
-	align-self: stretch;
-	padding: 1rem;
+	box-shadow: 0 0 10px rgba(0,0,0,0.75);
+	max-height: calc(100vh - 6rem);
+	overflow: hidden;
+	align-self: flex-start;
+	display: flex;
+	flex-direction: column;
+	position: relative;
 }
 .modalHeader {
 	display: flex;
+	padding: 1rem;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 1rem;
+	border-bottom: 1px solid var(--button-bg);
+	background-color: var(--bg);
+	top: 0px;
+	border-top-left-radius: var(--border-radius);
+	border-top-right-radius: var(--border-radius);
 }
+	.modalHeader h2 {
+		color: var(--text)
+	}
 	.modalHeader button {
 		width: min-content;
 	}
@@ -35,6 +52,9 @@
 		margin-left: 1rem;
 	}
 .modalContent {
+	flex: 1;
+	overflow-y: scroll;
+	padding: 1rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -42,7 +62,7 @@
 
 @media (max-width: 603px) {
 	.modal {
-		/* width: unset; */
+		width: 100%;
 		min-width: unset;
 		max-width: unset;
 	}

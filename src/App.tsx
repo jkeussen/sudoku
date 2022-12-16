@@ -22,7 +22,7 @@ function App() {
 
 	// return <Tile key={`gridTile_${index}`} value={char} />
 	return (
-		<div className={classes.wrapper + `${showDarkTheme ? ' dark' : ' light'}`}>
+		<div className={classes.wrapper + `${showDarkTheme ? ' dark' : ' light'}` + `${showMenu ? ' frozen' : ''}`}>
 			<div className={classes.app}>
 				{showMenu && <Menu/>}
 				<Header />
