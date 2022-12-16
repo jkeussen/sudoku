@@ -9,10 +9,12 @@ https://sudoku-42842.web.app/
 # Features
 
 * Puzzle generation
+* Variable difficulty
 * Puzzle solving
 * Responsive
 * Mobile-friendly
-* Hints
+* Dark & light theme
+* Hint functionality
 * Timer
 * Optional highlighting of active rows/columns/sections
 * Optional highlighting of valid rows/columns/sections
