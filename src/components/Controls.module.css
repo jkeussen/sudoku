@@ -4,13 +4,6 @@
   margin-top: 1rem;
   width: 100%;
 }
-.col1,
-.col2 {
-	display: flex;
-	flex: 1 1 auto;
-	flex-direction: column;
-	gap: 0.5rem;
-}
 .topRow {
 	display: flex;
 	gap: 0.5rem;
@@ -37,33 +30,7 @@
 		aspect-ratio: 4 / 3;
 		font-family: var(--number-font), Avenir, Helvetica, Arial, sans-serif;
 	}
-.gameActions {
-	display: flex;
-	gap: 0.5rem;
-}
-.difficultySelect {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	gap: 0.5rem;
-	padding: 0.5rem;
-	border: 1px solid var(--button-bg);
-	border-radius: var(--border-radius);
-	position: relative;
-}
-	.difficultySelect button {
-		width: min-content;
-		flex: 1;
-		flex-basis: auto;
-		white-space: nowrap;
-	}
-.switches {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-}
+
 
 @media (max-width: 603px) {
 	.controls {
@@ -81,13 +48,7 @@
 		gap: 0.25rem;
 	}
 		.numbers button {
-			/* font-size: 2.25rem; */
 			aspect-ratio: unset;
 			padding: 0.25rem 0rem;
-			/* background-color: transparent; */
-			/* border: 1px solid var(--text); */
 		}
-	.difficultySelect button {
-		min-width: 30%;
-	}
 }

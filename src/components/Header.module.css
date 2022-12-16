@@ -29,3 +29,12 @@
 	background-color: var(--valid);
 	opacity: 1;
 }
+
+@media (max-width: 603px) {
+	.logo h1 {
+		font-size: 1.25rem;
+	}
+	.timer h2 {
+		font-size: 1.25rem;
+	}
+}

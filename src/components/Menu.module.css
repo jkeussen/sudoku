@@ -1,0 +1,31 @@
+.switches,
+.difficultySelect {
+	gap: 0.5rem;
+	padding: 0.5rem;
+	border: 1px solid var(--button-bg);
+	border-radius: var(--border-radius);
+	position: relative;
+	background-color: var(--bg);
+}
+/* .switches::before,
+.difficultySelect::before {
+	--triangle-width: 0.25rem;
+	content: '';
+	position: absolute;
+	top: calc(var(--triangle-width) * -1 - 1px);
+	left: calc(50% - calc(var(--triangle-width)));
+	transform: rotate(45deg);
+	width: var(--triangle-width);
+	aspect-ratio: 1 / 1;
+	background-color: var(--bg);
+	padding: calc(var(--triangle-width) / 2);
+	border: 1px solid var(--button-bg);
+} */
+.difficultySelect {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+.switches {
+	display: flex;
+	flex-direction: column;
+}
