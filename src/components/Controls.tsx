@@ -16,17 +16,17 @@ const Controls = () => {
 
 	return (
 		<div className={classes.controls}>
-			<div className={classes.col1}>
-				<InputTopRow className={classes.topRow} />
+			{/* <div className={classes.col1}> */}
 				<NumberInputs className={classes.numbers} />
-			</div>
-			<div className={classes.col2}>
+				<InputTopRow className={classes.topRow} />
+			{/* </div> */}
+			{/* <div className={classes.col2}>
 				<GameActions className={classes.gameActions} />
 				{showDifficultySelect && (
 					<GameDifficultySelect className={classes.difficultySelect} />
 				)}
 				<OptionsSwitches className={classes.switches} />
-			</div>
+			</div> */}
 		</div>
 	);
 };

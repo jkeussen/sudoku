@@ -12,6 +12,7 @@ const GameDifficultySelect: React.FC<{
 
 	const newGameHandler = (difficulty: PuzzleDifficultyString) => {
 		dispatch(puzzleActions.generatePuzzle(difficulty));
+		dispatch(uiActions.setShowMenu(false));
 		dispatch(uiActions.setShowDifficultySelect(false));
 		dispatch(uiActions.setTimerSecondsElapsed(0));
 		dispatch(uiActions.setIsTimerPaused(false));

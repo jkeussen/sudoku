@@ -13,9 +13,10 @@
 	border-radius: var(--border-radius);
 	background-color: var(--bg);
 	/* max-width: 10rem; */
-	min-width: 20rem;
-	max-width: max-content;
-	min-height: 50vh;
+	/* min-width: 20rem; */
+	width: 20rem;
+	/* height: 100%; */
+	align-self: stretch;
 	padding: 1rem;
 }
 .modalHeader {
@@ -41,6 +42,7 @@
 
 @media (max-width: 603px) {
 	.modal {
+		/* width: unset; */
 		min-width: unset;
 		max-width: unset;
 	}

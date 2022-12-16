@@ -14,11 +14,13 @@
 .topRow {
 	display: flex;
 	gap: 0.5rem;
+	align-items: flex-start;
 }
-	.topRow button {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
+.topRow button {
+	display: flex;
+	flex-direction: column;
+	aspect-ratio: 4 / 3;
+	gap: 0.25rem;
 	}
 		.topRow button span {
 			font-size: 1.25rem;
@@ -65,7 +67,11 @@
 
 @media (max-width: 603px) {
 	.controls {
-		flex-direction: column;
+		flex-direction: column-reverse;
+		gap: 0.5rem;
+	}
+	.topRow button {
+		aspect-ratio: unset;
 	}
 	.topRow button span {
 		font-size: 1.25rem;

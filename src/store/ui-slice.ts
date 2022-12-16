@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface UiState {
 	showMenu: boolean;
 	showDarkTheme: boolean,
+	showOptionsSwitches: boolean,
 	highlightActiveRowsAndCols: boolean;
 	highlightActiveSection: boolean;
 	highlightSameValues: boolean;
@@ -20,6 +21,7 @@ interface UiState {
 const initialUiState: UiState = {
 	showMenu: false,
 	showDarkTheme: false,
+	showOptionsSwitches: false,
 	highlightActiveRowsAndCols: true,
 	highlightActiveSection: true,
 	highlightSameValues: true,
@@ -43,6 +45,9 @@ const uiSlice = createSlice({
 		},
 		setShowDarkTheme(state, action: { payload: boolean }) {
 			state.showDarkTheme = action.payload;
+		},
+		setShowOptionsSwitches(state, action: { payload: boolean }) {
+			state.showOptionsSwitches = action.payload;
 		},
 		setHighlightActiveRowsAndCols(state, action: { payload: boolean }) {
 			state.highlightActiveRowsAndCols = action.payload;
@@ -77,20 +82,16 @@ const uiSlice = createSlice({
 		setIsTimerDisabled(state, action: { payload: boolean }) {
 			state.isTimerDisabled = action.payload;
 		},
-		// toggleBoolean(state, action: { payload: string }) {
-		// 	let key = action.payload as keyof UiState;
-		// 	if (typeof state[key] !== 'boolean') {
-		// 		console.error(`Key: ${key} in state.uiSlice does not reference a boolean value and cannot be toggled.`)
-		// 		return;
-		// 	};
-		// 	state[key] = !state[key];
-		// },
 		incrementTimer(state, action: { payload: number }) {
 			let increment = action.payload
 			state.timerSecondsElapsed += increment;
 		},
 		setTimerSecondsElapsed(state, action: { payload: number }) {
 			state.timerSecondsElapsed = action.payload;
+		},
+		collapseMenuItems(state) {
+			state.showOptionsSwitches = false;
+			state.showDifficultySelect = false;
 		}
 	},
 });
