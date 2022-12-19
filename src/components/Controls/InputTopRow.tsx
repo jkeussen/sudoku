@@ -34,6 +34,7 @@ const InputTopRow: React.FC<{
 			})
 		);
 		dispatch(puzzleActions.clearNotesOnSquare(activeSquare))
+		dispatch(puzzleActions.incrementHint())
 	};
 
 	const undoHandler = () => {

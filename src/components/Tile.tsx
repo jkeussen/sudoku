@@ -95,6 +95,7 @@ const Tile: React.FC<{
 					})
 				);
 				dispatch(puzzleActions.clearNotesOnSquare(activeSquare))
+				dispatch(puzzleActions.incrementHint())
 				break;
 			case "Backspace":
 			case "Digit0":

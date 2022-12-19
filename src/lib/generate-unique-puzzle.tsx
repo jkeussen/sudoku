@@ -186,15 +186,15 @@ function _generateUniqueSudoku(
 	} else if (currentDifficulty === "medium") {
 		minimumCells = 2;
 		maximumCells = 6;
-		totalCells = 40;
+		totalCells = 38;
 	} else if (currentDifficulty === "hard") {
 		minimumCells = 2;
 		maximumCells = 5;
-		totalCells = 28;
+		totalCells = 30;
 	} else if (currentDifficulty === "very-hard") {
 		minimumCells = 1;
 		maximumCells = 4;
-		totalCells = 22;
+		totalCells = 24;
 	} else if (currentDifficulty === "insane") {
 		minimumCells = 0;
 		maximumCells = 4;

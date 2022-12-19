@@ -28,6 +28,9 @@ interface PuzzleState {
 	solvedString: string;
 	userGrid: string[][];
 	userString: string;
+	difficulty: PuzzleDifficultyString | '',
+	hintsUsed: number,
+	mistakesMade: number,
 	activeSquare: number;
 	validRows: number[];
 	validCols: number[];
@@ -41,11 +44,14 @@ interface PuzzleState {
 
 const initialState: PuzzleState = {
 	initialGrid: [],
-	initialString: "",
+	initialString: '',
 	solvedGrid: [],
-	solvedString: "",
+	solvedString: '',
 	userGrid: [],
-	userString: "",
+	userString: '',
+	difficulty: '',
+	hintsUsed: 0,
+	mistakesMade: 0,
 	activeSquare: 0,
 	validRows: [],
 	validCols: [],
@@ -71,6 +77,9 @@ const puzzleSlice = createSlice({
 			state.solvedString = solution;
 			state.userGrid = [...puzzleGrid];
 			state.userString = puzzle;
+			state.difficulty = action.payload;
+			state.hintsUsed = 0;
+			state.mistakesMade = 0;
 			state.localErrors = [];
 			state.globalErrors = [];
 			state.validRows = [];
@@ -148,25 +157,33 @@ const puzzleSlice = createSlice({
 
 			// ! If the input is done as a non-note value
 			let [row, col] = getRowAndColTupleFromSquareId(activeSquare)
-			let newUserPuzzle = [...state.userGrid];
-			newUserPuzzle[row][col] = action.payload.val;
-			state.localErrors = getLocalErrors(newUserPuzzle, activeSquare);
-			state.globalErrors = getGlobalErrors(newUserPuzzle);
-			state.validRows = getValidRows(newUserPuzzle);
-			state.validCols = getValidCols(newUserPuzzle);
-			state.validSections = getValidSections(newUserPuzzle);
+			let newUserGrid = [...state.userGrid];
+			newUserGrid[row][col] = action.payload.val;
+			state.localErrors = getLocalErrors(newUserGrid, activeSquare);
+			state.globalErrors = getGlobalErrors(newUserGrid);
+			state.validRows = getValidRows(newUserGrid);
+			state.validCols = getValidCols(newUserGrid);
+			state.validSections = getValidSections(newUserGrid);
 			state.sameValueTiles = getSameValueTiles(
-				newUserPuzzle,
+				newUserGrid,
 				action.payload.activeSquare
 			);
+			if (action.payload.val !== empty && state.solvedGrid[row][col] !== action.payload.val) { 
+				state.mistakesMade += 1;
+			}
 			if (state.validSections.length === 9) {
 				state.isPuzzleSolved = true;
 			} else {
 				state.isPuzzleSolved = false;
 			}
+			state.userGrid = newUserGrid
+			state.userString = buildPuzzleStringFromGrid(newUserGrid);
 		},
 		clearNotesOnSquare(state, action: { payload: number }) {
 			state.candidates[action.payload] = generateClearNoteDataForSingleSquare();
+		},
+		incrementHint(state) {
+			state.hintsUsed += 1;
 		},
 		setActiveSquare(state, action: { payload: number }) {
 			state.activeSquare = action.payload;
@@ -176,9 +193,9 @@ const puzzleSlice = createSlice({
 		savePuzzle(state) {
 			localStorage.setItem('puzzleState', JSON.stringify(state))
 		},
-		loadPuzzle(state, action) {
-			// Object.keys(state).forEach(key => {
-			// 	state[key] = action.payload[key]
+		loadPuzzle(state, action: { payload: PuzzleState }) {
+			// Object.keys(action.payload).forEach(key  => {
+			// 	state[key] = action.payload[key as keyof PuzzleState]
 			// })
 			// console.log(Object.keys(state))
 			// state = action.payload

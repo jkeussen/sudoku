@@ -1,0 +1,31 @@
+.puzzleInfo {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	padding: 0 var(--divider-section-width);
+	padding-top: 1rem;
+	margin-top: auto;
+}
+.puzzleInfo p {
+	flex-basis: content;
+	flex-direction: row;
+	opacity: 0.375;
+	flex-basis: content;
+}
+.puzzleInfo p span:nth-child(2) {
+	font-weight: bold;
+	text-transform: capitalize;
+}
+@media (max-width: 603px) {
+	.puzzleInfo {
+		flex-wrap: wrap;
+		margin-top: unset;
+	}
+	.puzzleInfo p {
+		font-size: 0.75rem;
+		display: flex;
+		flex-direction: column;
+		line-height: 0.875rem;
+		/* text-align: center; */
+	}
+}
