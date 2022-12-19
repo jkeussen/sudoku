@@ -27,7 +27,8 @@ const InputTopRow: React.FC<{
 	const hintHandler = () => {
 		dispatch(
 			puzzleActions.updateUserPuzzle({
-				noteModeEnabled: noteModeEnabled,
+				// noteModeEnabled: noteModeEnabled,
+				noteModeEnabled: false,
 				val: solvedString[activeSquare],
 				activeSquare,
 			})

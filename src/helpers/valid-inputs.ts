@@ -3,6 +3,7 @@ export const empty = '.'
 export const validInputs = [
 	"KeyN", 				// Toggle notes mode
 	"KeyH",					// Hint for current square
+	"KeyP",					// Pause/resume puzzle
 	"ArrowUp",			// Move current square up
 	"ArrowDown",		// Move current square down
 	"ArrowLeft",		// Move current square left	

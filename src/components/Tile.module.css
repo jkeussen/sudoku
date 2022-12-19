@@ -58,28 +58,24 @@
 .wrapper:has(.tile:focus) {
 	background-color: var(--blue-accent);
 }
-
 .highlighted {
 	background-color: var(--blue)
 }
 .wrapper:has(.highlighted) {
 	background-color: var(--blue)
 }
-
 .valid {
 	background-color: var(--valid);	
 }
 .wrapper:has(.valid) {
 	background-color: var(--valid);	
 }
-
 .error {
 	background-color: var(--error) !important;
 }
 .wrapper:has(.error) {
 	background-color: var(--error) !important;
 }
-
 .tile::selection {
 	background-color: transparent;
 }
@@ -96,4 +92,7 @@
 }
 .userTile.error {
 	color: var(--tile-num-wrong);
+}
+.userTile.error.correct {
+	color: var(--text);
 }

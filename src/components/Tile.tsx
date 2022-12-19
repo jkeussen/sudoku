@@ -20,25 +20,25 @@ const Tile: React.FC<{
 	error: boolean;
 }> = (props) => {
 	const dispatch = useAppDispatch();
-
 	const inputRef = useRef<HTMLInputElement>(null);
-
-	const [row, col] = getRowAndColTupleFromSquareId(props.id)
-	const section = sectionRefArr[row][col];
-
-	const validRow = props.validRows.includes(row);
-	const validCol = props.validCols.includes(col);
-	const validSection = props.validSections.includes(section);
-	const sameValueTiles = useAppSelector((state) => state.puzzle.sameValueTiles);
-	const noteModeEnabled = useAppSelector((state) => state.ui.noteModeEnabled);
-	const candidateValues = useAppSelector(state => state.puzzle.candidates[props.id])
-
-	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
-	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
-	const isGiven = initialGrid[row][col] !== empty;
 
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
 	const activeSection = getActiveSection(activeSquare);
+	const [row, col] = getRowAndColTupleFromSquareId(props.id)
+	const section = sectionRefArr[row][col];
+	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
+	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
+
+	const tileIsInValidRow = props.validRows.includes(row);
+	const tileIsInValidCol = props.validCols.includes(col);
+	const tileIsInValidSection = props.validSections.includes(section);
+	const tileIsGiven = initialGrid[row][col] !== empty;
+	const tileIsCorrect = props.value === solvedString[props.id]
+	const tilesWithSameValue = useAppSelector((state) => state.puzzle.sameValueTiles);
+
+	const isTimerPaused = useAppSelector(state => state.ui.isTimerPaused)
+	const noteModeEnabled = useAppSelector((state) => state.ui.noteModeEnabled);
+	const candidateValues = useAppSelector(state => state.puzzle.candidates[props.id])
 
 	const highlightActiveRowsAndCols = useAppSelector(
 		(state) => state.ui.highlightActiveRowsAndCols
@@ -79,10 +79,13 @@ const Tile: React.FC<{
 			case "KeyN":
 				dispatch(uiActions.setnoteModeEnabled(!noteModeEnabled))
 				break;
+			case "KeyP":
+				dispatch(uiActions.setIsTimerPaused(!isTimerPaused))
+				break;
 			case "KeyH":
 				dispatch(
 					puzzleActions.updateUserPuzzle({
-						noteModeEnabled: noteModeEnabled,
+						noteModeEnabled: false,
 						val: solvedString[activeSquare],
 						activeSquare,
 					})
@@ -91,7 +94,7 @@ const Tile: React.FC<{
 				break;
 			case "Backspace":
 			case "Digit0":
-				if (isGiven) return;
+				if (tileIsGiven) return;
 				dispatch(
 					puzzleActions.updateUserPuzzle({
 						noteModeEnabled: noteModeEnabled,
@@ -109,7 +112,7 @@ const Tile: React.FC<{
 			case "Digit7":
 			case "Digit8":
 			case "Digit9":
-				if (isGiven) return;
+				if (tileIsGiven) return;
 				let enteredValue = e.code.slice(-1);
 				dispatch(
 					puzzleActions.updateUserPuzzle({
@@ -149,7 +152,7 @@ const Tile: React.FC<{
 	};
 
 	// ! Build CSS classes for the tile
-	const userOrGiven = isGiven ? classes.givenTile : classes.userTile;
+	const userOrGiven = tileIsGiven ? classes.givenTile : classes.userTile;
 	const isActiveSquare = activeSquare === props.id ? classes.active : "";
 	const highlightedRow =
 		highlightActiveRowsAndCols &&
@@ -168,17 +171,18 @@ const Tile: React.FC<{
 			? classes.highlighted
 			: "";
 	const highLightedSameTile =
-		highlightSameValues && sameValueTiles.includes(props.id)
+		highlightSameValues && tilesWithSameValue.includes(props.id)
 			? classes.sameTileValue
 			: "";
 	const valid =
-		(highlightValidRowsAndCols && validRow) ||
-		(highlightValidRowsAndCols && validCol) ||
-		(highlightValidSections && validSection)
+		(highlightValidRowsAndCols && tileIsInValidRow) ||
+		(highlightValidRowsAndCols && tileIsInValidCol) ||
+		(highlightValidSections && tileIsInValidSection)
 			? classes.valid
 			: "";
 	const error = props.error ? classes.error : "";
-	const css = `${classes.tile} ${userOrGiven} ${isActiveSquare} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${highLightedSameTile} ${valid} ${error}`;
+	const correct = tileIsCorrect ? classes.correct : "";
+	const css = `${classes.tile} ${userOrGiven} ${isActiveSquare} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${highLightedSameTile} ${valid} ${error} ${correct}`;
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>
