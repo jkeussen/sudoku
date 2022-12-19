@@ -13,6 +13,9 @@
 .button:focus {
 	outline: var(--focus);
 }
+.underlineFirstLetter::first-letter {
+	text-decoration: underline;
+}
 .rounded {
 	border-radius: 50%;	
 }
@@ -33,5 +36,8 @@
 	}
 	.button.pressed:hover {
 		background-color: var(--blue-accent);
+	}
+	.underlineFirstLetter::first-letter {
+		text-decoration: none;
 	}
 }

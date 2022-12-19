@@ -52,15 +52,15 @@ const InputTopRow: React.FC<{
 			</button> */}
 			<button className={`${buttonCss.button} ${noteModeEnabled ? buttonCss.pressed : ''}`} onClick={notesHandler}>
 				<span className="material-icons">edit_note</span>
-				Notes
+				<span className={buttonCss.underlineFirstLetter}>Notes</span>
 			</button>
-			<button className={buttonCss.button} onClick={hintHandler}>
+			<button className={`${buttonCss.button}`} onClick={hintHandler}>
 				<span className="material-icons">question_mark</span>
-				Hint
+				<span className={buttonCss.underlineFirstLetter}>Hint</span>
 			</button>
-			<button className={buttonCss.button} onClick={deleteHandler}>
+			<button className={`${buttonCss.button}`} onClick={deleteHandler}>
 				<span className="material-icons">backspace</span>
-				Delete
+				<span className={buttonCss.underlineFirstLetter}>Delete</span>
 			</button>
 		</div>
 	);

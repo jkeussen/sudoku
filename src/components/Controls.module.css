@@ -15,9 +15,6 @@
 	aspect-ratio: 4 / 3;
 	gap: 0.25rem;
 	}
-		.topRow button span {
-			font-size: 1.25rem;
-		}
 .numbers {
 	width: 100%;
 	position: relative;
@@ -39,9 +36,6 @@
 	}
 	.topRow button {
 		aspect-ratio: unset;
-	}
-	.topRow button span {
-		font-size: 1.25rem;
 	}
 	.numbers {
 		grid-template-columns: repeat(9, 1fr);

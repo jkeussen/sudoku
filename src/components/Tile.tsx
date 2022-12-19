@@ -36,6 +36,7 @@ const Tile: React.FC<{
 	const tileIsCorrect = props.value === solvedString[props.id]
 	const tilesWithSameValue = useAppSelector((state) => state.puzzle.sameValueTiles);
 
+	const showMenu = useAppSelector(state => state.ui.showMenu)
 	const isTimerPaused = useAppSelector(state => state.ui.isTimerPaused)
 	const noteModeEnabled = useAppSelector((state) => state.ui.noteModeEnabled);
 	const candidateValues = useAppSelector(state => state.puzzle.candidates[props.id])
@@ -76,6 +77,9 @@ const Tile: React.FC<{
 			case "Escape":
 				// dispatch(puzzleActions.setActiveSquare(null));
 				return;
+			case "KeyM":
+				dispatch(uiActions.setShowMenu(!showMenu))
+				break;
 			case "KeyN":
 				dispatch(uiActions.setnoteModeEnabled(!noteModeEnabled))
 				break;
@@ -94,6 +98,7 @@ const Tile: React.FC<{
 				break;
 			case "Backspace":
 			case "Digit0":
+			case "KeyD":
 				if (tileIsGiven) return;
 				dispatch(
 					puzzleActions.updateUserPuzzle({

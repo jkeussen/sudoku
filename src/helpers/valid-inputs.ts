@@ -4,12 +4,14 @@ export const validInputs = [
 	"KeyN", 				// Toggle notes mode
 	"KeyH",					// Hint for current square
 	"KeyP",					// Pause/resume puzzle
+	"KeyM",					// Toggle menu
 	"ArrowUp",			// Move current square up
 	"ArrowDown",		// Move current square down
 	"ArrowLeft",		// Move current square left	
 	"ArrowRight",		// Move current square right
 	"Escape",				// Nothing at the moment
 	"Backspace",		// Delete square value, or notes	
+	"KeyD",					// Delete square value, or notes	
 	"Digit0",				// Delete square value, or notes	
 	"Digit1",				// Enter note, or set value to 1	
 	"Digit2",				// Enter note, or set value to 2
