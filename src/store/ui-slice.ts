@@ -92,6 +92,14 @@ const uiSlice = createSlice({
 		collapseMenuItems(state) {
 			state.showOptionsSwitches = false;
 			state.showDifficultySelect = false;
+		},
+		saveUi(state) {
+			localStorage.setItem('uiState', JSON.stringify(state))
+		},
+		loadUi(state, action) {
+			// state = { ...action.payload }
+			// state = action.payload
+			return { ...action.payload }
 		}
 	},
 });

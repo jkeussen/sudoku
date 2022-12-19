@@ -1,17 +1,12 @@
-import { useEffect, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useMemo } from "react";
+import { useAppSelector } from "../store/hooks";
 
 import Tile from "./Tile";
-
-import { puzzleActions } from "../store/puzzle-slice";
+import PauseOverlay from "./PauseOverlay";
 
 import classes from "./Puzzle.module.css";
-import buttonCss from "../styles/Buttons.module.css";
-import { uiActions } from "../store/ui-slice";
 
 const Puzzle = () => {
-	const dispatch = useAppDispatch();
-
 	const userGrid = useAppSelector((state) => state.puzzle.userGrid);
 
 	const validRows = useAppSelector((state) => state.puzzle.validRows);
@@ -23,10 +18,6 @@ const Puzzle = () => {
 
 	const localErrors = useAppSelector((state) => state.puzzle.localErrors);
 	const globalErrors = useAppSelector((state) => state.puzzle.globalErrors);
-
-	useEffect(() => {
-		dispatch(puzzleActions.generatePuzzle("hard"));
-	}, []);
 
 	const puzzle = userGrid.map((row: string[], i: number) => {
 		return row.map((col: string, j: number) => {
@@ -54,21 +45,11 @@ const Puzzle = () => {
 		});
 	}, []);
 
-	const resumeGameHandler = () => {
-		dispatch(uiActions.setIsTimerPaused(false));
-	};
-
 	return (
 		<div className={classes.puzzleGrid}>
-			{isTimerPaused && !isPuzzleSolved && (
-				<div className={classes.pauseShield}>
-					<span>Game Paused...</span>
-					<button className={buttonCss.button} onClick={resumeGameHandler} style={{paddingRight: '0.85rem'}}>
-						<span className="material-icons">play_arrow</span>
-						Resume
-					</button>
-				</div>
-			)}
+			{isTimerPaused && !isPuzzleSolved && 
+				<PauseOverlay />
+			}
 			{dividers}
 			{puzzle}
 		</div>

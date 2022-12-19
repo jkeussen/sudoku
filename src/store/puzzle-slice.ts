@@ -173,6 +173,17 @@ const puzzleSlice = createSlice({
 			state.localErrors = getLocalErrors(state.userGrid, action.payload);
 			state.sameValueTiles = getSameValueTiles(state.userGrid, action.payload);
 		},
+		savePuzzle(state) {
+			localStorage.setItem('puzzleState', JSON.stringify(state))
+		},
+		loadPuzzle(state, action) {
+			// Object.keys(state).forEach(key => {
+			// 	state[key] = action.payload[key]
+			// })
+			// console.log(Object.keys(state))
+			// state = action.payload
+			return { ...action.payload }
+		}
 	},
 });
 
