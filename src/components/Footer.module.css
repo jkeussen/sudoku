@@ -14,6 +14,7 @@
 	/* background-color: blue; */
 	text-align: right;
 }
+.footer p a,
 .footer p a:visited {
 	color: var(--text);
 }

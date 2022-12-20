@@ -25,6 +25,7 @@ const Tile: React.FC<{
 	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
 	const activeSection = getActiveSection(activeSquare);
 	const [row, col] = getRowAndColTupleFromSquareId(props.id)
+	const [activeRow, activeCol] = getRowAndColTupleFromSquareId(activeSquare)
 	const section = sectionRefArr[row][col];
 	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
 	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
@@ -160,35 +161,26 @@ const Tile: React.FC<{
 	// ! Build CSS classes for the tile
 	const userOrGiven = tileIsGiven ? classes.givenTile : classes.userTile;
 	const isActiveSquare = activeSquare === props.id ? classes.active : "";
-	const highlightedRow =
-		highlightActiveRowsAndCols &&
-		activeSquare !== null &&
-		row === Math.floor(activeSquare! / 9)
+	const highlighted =
+		(highlightActiveRowsAndCols && (row === activeRow || col === activeCol)) ||
+		(highlightActiveSection && (section === activeSection))
 			? classes.highlighted
 			: "";
-	const highlightedCol =
-		highlightActiveRowsAndCols &&
-		activeSquare !== null &&
-		col === activeSquare! % 9
-			? classes.highlighted
-			: "";
-	const highlightedSection =
-		highlightActiveSection && section === activeSection
-			? classes.highlighted
-			: "";
-	const highLightedSameTile =
-		highlightSameValues && tilesWithSameValue.includes(props.id)
+	const sameTileValueAsActiveSquare =
+		(highlightSameValues && tilesWithSameValue.includes(props.id))
 			? classes.sameTileValue
 			: "";
 	const valid =
-		(highlightValidRowsAndCols && tileIsInValidRow) ||
-		(highlightValidRowsAndCols && tileIsInValidCol) ||
+		(highlightValidRowsAndCols && (tileIsInValidRow || tileIsInValidCol)) ||
 		(highlightValidSections && tileIsInValidSection)
 			? classes.valid
 			: "";
 	const error = props.error ? classes.error : "";
-	const correct = tileIsCorrect ? classes.correct : "";
-	const css = `${classes.tile} ${userOrGiven} ${isActiveSquare} ${highlightedRow} ${highlightedCol} ${highlightedSection} ${highLightedSameTile} ${valid} ${error} ${correct}`;
+	const wrongValue = 
+		(props.value !== empty && !tileIsCorrect) 
+			? classes.wrongValue
+			: ""
+	const css = `${classes.tile} ${userOrGiven} ${isActiveSquare} ${highlighted} ${sameTileValueAsActiveSquare} ${valid} ${error} ${wrongValue}`;
 
 	return (
 		<div className={classes.wrapper} id={`${row}_${col}`}>

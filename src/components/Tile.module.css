@@ -86,12 +86,8 @@
 	z-index: 3;
 }
 .userTile {
-	/* color: var(--tile-num-user) */
-	color: var(--tile-num-wrong);
+	color: var(--tile-num-user)
 }
-.userTile.error {
+.userTile.wrongValue {
 	color: var(--tile-num-wrong);
-}
-.userTile.correct {
-	color: var(--text);
 }
