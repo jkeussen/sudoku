@@ -1,0 +1,38 @@
+.footer { 
+	display: flex;
+	margin-top: auto;
+	padding-top: 1rem;
+	justify-content: space-between;
+	align-items: center;
+	opacity: 0.5;
+	
+}
+.footer p {
+	flex-basis: content;
+}
+.footer p:last-child{
+	/* background-color: blue; */
+	text-align: right;
+}
+.footer p a:visited {
+	color: var(--text);
+}
+.buttonLink {
+	padding: 0.5rem 1rem;
+	background-color: var(--button-bg);
+	border-radius: var(--border-radius);
+	text-decoration: none;
+}
+.buttonLink:hover {
+	background-color: var(--blue-accent);
+}
+.buttonLink:visited {
+	color: var(--text)
+}
+
+@media (max-width: 603px) {
+	.footer p { 
+		font-size: 0.75rem;
+		line-height: 0.875rem;
+	}
+}

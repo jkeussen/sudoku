@@ -4,7 +4,7 @@
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;
-	/* flex-basis: 0; */
+	/* background-color: blue !important; */
 }
 .logo,
 .timer {
@@ -14,10 +14,12 @@
 	flex: 0;
 }
 .logo h1 {
+	font-family: var(--text-font);
+	margin-top: 0.125rem;
 	margin-left: 0.25rem;
 }
 .timer h2 {
-	font-family: 'Questrial', Avenir, Helvetica, Arial, sans-serif;
+	font-family: var(--number-font);
 	font-weight: 700;
 	margin-top: 0.125rem;
 }

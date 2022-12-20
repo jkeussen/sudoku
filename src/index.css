@@ -8,7 +8,13 @@
 }
 
 :root {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* --number-font: 'Questrial'; */
+  /* --number-font: 'Ubuntu'; */
+  --number-font: 'Nunito', Helvetica, Arial, sans-serif;
+  --text-font: 'Questrial', Helvetica, Arial, sans-serif;
+  /* --number-font: 'IBM Plex Mono'; */
+
+  font-family: var(--text-font);
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -21,11 +27,6 @@
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
 
-  /* --number-font: 'Questrial'; */
-  /* --number-font: 'Ubuntu'; */
-  --number-font: 'Nunito';
-  /* --number-font: 'IBM Plex Mono'; */
-  
   /* Dividers */
   --divider-tile-width: 1px;
   --divider-section-width: 2px;

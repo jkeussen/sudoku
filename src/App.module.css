@@ -16,3 +16,12 @@
   /* background-color: red; */
   color: var(--text);
 }
+.under {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 603px) {
+  .under {
+    flex-direction: column-reverse;
+  }
+}

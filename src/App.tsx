@@ -11,6 +11,7 @@ import { uiActions } from "./store/ui-slice";
 import { puzzleActions } from "./store/puzzle-slice";
 
 import classes from "./App.module.css";
+import Footer from "./components/Footer";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -66,8 +67,11 @@ function App() {
 				{showMenu && <Menu />}
 				<Header />
 				<Puzzle />
-				<Controls />
-				<PuzzleInfo />
+				<div className={classes.under}>
+					<PuzzleInfo />
+					<Controls />
+				</div>
+				<Footer />
 			</div>
 		</div>
 	);

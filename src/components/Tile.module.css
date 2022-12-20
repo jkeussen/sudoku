@@ -34,12 +34,7 @@
 	}
 }
 
-.userTile {
-	color: var(--tile-num-user)
-}
-.wrapper:has(.userTile) {
-	color: var(--tile-num-user)
-}
+
 
 .givenTile {
 	color: var(--tile-num-given);
@@ -90,9 +85,13 @@
 	border: var(--tile-inner-border-width) solid var(--valid);
 	z-index: 3;
 }
+.userTile {
+	/* color: var(--tile-num-user) */
+	color: var(--tile-num-wrong);
+}
 .userTile.error {
 	color: var(--tile-num-wrong);
 }
-.userTile.error.correct {
+.userTile.correct {
 	color: var(--text);
 }

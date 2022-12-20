@@ -4,16 +4,17 @@
 	flex-wrap: nowrap;
 	padding: 0 var(--divider-section-width);
 	padding-top: 1rem;
-	margin-top: auto;
+	/* margin-top: auto; */
 }
 .puzzleInfo p {
 	flex-basis: content;
 	flex-direction: row;
-	opacity: 0.375;
+	opacity: 0.5;
 	flex-basis: content;
 }
 .puzzleInfo p span:nth-child(2) {
 	font-weight: bold;
+	padding-left: 0.25rem;
 	text-transform: capitalize;
 }
 @media (max-width: 603px) {
@@ -26,6 +27,8 @@
 		display: flex;
 		flex-direction: column;
 		line-height: 0.875rem;
-		/* text-align: center; */
+	}
+	.puzzleInfo p span:nth-child(2) {
+		padding-left: unset;
 	}
 }
