@@ -14,7 +14,8 @@ const Header: React.FC = (props?) => {
 	const timerSecondsElapsed = useAppSelector((state) => state.ui.timerSecondsElapsed);
 	const isPuzzleSolved = useAppSelector(state => state.puzzle.isPuzzleSolved)
 
-	const minutes = Math.floor(timerSecondsElapsed / 60).toString();
+	const hours = Math.floor(timerSecondsElapsed / 60 / 60 );
+	const minutes = Math.floor(timerSecondsElapsed / 60) - (hours * 60);
 	const seconds = (timerSecondsElapsed % 60).toString();
 
 	const timerToggleHandler = () => {
@@ -56,7 +57,7 @@ const Header: React.FC = (props?) => {
 			</div>
 			<div className={classes.timer}>
 				<h2>
-					{minutes}:{seconds.length > 1 ? seconds : `0${seconds}`}
+					{hours > 0 && `${hours}:`}{minutes}:{seconds.length > 1 ? seconds : `0${seconds}`}
 				</h2>
 				<button
 					onClick={timerToggleHandler}
@@ -66,7 +67,9 @@ const Header: React.FC = (props?) => {
 					<span className="material-icons">
 						{!isTimerDisabled && isTimerPaused && "play_arrow"}
 						{!isTimerDisabled && !isTimerPaused && "pause"}
-						{isTimerDisabled && 'celebration'}
+						{/* {isTimerDisabled && 'celebration'} */}
+						{/* {isTimerDisabled && 'check_circle'} */}
+						{isTimerDisabled && 'star'}
 					</span>
 				</button>
 			</div>

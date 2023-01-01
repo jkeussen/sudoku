@@ -22,11 +22,11 @@ const PuzzleInfo = () => {
 			</p>
 			<p>
 				<span>Mistakes:</span>
-				<span>{mistakesMade}</span>
+				<span>{mistakesMade.toString()}</span>
 			</p>
 			<p>
 				<span>Hints:</span>
-				<span>{hintsUsed}</span>
+				<span>{hintsUsed.toString()}</span>
 			</p>
 		</div>
 	)
