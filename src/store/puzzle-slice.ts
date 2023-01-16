@@ -21,7 +21,7 @@ import {
 import { empty } from "../helpers/valid-inputs";
 import { CandidateTileValues } from "../components/Notes";
 
-interface PuzzleState {
+export interface PuzzleState {
 	initialGrid: string[][];
 	initialString: string;
 	solvedGrid: string[][];

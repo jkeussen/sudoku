@@ -7,11 +7,14 @@ import PuzzleInfo from "./components/PuzzleInfo";
 import Puzzle from "./components/Puzzle";
 import Controls from "./components/Controls";
 
+import { getRowAndColTupleFromSquareId } from "./helpers/utils";
+
 import { uiActions } from "./store/ui-slice";
 import { puzzleActions } from "./store/puzzle-slice";
 
 import classes from "./App.module.css";
 import Footer from "./components/Footer";
+import useKeydown from "./hooks/useKeydown";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -19,11 +22,35 @@ function App() {
 	const showMenu = useAppSelector((state) => state.ui.showMenu);
 	const showDarkTheme = useAppSelector((state) => state.ui.showDarkTheme);
 
+	const isTimerPaused = useAppSelector(state => state.ui.isTimerPaused)
+	const noteModeEnabled = useAppSelector((state) => state.ui.noteModeEnabled);
+	const activeSquare = useAppSelector((state) => state.puzzle.activeSquare);
+	const solvedString = useAppSelector((state) => state.puzzle.solvedString);
+	const initialGrid = useAppSelector((state) => state.puzzle.initialGrid);
+
 	const handleUnload = () => {
 		dispatch(uiActions.saveUi());
 		dispatch(puzzleActions.savePuzzle());
 		localStorage.setItem("canResume", "true");
 	};
+
+	// Add global event listener for keyboard inputs
+	useEffect(() => {
+		const keyInputListener = (e: KeyboardEvent) => {
+			useKeydown({
+				e: e,
+				dispatch,
+				showMenu,
+				noteModeEnabled,
+				isTimerPaused,
+				initialGrid,
+				solvedString,
+				activeSquare
+			})
+		}
+		window.addEventListener("keydown", keyInputListener)
+		return () => window.removeEventListener("keydown", keyInputListener)
+	}, [showMenu, noteModeEnabled, isTimerPaused, initialGrid, solvedString, activeSquare])
 
 	// Create a puzzle on initial render or load previous puzzle
 	useEffect(() => {

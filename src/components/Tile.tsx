@@ -195,7 +195,7 @@ const Tile: React.FC<{
 				value={props.value === empty ? "" : props.value}
 				readOnly
 				onFocus={onFocusHandler}
-				onKeyDown={onKeyDownHandler}
+				// onKeyDown={onKeyDownHandler}
 			/>
 		</div>
 	);
